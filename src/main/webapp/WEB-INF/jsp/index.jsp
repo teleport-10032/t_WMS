@@ -6,10 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/axios.min.js";
+%>
+<html lang="en">
 <head>
     <title>Vue.js test</title>
-    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="<%=basePath%>>"></script>
     <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
