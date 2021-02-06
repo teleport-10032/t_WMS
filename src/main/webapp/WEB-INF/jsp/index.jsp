@@ -14,7 +14,8 @@
 <html lang="en">
 <head>
     <title>Vue.js test</title>
-    <script src="<%=basePath%>>"></script>
+<%--    <script src="<%=basePath%>>"></script>--%>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
     <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
