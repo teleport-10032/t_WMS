@@ -9,8 +9,22 @@
 <html>
 <head>
     <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css" />
+    <script src="resources/js/jquery.min.js"></script>
+    <script src="resources/js/bootstrap.bundle.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="row" style="height: 100px">
+        <div class="col-sm-1" style="background: black"></div>
+        <div class="col-sm-2" style="background: blue"></div>
+        <div class="col-sm-3" style="background: green"></div>
+    </div>
+</div>
+<br>
 Hello JSP2.
+<br>
+${user.getUsername()}
 </body>
 </html>

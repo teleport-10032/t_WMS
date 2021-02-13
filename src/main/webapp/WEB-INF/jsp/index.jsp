@@ -6,15 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/axios.min.js";
-%>
 <html lang="en">
 <head>
     <title>Vue.js test</title>
-<%--    <script src="<%=basePath%>>"></script>--%>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
     <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -42,9 +36,9 @@ Hello JSP.
         methods: {
             async getHello()
             {
-                let url = "http://localhost:8888/hello";
+                let url = "http://localhost:8080/hello";
                 let params ={
-                    id:"2331111111123123"
+                    id:"{*}测试"
                 }
                 axios.get(url, {
                         params: {
