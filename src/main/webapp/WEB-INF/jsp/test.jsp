@@ -9,11 +9,6 @@
 <html lang="en">
 <head>
     <title>Vue.js test</title>
-    <%--    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>--%>
-    <%--    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>--%>
-    <%--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">--%>
-    <%--    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>--%>
-    <%--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>--%>
     <script src="${pageContext.request.contextPath}/resources/js/axios.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
@@ -21,7 +16,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 </head>
 <body>
-Hello JSP.
 <div id="app">
     <p>{{ info }}</p>
     <br>

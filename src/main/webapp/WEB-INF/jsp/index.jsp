@@ -6,33 +6,48 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+<html>
 <head>
-    <title>Vue.js test</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/iview.css">
-    <script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/iview.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/axios.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
+    <title>Hello JSP</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<%--    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>--%>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-Hello JSP.
-<div id="app">
-    <i-button @click="show">Click me!</i-button>
-    <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
-</div>
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            visible: false
-        },
-        methods: {
-            show: function () {
-                this.visible = true;
-            }
-        }
-    })
-</script>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>   
+                <a class="navbar-brand" href="#">菜鸟教程</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">iOS</a></li>
+                    <li><a href="#">SVN</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </body>
 </html>
