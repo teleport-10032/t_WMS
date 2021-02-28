@@ -9,52 +9,28 @@
 <html lang="en">
 <head>
     <title>Vue.js test</title>
-<%--    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>--%>
-<%--    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>--%>
-<%--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">--%>
-<%--    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>--%>
-<%--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>--%>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/iview.css">
+    <script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/iview.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/axios.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
-    <script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 </head>
 <body>
 Hello JSP.
 <div id="app">
-    <p>{{ info }}</p>
-    <br>
-    <el-tag>tag</el-tag>
+    <i-button @click="show">Click me!</i-button>
+    <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
 </div>
 <script>
     new Vue({
         el: '#app',
         data: {
-            info: 'nullinfo'
-        },
-        created()
-        {
-            this.getHello()
+            visible: false
         },
         methods: {
-            async getHello()
-            {
-                let url = "http://localhost:8080/hello";
-                let params ={
-                    id:"{*}测试"
-                }
-                axios.get(url, {
-                        params: {
-                                id:"111"
-                            }
-                    }).then(res=>{
-                    this.info = res.data;
-                    this.$message.success("success")
-                }).catch(err=>{
-                    console.log(err);
-                })
-            },
+            show: function () {
+                this.visible = true;
+            }
         }
     })
 </script>

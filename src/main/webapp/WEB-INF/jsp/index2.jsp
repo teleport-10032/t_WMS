@@ -26,7 +26,6 @@
         <div class="col-sm-3" style="background: green"></div>
     </div>
     <button type="button" class="btn btn-primary">主要按钮</button>
-
 </div>
 <br>
 Hello JSP2.
