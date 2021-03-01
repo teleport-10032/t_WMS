@@ -8,15 +8,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageController {
 
+    @RequestMapping("/bootflatTest")
+    public String bootflatTest()
+    {
+        return "bootflatTest";
+    }
     @RequestMapping("/eleTest")
     public String eleTest()
     {
         return "eleTest";
     }
+    @RequestMapping("/eleTest2")
+    public String eleTest2()
+    {
+        return "eleTest2";
+    }
     @RequestMapping("/iViewTest")
     public String iViewTest()
     {
         return "iViewTest";
+    }
+    @RequestMapping("/layUITest")
+    public String layUITest()
+    {
+        return "layUITest";
+    }
+    @RequestMapping("/bootstrapTest")
+    public String bootstrapTest()
+    {
+        return "bootstrapTest";
     }
     @RequestMapping("/index")
     public String index() {
