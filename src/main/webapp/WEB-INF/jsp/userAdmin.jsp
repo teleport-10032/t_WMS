@@ -1,67 +1,33 @@
 <%--
   Created by IntelliJ IDEA.
   User: teleport
-  Date: 2021/2/3
-  Time: 8:02 下午
+  Date: 2021/3/2
+  Time: 15:51
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+<html>
 <head>
-    <title>eleTest</title>
+    <title>用户管理</title>
     <script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css">
     <script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 </head>
 <body>
-<div id="app">
+
+<div id="app" v-cloak>
     <el-container>
-        <el-header>
-            <div>
-                <p style="font-size: 16px;padding-left: 10px">企业仓库管理系统 * Login as
-                    <el-tag effect="dark" size="mini" style="margin-left: 3px">teleport</el-tag>
-                </p>
-            </div>
-            <el-button type="success">退出</el-button>
-        </el-header>
+        <%@ include file="public/header.jsp" %>
         <el-container>
-            <el-aside width="220px" :style="asideStyle">
-                <el-menu background-color="#333744"
-                         text-color="#fff" active-text-color="#409EFF"
-                         default-active="1" class="el-menu-vertical-demo">
-                    <el-menu-item index="1" style="width: 220px">
-                        <i class="el-icon-user-solid"></i>
-                        <span slot="title">用户管理</span>
-                    </el-menu-item>
-                    <el-menu-item index="2" style="width: 220px">
-                        <i class="el-icon-s-goods"></i>
-                        <span slot="title">原料与产品信息管理</span>
-                    </el-menu-item>
-                    <el-menu-item index="3" style="width: 220px">
-                        <i class="el-icon-help"></i>
-                        <span slot="title">采购入库信息管理</span>
-                    </el-menu-item>
-                    <el-menu-item index="4" style="width: 220px">
-                        <i class="el-icon-s-shop"></i>
-                        <span slot="title">生产销售出库信息管理</span>
-                    </el-menu-item>
-                    <el-menu-item index="5" style="width: 220px">
-                        <i class="el-icon-s-order"></i>
-                        <span slot="title">库存信息管理</span>
-                    </el-menu-item>
-                    <el-menu-item index="6" style="width: 220px">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">基本CRM管理</span>
-                    </el-menu-item>
-                </el-menu>
-            </el-aside>
-            <el-main :style="mainStyle">
+            <%@ include file="public/aside.jsp" %>
+            <el-main id="elMain">
                 <div>
-                    <!-- 卡片视图区域 -->
+                    <!-- 卡片 -->
                     <el-card>
-                        <!-- 搜索与添加区域 -->
+                        <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
                                 <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getAnnList"
@@ -159,33 +125,11 @@
         </el-container>
     </el-container>
 </div>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    .el-header {
-        background-color: #333744;
-        display: flex;
-        justify-content: space-between;
-        padding-left: 0;
-        align-items: center;
-        color: #fff;
-        font-size: 20px;
-    }
-</style>
+
 <script>
     new Vue({
         el: '#app',
         data: {
-            activeIndex: '1',
-            activeIndex2: '1',
-            height: 100,
-            asideStyle: 'background:#333744;' + 'height:'
-                + document.documentElement.clientHeight + 'px',
-                // +';padding:0;margin:0',
-            mainStyle: 'background:#eaedf1;' + 'height:'
-                + document.documentElement.clientHeight + 'px',
             loading:true,
             // 获取用户列表的参数对象
             queryInfo: {
@@ -251,8 +195,22 @@
         ,
         created() {
             this.getAnnList()
+            this.init()
         },
         methods: {
+            init()
+            {
+                let h = document.documentElement.clientHeight-60
+                let t1 = document.getElementById("elMain")
+                t1.style.height = h + 'px'
+                t1.style.background = "#eaedf1"
+
+                let t2 = document.getElementById("elAside")
+                t2.style.height = h + 'px'
+                t2.style.background = "#333744"
+
+
+            },
             async getHello() {
                 let url = "http://localhost:8080/hello";
                 let params = {
@@ -314,34 +272,34 @@
             // 点击按钮，创建新公告
             createAnn() {
                 //预验证
-                this.$refs.addFormRef.validate(async valid => {
-                    //未通过则return
-                    if (!valid) return
-                    //通过
-                    let result =  this.$axios({
-                        method: 'post',
-                        url: '/createAnn',
-                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                        data: qs.stringify({
-                            title:this.addForm.title,
-                            content:this.addForm.content,
-                            token:window.localStorage.getItem("token")
-                        })
-                    });
-                    result.then(res=>{
-                        var error = res.data.error;
-                        if(error === '0')
-                        {
-                            this.$message.success('创建公告成功')
-                            this.$refs.addFormRef.resetFields()
-                            this.addDialogVisible = false
-                        }
-                        else
-                            this.$message.warning('创建公告失败')
-                        this.getAnnList()
-
-                    })
-                })
+                // this.$refs.addFormRef.validate(async valid => {
+                //     //未通过则return
+                //     if (!valid) return
+                //     //通过
+                //     let result =  this.$axios({
+                //         method: 'post',
+                //         url: '/createAnn',
+                //         headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                //         data: qs.stringify({
+                //             title:this.addForm.title,
+                //             content:this.addForm.content,
+                //             token:window.localStorage.getItem("token")
+                //         })
+                //     });
+                //     result.then(res=>{
+                //         var error = res.data.error;
+                //         if(error === '0')
+                //         {
+                //             this.$message.success('创建公告成功')
+                //             this.$refs.addFormRef.resetFields()
+                //             this.addDialogVisible = false
+                //         }
+                //         else
+                //             this.$message.warning('创建公告失败')
+                //         this.getAnnList()
+                //
+                //     })
+                // })
             },
             // 展示编辑公告对话框
             async editAnn(id) {

@@ -11,36 +11,32 @@ public class PageController {
     @RequestMapping("/bootflatTest")
     public String bootflatTest()
     {
-        return "bootflatTest";
+        return "test/bootflatTest";
     }
     @RequestMapping("/eleTest")
     public String eleTest()
     {
-        return "eleTest";
+        return "test/eleTest";
     }
     @RequestMapping("/eleTest2")
     public String eleTest2()
     {
-        return "eleTest2";
+        return "test/eleTest2";
     }
     @RequestMapping("/iViewTest")
     public String iViewTest()
     {
-        return "iViewTest";
+        return "test/iViewTest";
     }
     @RequestMapping("/layUITest")
     public String layUITest()
     {
-        return "layUITest";
+        return "test/layUITest";
     }
     @RequestMapping("/bootstrapTest")
     public String bootstrapTest()
     {
-        return "bootstrapTest";
-    }
-    @RequestMapping("/index")
-    public String index() {
-        return "index";
+        return "test/bootstrapTest";
     }
     @RequestMapping("/index2")
     public String index2(Model model)
@@ -51,5 +47,16 @@ public class PageController {
         model.addAttribute("user", userObject);
         return "index2";
     }
+
+
+    @RequestMapping("/")
+    public String index() {
+        return "index";
+    }
+    @RequestMapping("userAdmin")
+    public String userAdmin(){
+        return "userAdmin";
+    }
+
 
 }

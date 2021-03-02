@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.el-header{
+    background-color: #333744;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0;
+    align-items: center;
+    color: #fff;
+    font-size: 20px;
+}
+[v-cloak] {
+    display: none !important;
+}
