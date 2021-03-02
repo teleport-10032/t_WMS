@@ -31,27 +31,27 @@
                 <el-menu background-color="#333744"
                          text-color="#fff" active-text-color="#409EFF"
                          default-active="1" class="el-menu-vertical-demo">
-                    <el-menu-item index="1">
+                    <el-menu-item index="1" style="width: 220px">
                         <i class="el-icon-user-solid"></i>
                         <span slot="title">用户管理</span>
                     </el-menu-item>
-                    <el-menu-item index="2">
+                    <el-menu-item index="2" style="width: 220px">
                         <i class="el-icon-s-goods"></i>
                         <span slot="title">原料与产品信息管理</span>
                     </el-menu-item>
-                    <el-menu-item index="3">
+                    <el-menu-item index="3" style="width: 220px">
                         <i class="el-icon-help"></i>
                         <span slot="title">采购入库信息管理</span>
                     </el-menu-item>
-                    <el-menu-item index="4">
+                    <el-menu-item index="4" style="width: 220px">
                         <i class="el-icon-s-shop"></i>
                         <span slot="title">生产销售出库信息管理</span>
                     </el-menu-item>
-                    <el-menu-item index="5">
+                    <el-menu-item index="5" style="width: 220px">
                         <i class="el-icon-s-order"></i>
                         <span slot="title">库存信息管理</span>
                     </el-menu-item>
-                    <el-menu-item index="6">
+                    <el-menu-item index="6" style="width: 220px">
                         <i class="el-icon-menu"></i>
                         <span slot="title">基本CRM管理</span>
                     </el-menu-item>
@@ -76,8 +76,8 @@
                         <br>
                         <!-- 列表区域 stripe 斑马-->
                         <el-table :data="userlist" border stripe v-loading="loading"
-                                  :header-cell-style="{'text-align':'center'}"
-                                  :cell-style="{'text-align':'center'}">
+                                  :header-cell-style="{'text-align':'center','font-size':'14px'}"
+                                  :cell-style="{'text-align':'center','font-size':'14px'}">
                             <!--                索引列-->
                             <el-table-column label="ID" prop="id" min-width="10%"></el-table-column>
                             <el-table-column label="标题" prop="title" min-width="10%"></el-table-column>
@@ -183,6 +183,7 @@
             height: 100,
             asideStyle: 'background:#333744;' + 'height:'
                 + document.documentElement.clientHeight + 'px',
+                // +';padding:0;margin:0',
             mainStyle: 'background:#eaedf1;' + 'height:'
                 + document.documentElement.clientHeight + 'px',
             loading:true,
