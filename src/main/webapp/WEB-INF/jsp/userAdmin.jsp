@@ -200,16 +200,9 @@
         methods: {
             init()
             {
-                let h = document.documentElement.clientHeight-60
-                let t1 = document.getElementById("elMain")
-                t1.style.height = h + 'px'
-                t1.style.background = "#eaedf1"
-
-                let t2 = document.getElementById("elAside")
-                t2.style.height = h + 'px'
-                t2.style.background = "#333744"
-
-
+                <%@ include file="public/setHeight.jsp" %>
+                document.getElementById("userAdmin").style.color = "#409EFF";
+                document.getElementById("userAdminIco").style.color = "#409EFF";
             },
             async getHello() {
                 let url = "http://localhost:8080/hello";
