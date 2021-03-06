@@ -12,4 +12,9 @@
     <select id="getStaffNum" resultType="int">
         select count(id) from staff;
    </select>
+<!--    String name,String sex,int age,String type,String phone,String email,String username,String password-->
+    <insert id="addStaff" parameterType="staff">
+        insert into staff (name,sex,age,type,phone,email,username,password)
+            values (#{name},#{sex},#{age},#{type},#{phone},#{email},#{username},#{password})
+    </insert>
 </mapper>

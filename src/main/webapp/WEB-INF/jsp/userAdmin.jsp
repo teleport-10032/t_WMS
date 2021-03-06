@@ -36,7 +36,7 @@
                                 </el-input>
                             </el-col>
                             <el-col :span="4">
-                                <el-button type="primary" @click="addDialogVisible = true">创建公告</el-button>
+                                <el-button type="primary" @click="addDialogOpen">新建员工</el-button>
                             </el-col>
                         </el-row>
                         <br>
@@ -74,24 +74,58 @@
                                        layout="total, sizes, prev, pager, next, jumper" :total="total">
                         </el-pagination>
                     </el-card>
+
                     <!-- 创建对话框 -->
-<%--                    <el-dialog title="创建新的用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"--%>
-<%--                               @submit.native.prevent>--%>
-<%--                        <!-- 内容主体区域 -->--%>
-<%--                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">--%>
-<%--                            <el-form-item label="标题" prop="title">--%>
-<%--                                <el-input v-model="addForm.title" @keyup.enter.native="createAnn"></el-input>--%>
-<%--                            </el-form-item>--%>
-<%--                            <el-form-item label="内容" prop="content">--%>
-<%--                                <el-input v-model="addForm.content" type="textarea" :rows="8"></el-input>--%>
-<%--                            </el-form-item>--%>
-<%--                        </el-form>--%>
-<%--                        <!-- 底部区域 -->--%>
-<%--                        <span slot="footer" class="dialog-footer">--%>
-<%--                            <el-button @click="addDialogVisible = false">取 消</el-button>--%>
-<%--                            <el-button type="primary" @click="createAnn">确 定</el-button>--%>
-<%--                          </span>--%>
-<%--                    </el-dialog>--%>
+                    <el-dialog title="新建员工" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
+                               @submit.native.prevent>
+                        <!-- 内容主体区域 -->
+                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
+                            <el-form-item label="姓名" prop="name">
+                                <el-input v-model="addForm.name"></el-input>
+                            </el-form-item>
+                            <el-form-item label="登录名" prop="username">
+                                <el-input v-model="addForm.username"></el-input>
+                            </el-form-item>
+                            <el-form-item label="性别" prop="sex">
+                                <template>
+                                    <el-select v-model="sexValue" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in sexOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-form-item>
+                            <el-form-item label="年龄" prop="age">
+                                <el-input v-model="addForm.age"></el-input>
+                            </el-form-item>
+                            <el-form-item label="类型" prop="type">
+                                <template>
+                                    <el-select v-model="typeValue" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in typeOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-form-item>
+                            <el-form-item label="手机" prop="phone">
+                                <el-input v-model="addForm.phone"></el-input>
+                            </el-form-item>
+                            <el-form-item label="邮箱" prop="email">
+                                <el-input v-model="addForm.email"></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <!-- 底部区域 -->
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="addDialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="addStaff">确 定</el-button>
+                          </span>
+                    </el-dialog>
 
                     <!-- 修改对话框 -->
 <%--                    <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"--%>
@@ -124,42 +158,119 @@
 <script>
     new Vue({
         el: '#app',
-        data: {
-            loading:true,
-            queryInfo: {
-                page: 1,
-                pre: 5,
-                key:""
-            },
-            staffList:[],
-            total: 0,
-            addDialogVisible: false,
-            addForm: {
-                title:"",
-                content:""
-            },
-            addFormRules: {
-                title: [
-                    { required: true, message: '请输入标题', trigger: 'blur' }
-                ],
-                content: [
-                    { required: true, message: '请输入内容', trigger: 'blur' },
-                ]
-            },
-            editDialogVisible: false,
-            editForm: {
-                id:0,
-                title:"",
-                content:""
-            },
-            editFormRules: {
-                title: [
-                    { required: true, message: '请输入标题', trigger: 'blur' }
-                ],
-                content: [
-                    { required: true, message: '请输入内容', trigger: 'blur' },
-                ]
-            },
+        data()
+        {
+            isAge = (rule, value, callback) => {
+                let reg=/^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
+                if(value == undefined){
+                    callback([new Error('帐号输入不合法')]);
+                }else{
+                    if (value && value.length > 0) {
+                        if(!reg.test(value)){
+                            callback([new Error('请输入正确的年龄')]);
+                        }else{
+                            callback();
+                        }
+                    } else if(value.length == 0){
+                        callback();
+                    }else {
+                        callback(new Error('请输入正确的年龄'));
+                    }
+                }
+            }
+            return{
+                loading:true,
+                queryInfo: {
+                    page: 1,
+                    pre: 5,
+                    key:""
+                },
+                staffList:[],
+                total: 0,
+                addDialogVisible: false,
+                sexOptions: [{
+                    value: '男',
+                    label: '男'
+                }, {
+                    value: '女',
+                    label: '女'
+                }],
+                sexValue:"",
+                typeOptions: [{
+                    value: '员工',
+                    label: '员工'
+                }, {
+                    value: '管理员',
+                    label: '管理员'
+                }],
+                typeValue:"",
+                addForm: {
+                    name:'',
+                    username:'',
+                    sex:'',
+                    age:'',
+                    type:'',
+                    phone:'',
+                    email:''
+                },
+                addFormRules: {
+                    name: [
+                        { required: true, message: '请输入姓名', trigger: 'blur' }
+                    ],
+                    username: [
+                        { required: true, message: '请输入登录名', trigger: 'blur' }
+                    ],
+                    age: [
+                        { required: true, message: '请输入年龄', trigger: 'blur' }
+                    ],
+                    phone: [
+                        {
+                            validator: function(rule, value, callback) {
+                                if (/^1[34578]\d{9}$/.test(value) == false) {
+                                    callback(new Error("请输入正确的手机号"));
+                                } else {
+                                    callback();
+                                }
+                            },
+                            trigger: "blur"
+                        }
+                    ],
+                    email: [
+                        {
+                            validator: function(rule, value, callback) {
+                                if (
+                                    /^\w{1,64}@[a-z0-9\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(
+                                        value
+                                    ) == false
+                                ) {
+                                    callback(new Error("请输入正确的邮箱"));
+                                } else {
+                                    callback();
+                                }
+                            },
+                            trigger: "blur"
+                        }],
+                    age: [
+                        { required: true, message: '请输入正确的年龄', trigger: 'blur' },
+                        { validator: isAge, trigger: 'blur'}
+                    ],
+                },
+                editDialogVisible: false,
+                editForm: {
+                    id:0,
+                    title:"",
+                    content:""
+                },
+                editFormRules: {
+                    title: [
+                        { required: true, message: '请输入标题', trigger: 'blur' }
+                    ],
+                    content: [
+                        { required: true, message: '请输入内容', trigger: 'blur' },
+                    ]
+                },
+            }
+
         }
         ,
         created() {
@@ -175,7 +286,7 @@
             },
             async getStaffList() {
                 this.loading = true;
-                let url = "http://localhost:8080/getStaffList";
+                let url =  'getStaffList';
                 axios.get(url, {
                     params: this.queryInfo
                 }).then(res => {
@@ -190,78 +301,57 @@
                     console.log(err);
                 })
             },
-            // 监听 pagesize 改变的事件
             handleSizeChange(newSize) {
-                // console.log(newSize)
                 this.queryInfo.pre = newSize
                 this.getStaffList()
             },
-            // 监听 页码值 改变的事件
             handleCurrentChange(newPage) {
-                // console.log(newPage)
                 this.queryInfo.page = newPage
                 this.getStaffList()
             },
-            // 监听 switch 开关状态的改变
-            async changeAnnVisible(id) {
+            addDialogOpen()
+            {
+                this.addDialogVisible = true
+                this.sexValue = "男"
+                this.typeValue = "员工"
+            },
+            addDialogClosed() {
+                this.sexValue = ""
+                this.typeValue = ""
+                this.$refs.addFormRef.resetFields()
+                this.addDialogVisible = false
+            },
+            addStaff() {
+                // 预验证
+                this.$refs.addFormRef.validate(async valid => {
+                    if (!valid) return
+                    let url = "/addStaff";
 
-                let result =  this.$axios({
-                    method: 'put',
-                    url: '/changeAnnVisibleById',
-                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                    data: qs.stringify({
-                        id:id,
-                        token: window.localStorage.getItem("token")
+                    let result =  axios({
+                        method: 'post',
+                        url: 'addStaff',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: Qs.stringify({
+                            name:this.addForm.name,
+                            username:this.addForm.username,
+                            age:this.addForm.age,
+                            phone:this.addForm.phone,
+                            email:this.addForm.email,
+                            type:this.typeValue,
+                            sex:this.sexValue
+                        })
+                    });
+                    result.then(res=>{
+                        if(res.data.error === "0")
+                        {
+                            this.getStaffList()
+                            this.addDialogClosed()
+                            this.$message.success("success")
+                        }
                     })
-                });
-                result.then(res=>{
-                    var error = res.data.error;
-                    if(error === '0')
-                    {
-                        this.$message.success('更改可用性成功')
-                    }
-                    else
-                        this.$message.warning('越权操作')
-                    this.getStaffList()
                 })
             },
-            // 监听添加用户对话框的关闭事件 重置表单
-            addDialogClosed() {
-                this.$refs.addFormRef.resetFields()
-            },
-            // 点击按钮，创建新公告
-            createAnn() {
-                //预验证
-                // this.$refs.addFormRef.validate(async valid => {
-                //     //未通过则return
-                //     if (!valid) return
-                //     //通过
-                //     let result =  this.$axios({
-                //         method: 'post',
-                //         url: '/createAnn',
-                //         headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                //         data: qs.stringify({
-                //             title:this.addForm.title,
-                //             content:this.addForm.content,
-                //             token:window.localStorage.getItem("token")
-                //         })
-                //     });
-                //     result.then(res=>{
-                //         var error = res.data.error;
-                //         if(error === '0')
-                //         {
-                //             this.$message.success('创建公告成功')
-                //             this.$refs.addFormRef.resetFields()
-                //             this.addDialogVisible = false
-                //         }
-                //         else
-                //             this.$message.warning('创建公告失败')
-                //         this.getStaffList()
-                //
-                //     })
-                // })
-            },
-            // 展示编辑公告对话框
+            // 展示编辑对话框
             async editAnn(id) {
                 this.editForm.id = id
                 this.editDialogVisible = true
