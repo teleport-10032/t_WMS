@@ -7,19 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class user {
+public class staff {
     int id;
     String username;
-    String passwd;
-    String avatar;
+    String password;
+    String name;
+    String sex;
+    int age;
     String type;
+    String phone;
     String email;
-    boolean available;
-    String token;
-    String github;
-    String sign;
-    String site;
-    String attemptList;
-    String solvedList;
-    int solvedNum;
 }

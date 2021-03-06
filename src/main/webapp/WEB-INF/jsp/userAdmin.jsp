@@ -2,13 +2,13 @@
   Created by IntelliJ IDEA.
   User: teleport
   Date: 2021/3/2
-  Time: 15:51
+  Time: 16:37
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>用户管理</title>
+    <title>原料与产品信息管理</title>
     <script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
@@ -30,8 +30,8 @@
                         <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getAnnList"
-                                          @keyup.enter.native="getAnnList">
+                                <el-input placeholder="查找用户名或姓名" v-model="queryInfo.key" clearable @clear="getStaffList"
+                                          @keyup.enter.native="getStaffList">
                                     <el-button slot="append" icon="el-icon-search"></el-button>
                                 </el-input>
                             </el-col>
@@ -40,33 +40,28 @@
                             </el-col>
                         </el-row>
                         <br>
-                        <!-- 列表区域 stripe 斑马-->
-                        <el-table :data="userlist" border stripe v-loading="loading"
+                        <%--                        id,username,name,sex,age,type--%>
+                        <el-table :data="staffList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
-                            <!--                索引列-->
-                            <el-table-column label="ID" prop="id" min-width="10%"></el-table-column>
-                            <el-table-column label="标题" prop="title" min-width="10%"></el-table-column>
-                            <el-table-column label="创建时间" prop="date" min-width="20%"></el-table-column>
-                            <el-table-column label="可见性" width="70px">
-                                <template slot-scope="scope">
-                                    <el-switch v-model="scope.row.visible" @change="changeAnnVisible(scope.row.id)">
-                                    </el-switch>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="作者" prop="authorName" min-width="20%"></el-table-column>
+                            <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
+                            <el-table-column label="姓名" prop="name" min-width="10%"></el-table-column>
+                            <el-table-column label="登录名" prop="username" min-width="10%"></el-table-column>
+                            <el-table-column label="性别" prop="sex" min-width="5%"></el-table-column>
+                            <el-table-column label="年龄" prop="age" min-width="5%"></el-table-column>
+                            <el-table-column label="类型" prop="type" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="125px">
                                 <template slot-scope="scope">
-                                    <!-- 编辑按钮 -->
-                                    <!--enterable=false表示鼠标进入tooltip区域自动隐藏-->
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
                                         <el-button type="primary" icon="el-icon-edit" size="mini"
-                                                   @click="editAnn(scope.row.id)"></el-button>
+<%--                                                   @click="editAnn(scope.row.id)"--%>
+                                        ></el-button>
                                     </el-tooltip>
                                     <!-- 删除按钮 -->
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
-                                                   @click="removeAnnById(scope.row.id)"></el-button>
+<%--                                                   @click="removeAnnById(scope.row.id)"--%>
+                                        ></el-button>
                                     </el-tooltip>
                                 </template>
                             </el-table-column>
@@ -79,47 +74,47 @@
                                        layout="total, sizes, prev, pager, next, jumper" :total="total">
                         </el-pagination>
                     </el-card>
-                    <!-- 创建的对话框 -->
-                    <el-dialog title="创建公告" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
-                               @submit.native.prevent>
-                        <!-- 内容主体区域 -->
-                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
-                            <el-form-item label="标题" prop="title">
-                                <el-input v-model="addForm.title" @keyup.enter.native="createAnn"></el-input>
-                            </el-form-item>
-                            <el-form-item label="内容" prop="content">
-                                <el-input v-model="addForm.content" type="textarea" :rows="8"></el-input>
-                            </el-form-item>
-                        </el-form>
-                        <!-- 底部区域 -->
-                        <span slot="footer" class="dialog-footer">
-                            <el-button @click="addDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="createAnn">确 定</el-button>
-                          </span>
-                    </el-dialog>
+                    <!-- 创建对话框 -->
+<%--                    <el-dialog title="创建新的用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"--%>
+<%--                               @submit.native.prevent>--%>
+<%--                        <!-- 内容主体区域 -->--%>
+<%--                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">--%>
+<%--                            <el-form-item label="标题" prop="title">--%>
+<%--                                <el-input v-model="addForm.title" @keyup.enter.native="createAnn"></el-input>--%>
+<%--                            </el-form-item>--%>
+<%--                            <el-form-item label="内容" prop="content">--%>
+<%--                                <el-input v-model="addForm.content" type="textarea" :rows="8"></el-input>--%>
+<%--                            </el-form-item>--%>
+<%--                        </el-form>--%>
+<%--                        <!-- 底部区域 -->--%>
+<%--                        <span slot="footer" class="dialog-footer">--%>
+<%--                            <el-button @click="addDialogVisible = false">取 消</el-button>--%>
+<%--                            <el-button type="primary" @click="createAnn">确 定</el-button>--%>
+<%--                          </span>--%>
+<%--                    </el-dialog>--%>
 
-                    <!-- 修改公告的对话框 -->
-                    <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
-                               @submit.native.prevent>
-                        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
-                            <el-form-item label="id" prop="id">
-                                <el-input v-model="editForm.id" disabled></el-input>
-                            </el-form-item>
-                            <el-form-item label="标题" prop="title">
-                                <el-input v-model="editForm.title"
-                                          @keyup.enter.native="editAnnSubmit"></el-input>
-                            </el-form-item>
-                            <el-form-item label="内容" prop="content">
-                                <el-input v-model="editForm.content"
-                                          type="textarea" :rows="8">
-                                </el-input>
-                            </el-form-item>
-                        </el-form>
-                        <span slot="footer" class="dialog-footer">
-                            <el-button @click="editDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="editAnnSubmit">确 定</el-button>
-                        </span>
-                    </el-dialog>
+                    <!-- 修改对话框 -->
+<%--                    <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"--%>
+<%--                               @submit.native.prevent>--%>
+<%--                        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">--%>
+<%--                            <el-form-item label="id" prop="id">--%>
+<%--                                <el-input v-model="editForm.id" disabled></el-input>--%>
+<%--                            </el-form-item>--%>
+<%--                            <el-form-item label="标题" prop="title">--%>
+<%--                                <el-input v-model="editForm.title"--%>
+<%--                                          @keyup.enter.native="editAnnSubmit"></el-input>--%>
+<%--                            </el-form-item>--%>
+<%--                            <el-form-item label="内容" prop="content">--%>
+<%--                                <el-input v-model="editForm.content"--%>
+<%--                                          type="textarea" :rows="8">--%>
+<%--                                </el-input>--%>
+<%--                            </el-form-item>--%>
+<%--                        </el-form>--%>
+<%--                        <span slot="footer" class="dialog-footer">--%>
+<%--                            <el-button @click="editDialogVisible = false">取 消</el-button>--%>
+<%--                            <el-button type="primary" @click="editAnnSubmit">确 定</el-button>--%>
+<%--                        </span>--%>
+<%--                    </el-dialog>--%>
                 </div>
             </el-main>
         </el-container>
@@ -131,38 +126,18 @@
         el: '#app',
         data: {
             loading:true,
-            // 获取用户列表的参数对象
             queryInfo: {
-                // 当前的页数
                 page: 1,
-                // 当前每页显示多少条数据
                 pre: 5,
-                token: "",
                 key:""
             },
-            userlist:[
-                {id:1,title:"title1",date:"2020-1-4",visible:true,authorName:"user1"},
-                {id:2,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                {id:3,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                {id:4,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                {id:5,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:6,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:7,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:8,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:9,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:10,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:11,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"},
-                // {id:12,title:"title2",date:"2020-1-4",visible:false,authorName:"user2"}
-            ],
-            total: 12,
-            // 控制添加用户对话框的显示与隐藏
+            staffList:[],
+            total: 0,
             addDialogVisible: false,
-            // 添加用户的表单数据
             addForm: {
                 title:"",
                 content:""
             },
-            // 添加表单的验证规则对象
             addFormRules: {
                 title: [
                     { required: true, message: '请输入标题', trigger: 'blur' }
@@ -171,16 +146,12 @@
                     { required: true, message: '请输入内容', trigger: 'blur' },
                 ]
             },
-            // 控制修改用户对话框的显示与隐藏
             editDialogVisible: false,
-            // 下面是编辑用户
-            // 查询到的用户信息对象
             editForm: {
                 id:0,
                 title:"",
                 content:""
             },
-            // 修改表单的验证规则对象
             editFormRules: {
                 title: [
                     { required: true, message: '请输入标题', trigger: 'blur' }
@@ -189,51 +160,47 @@
                     { required: true, message: '请输入内容', trigger: 'blur' },
                 ]
             },
-            // 控制分配角色对话框的显示与隐藏
-            editAnnDialogVisible: false
         }
         ,
         created() {
-            this.getAnnList()
+            this.getStaffList()
             this.init()
         },
         methods: {
             init()
             {
                 <%@ include file="public/setHeight.jsp" %>
-                document.getElementById("userAdmin").style.color = "#409EFF";
-                document.getElementById("userAdminIco").style.color = "#409EFF";
+                document.getElementById("staffAdmin").style.color = "#409EFF";
+                document.getElementById("staffAdminIco").style.color = "#409EFF"
             },
-            async getHello() {
-                let url = "http://localhost:8080/hello";
-                let params = {
-                    id: "{*}测试"
-                }
+            async getStaffList() {
+                this.loading = true;
+                let url = "http://localhost:8080/getStaffList";
                 axios.get(url, {
-                    params: {
-                        id: "111"
-                    }
+                    params: this.queryInfo
                 }).then(res => {
-                    this.info = res.data;
-                    this.$message.success("success")
+                    if(res.data.error === "0")
+                    {
+                        this.loading = false;
+                        this.staffList = res.data.data;
+                        this.total = res.data.total;
+                        // this.$message.success("success")
+                    }
                 }).catch(err => {
                     console.log(err);
                 })
-            },
-            async getAnnList() {
-                this.loading = false;
             },
             // 监听 pagesize 改变的事件
             handleSizeChange(newSize) {
                 // console.log(newSize)
                 this.queryInfo.pre = newSize
-                this.getAnnList()
+                this.getStaffList()
             },
             // 监听 页码值 改变的事件
             handleCurrentChange(newPage) {
                 // console.log(newPage)
                 this.queryInfo.page = newPage
-                this.getAnnList()
+                this.getStaffList()
             },
             // 监听 switch 开关状态的改变
             async changeAnnVisible(id) {
@@ -255,7 +222,7 @@
                     }
                     else
                         this.$message.warning('越权操作')
-                    this.getAnnList()
+                    this.getStaffList()
                 })
             },
             // 监听添加用户对话框的关闭事件 重置表单
@@ -289,7 +256,7 @@
                 //         }
                 //         else
                 //             this.$message.warning('创建公告失败')
-                //         this.getAnnList()
+                //         this.getStaffList()
                 //
                 //     })
                 // })
@@ -337,7 +304,7 @@
                 //         }
                 //         else
                 //             this.$message.warning('修改失败')
-                //         this.getAnnList()
+                //         this.getStaffList()
                 //     })
                 // })
             },
@@ -367,7 +334,7 @@
                 //     return this.$message.error('删除公告失败！')
                 // }
                 // this.$message.success('删除公告成功！')
-                // this.getAnnList()
+                // this.getStaffList()
             }
         }
     })

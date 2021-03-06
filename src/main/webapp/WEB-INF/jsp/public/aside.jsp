@@ -3,8 +3,8 @@
     <el-menu background-color="#333744"
              text-color="#fff"  class="el-menu-vertical-demo">
         <el-menu-item index="1" style="width: 220px">
-            <i class="el-icon-user-solid"  id="userAdminIco"></i>
-            <span slot="title"  id="userAdmin">用户管理</span>
+            <i class="el-icon-user-solid"  id="staffAdminIco"></i>
+            <span slot="title"  id="staffAdmin">员工管理</span>
         </el-menu-item>
         <el-menu-item index="2" style="width: 220px">
             <i class="el-icon-s-goods" id="goodsAdminIco"></i>

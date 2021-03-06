@@ -1,13 +1,11 @@
-package com.example.t_wms.Controller;
+package com.example.t_wms.controller;
 
-import com.example.t_wms.pojo.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class PageController {
-
+public class pageController {
     @RequestMapping("/bootflatTest")
     public String bootflatTest()
     {
@@ -41,15 +39,15 @@ public class PageController {
     @RequestMapping("/index2")
     public String index2(Model model)
     {
-        user userObject = new user();
-        userObject.setId(1);
-        userObject.setUsername("root");
-        model.addAttribute("user", userObject);
+//        user userObject = new user();
+//        userObject.setId(1);
+//        userObject.setUsername("root");
+//        model.addAttribute("user", userObject);
         return "index2";
     }
     @RequestMapping("/")
     public String index() {
-        return "index";
+        return "userAdmin";
     }
     @RequestMapping("/test")
     public String test() {
