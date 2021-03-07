@@ -30,13 +30,13 @@
                         <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="查找用户名或姓名" v-model="queryInfo.key" clearable @clear="getStaffList"
+                                <el-input placeholder="查找登录名或姓名" v-model="queryInfo.key" clearable @clear="getStaffList"
                                           @keyup.enter.native="getStaffList">
                                     <el-button slot="append" icon="el-icon-search"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col :span="4">
-                                <el-button type="primary" @click="addDialogOpen">新建员工</el-button>
+                                <el-button type="primary" @click="addDialogOpen">新建员工信息</el-button>
                             </el-col>
                         </el-row>
                         <br>
@@ -47,20 +47,32 @@
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
                             <el-table-column label="姓名" prop="name" min-width="10%"></el-table-column>
                             <el-table-column label="登录名" prop="username" min-width="10%"></el-table-column>
-                            <el-table-column label="性别" prop="sex" min-width="5%"></el-table-column>
-                            <el-table-column label="年龄" prop="age" min-width="5%"></el-table-column>
-                            <el-table-column label="类型" prop="type" min-width="5%"></el-table-column>
+                            <el-table-column label="性别" prop="sex" min-width="3%"></el-table-column>
+                            <el-table-column label="年龄" prop="age" min-width="3%"></el-table-column>
+                            <el-table-column label="类型" prop="type" min-width="5%">
+                                <template slot-scope= "scope">
+                                    <div v-if="scope.row.type==='管理员'">
+                                        <el-tag type="success" effect="light" size="mini">
+                                            管理员
+                                        </el-tag>
+                                    </div>
+                                    <div v-else>
+                                        <el-tag effect="light" size="mini">
+                                            用户
+                                        </el-tag>
+                                    </div>
+                                </template>
+                            </el-table-column>
                             <el-table-column label="操作" width="125px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
                                         <el-button type="primary" icon="el-icon-edit" size="mini"
-<%--                                                   @click="editAnn(scope.row.id)"--%>
-                                        ></el-button>
+                                                   @click="editStaff(scope.row.id)"></el-button>
                                     </el-tooltip>
                                     <!-- 删除按钮 -->
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
-<%--                                                   @click="removeAnnById(scope.row.id)"--%>
+                                                   @click="deleteStaffById(scope.row.id)"
                                         ></el-button>
                                     </el-tooltip>
                                 </template>
@@ -128,27 +140,57 @@
                     </el-dialog>
 
                     <!-- 修改对话框 -->
-<%--                    <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"--%>
-<%--                               @submit.native.prevent>--%>
-<%--                        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">--%>
-<%--                            <el-form-item label="id" prop="id">--%>
-<%--                                <el-input v-model="editForm.id" disabled></el-input>--%>
-<%--                            </el-form-item>--%>
-<%--                            <el-form-item label="标题" prop="title">--%>
-<%--                                <el-input v-model="editForm.title"--%>
-<%--                                          @keyup.enter.native="editAnnSubmit"></el-input>--%>
-<%--                            </el-form-item>--%>
-<%--                            <el-form-item label="内容" prop="content">--%>
-<%--                                <el-input v-model="editForm.content"--%>
-<%--                                          type="textarea" :rows="8">--%>
-<%--                                </el-input>--%>
-<%--                            </el-form-item>--%>
-<%--                        </el-form>--%>
-<%--                        <span slot="footer" class="dialog-footer">--%>
-<%--                            <el-button @click="editDialogVisible = false">取 消</el-button>--%>
-<%--                            <el-button type="primary" @click="editAnnSubmit">确 定</el-button>--%>
-<%--                        </span>--%>
-<%--                    </el-dialog>--%>
+                    <el-dialog title="编辑员工信息" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
+                               @submit.native.prevent>
+                        <el-form :model="editForm" :rules="addFormRules"  ref="editFormRef" label-width="70px">
+                            <el-form-item label="id" prop="id">
+                                <el-input v-model="editForm.id" disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="姓名" prop="name">
+                                <el-input v-model="editForm.name"></el-input>
+                            </el-form-item>
+                            <el-form-item label="登录名" prop="username">
+                                <el-input v-model="editForm.username"></el-input>
+                            </el-form-item>
+                            <el-form-item label="性别" prop="sex">
+                                <template>
+                                    <el-select v-model="sexValue" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in sexOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-form-item>
+                            <el-form-item label="年龄" prop="age">
+                                <el-input v-model="editForm.age"></el-input>
+                            </el-form-item>
+                            <el-form-item label="类型" prop="type">
+                                <template>
+                                    <el-select v-model="typeValue" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in typeOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-form-item>
+                            <el-form-item label="手机" prop="phone">
+                                <el-input v-model="editForm.phone"></el-input>
+                            </el-form-item>
+                            <el-form-item label="邮箱" prop="email">
+                                <el-input v-model="editForm.email"></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="editDialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="editStaffSubmit">确 定</el-button>
+                        </span>
+                    </el-dialog>
                 </div>
             </el-main>
         </el-container>
@@ -160,24 +202,6 @@
         el: '#app',
         data()
         {
-            isAge = (rule, value, callback) => {
-                let reg=/^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
-                if(value == undefined){
-                    callback([new Error('帐号输入不合法')]);
-                }else{
-                    if (value && value.length > 0) {
-                        if(!reg.test(value)){
-                            callback([new Error('请输入正确的年龄')]);
-                        }else{
-                            callback();
-                        }
-                    } else if(value.length == 0){
-                        callback();
-                    }else {
-                        callback(new Error('请输入正确的年龄'));
-                    }
-                }
-            }
             return{
                 loading:true,
                 queryInfo: {
@@ -220,13 +244,10 @@
                     username: [
                         { required: true, message: '请输入登录名', trigger: 'blur' }
                     ],
-                    age: [
-                        { required: true, message: '请输入年龄', trigger: 'blur' }
-                    ],
                     phone: [
                         {
                             validator: function(rule, value, callback) {
-                                if (/^1[34578]\d{9}$/.test(value) == false) {
+                                if (/^1[34578]\d{9}$/.test(value) == false && value != '') {
                                     callback(new Error("请输入正确的手机号"));
                                 } else {
                                     callback();
@@ -241,7 +262,7 @@
                                 if (
                                     /^\w{1,64}@[a-z0-9\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(
                                         value
-                                    ) == false
+                                    ) == false  && value != ''
                                 ) {
                                     callback(new Error("请输入正确的邮箱"));
                                 } else {
@@ -252,23 +273,33 @@
                         }],
                     age: [
                         { required: true, message: '请输入正确的年龄', trigger: 'blur' },
-                        { validator: isAge, trigger: 'blur'}
+                        {
+                            validator: function(rule, value, callback) {
+                                if (
+                                    /^(?:[1-9][0-9]?|1[01][0-9]|120)$/.test(
+                                        value
+                                    ) == false  && value != ''
+                                ) {
+                                    callback(new Error("请输入正确的年龄"));
+                                } else {
+                                    callback();
+                                }
+                            },
+                            trigger: "blur"
+                        }
                     ],
                 },
                 editDialogVisible: false,
                 editForm: {
-                    id:0,
-                    title:"",
-                    content:""
-                },
-                editFormRules: {
-                    title: [
-                        { required: true, message: '请输入标题', trigger: 'blur' }
-                    ],
-                    content: [
-                        { required: true, message: '请输入内容', trigger: 'blur' },
-                    ]
-                },
+                    id:'',
+                    name:'',
+                    username:'',
+                    sex:'',
+                    age:'',
+                    type:'',
+                    phone:'',
+                    email:''
+                }
             }
 
         }
@@ -297,6 +328,10 @@
                         this.total = res.data.total;
                         // this.$message.success("success")
                     }
+                    else
+                    {
+                        return this.$message.error('获取数据失败！')
+                    }
                 }).catch(err => {
                     console.log(err);
                 })
@@ -322,11 +357,8 @@
                 this.addDialogVisible = false
             },
             addStaff() {
-                // 预验证
                 this.$refs.addFormRef.validate(async valid => {
                     if (!valid) return
-                    let url = "/addStaff";
-
                     let result =  axios({
                         method: 'post',
                         url: 'addStaff',
@@ -352,79 +384,88 @@
                 })
             },
             // 展示编辑对话框
-            async editAnn(id) {
+            async editStaff(id){
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // console.log(id)
-                // const { data: res } = await this.$http.get('/getAnnDetailByIdAdmin'
-                //     ,{params:{id:id,token:window.localStorage.getItem("token")}})
-                // if (res.error !== "0") {
-                //     return this.$message.error('获取数据失败！')
-                // }
-                // this.editForm.title = res.data.title
-                // this.editForm.content = res.data.content
-                this.editAnnDialogVisible = true
+                const { data: res } = await axios.get('/getStaffInfoById'
+                    ,{params:{id:id}})
+                if (res.error !== "0") {
+                    return this.$message.error('获取数据失败！')
+                }
+                this.editForm.id = id;
+                this.editForm.name = res.data.name
+                this.editForm.username = res.data.username
+                this.editForm.age = res.data.age
+                this.sexValue = res.data.sex
+                this.typeValue = res.data.type
+                this.editForm.phone =res.data.phone
+                this.editForm.email = res.data.email
+                this.editStaffDialogVisible = true
             },
             // 监听修改对话框的关闭事件
             editDialogClosed() {
-                this.editForm.passwd = ""
+                this.sexValue = ""
+                this.typeValue = ""
+                this.$refs.editFormRef.resetFields()
+                this.editDialogVisible = false
             },
             // 修改信息并提交
-            editAnnSubmit() {
-                // this.$refs.editFormRef.validate(async valid => {
-                //     if (!valid) return
-                //
-                //     let result =  this.$axios({
-                //         method: 'put',
-                //         url: '/updateAnn',
-                //         headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                //         data: qs.stringify({
-                //             token:window.localStorage.getItem("token"),
-                //             id:this.editForm.id,
-                //             title:this.editForm.title,
-                //             content:this.editForm.content
-                //         })
-                //     });
-                //     result.then(res=>{
-                //         var error = res.data.error;
-                //         if(error === '0')
-                //         {
-                //             this.$message.success('修改成功')
-                //             this.editDialogVisible = false
-                //         }
-                //         else
-                //             this.$message.warning('修改失败')
-                //         this.getStaffList()
-                //     })
-                // })
+            editStaffSubmit() {
+                this.$refs.editFormRef.validate(async valid => {
+                    if (!valid) return
+                    let result =  axios({
+                        method: 'put',
+                        url: 'updateStaffById',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: Qs.stringify({
+                            name:this.editForm.name,
+                            sex:this.sexValue,
+                            age:this.editForm.age,
+                            phone:this.editForm.phone,
+                            email:this.editForm.email,
+                            type:this.typeValue,
+                            username:this.editForm.username,
+                            id:this.editForm.id
+                        })
+                    });
+                    result.then(res=>{
+                        if(res.data.error === "0")
+                        {
+                            this.getStaffList()
+                            this.editDialogClosed()
+                            this.$message.success("success")
+                        }
+                    })
+                })
             },
-            // 根据Id删除公告
-            async removeAnnById(id) {
-                // const confirmResult = await this.$confirm(
-                //     '此操作将永久删除该公告, 是否继续?',
-                //     '提示',
-                //     {
-                //         confirmButtonText: '确定',
-                //         cancelButtonText: '取消',
-                //         type: 'warning'
-                //     }
-                // ).catch(err => err)
-                // if (confirmResult !== 'confirm') {
-                //     return this.$message.info('已取消删除')
-                // }
-                //
-                // const {data: res} = await this.$http.delete('deleteAnnById',
-                //     {
-                //         params: {
-                //             id: id,
-                //             token: window.localStorage.getItem("token")
-                //         }
-                //     })
-                // if (res.error !== "0") {
-                //     return this.$message.error('删除公告失败！')
-                // }
-                // this.$message.success('删除公告成功！')
-                // this.getStaffList()
+            // 根据Id删除
+            async deleteStaffById(id) {
+                const confirmResult = await this.$confirm(
+                    '此操作将永久删除该员工, 是否继续?',
+                    '提示',
+                    {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }
+                ).catch(err => err)
+                if (confirmResult !== 'confirm') {
+                    return this.$message.info('已取消删除')
+                }
+
+                const {data: res} = await axios.delete('deleteStaffById',
+                    {
+                        params: {
+                            id: id,
+                            // token: window.localStorage.getItem("token")
+                        }
+                    })
+                if (res.error !== "0") {
+                    return this.$message.error('删除失败！')
+                }
+                this.$message.success('删除员工成功！')
+                await this.getStaffList()
             }
         }
     })

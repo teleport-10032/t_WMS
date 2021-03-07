@@ -43,4 +43,38 @@ public class staffServiceImpl implements staffService {
             s.put("error","1");
         return mapper.writeValueAsString(s);
     }
+
+    @Override
+    public String getStaffInfoById(int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        staff staffObject = staffMapperObject.getStaffInfoById(id);
+        HashMap s = new HashMap();
+        s.put("data", staffObject);
+        s.put("error", "0");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String updateStaffById(String name, String sex, int age, String type, String phone, String email, String username, int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        int re = staffMapperObject.updateStaffById(name,sex,age,type,phone,email,username, id);
+        HashMap s = new HashMap();
+        if(re == 1)
+            s.put("error", "0");
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String deleteStaffById(int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        int re = staffMapperObject.deleteStaffById(id);
+        HashMap s = new HashMap();
+        if(re == 1)
+            s.put("error", "0");
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
+    }
 }

@@ -12,9 +12,18 @@
     <select id="getStaffNum" resultType="int">
         select count(id) from staff;
    </select>
-<!--    String name,String sex,int age,String type,String phone,String email,String username,String password-->
     <insert id="addStaff" parameterType="staff">
         insert into staff (name,sex,age,type,phone,email,username,password)
             values (#{name},#{sex},#{age},#{type},#{phone},#{email},#{username},#{password})
     </insert>
+    <select id="getStaffInfoById" resultType="staff">
+        select name,sex,age,type,phone,email,username from staff where id=#{id}
+    </select>
+    <update id="updateStaffById" parameterType="staff">
+        update staff set name=#{name},sex=#{sex},age=#{age},type=#{type},phone=#{phone},
+                            email=#{email},username=#{username} where id=#{id}
+    </update>
+    <delete id="deleteStaffById" parameterType="int">
+        delete from staff where id=#{id}
+    </delete>
 </mapper>

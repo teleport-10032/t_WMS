@@ -1,6 +1,5 @@
 package com.example.t_wms.controller;
 
-import com.example.t_wms.pojo.staff;
 import com.example.t_wms.service.staffService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,13 @@ public class staffController {
         return "Hello Traveler";
     }
 
-    @GetMapping("/getStaffList")
+    @GetMapping("getStaffList")
     public String getStaffList(@RequestParam("page") int page,@RequestParam("pre") int pre,@RequestParam("key") String key)
             throws JsonProcessingException {
         return staffServiceObject.getStaffList(page,pre,key);
     }
 
-    @RequestMapping("addStaff")
+    @PostMapping("addStaff")
     public String addStaff(@RequestParam("name") String name,@RequestParam("sex") String sex,
                            @RequestParam("age") int age,@RequestParam("type") String type,
                            @RequestParam("phone") String phone,@RequestParam("email") String email,
@@ -32,4 +31,22 @@ public class staffController {
         return staffServiceObject.addStaff(name,sex,age,type,phone,email,username);
     }
 
+    @GetMapping("getStaffInfoById")
+    public String getStaffInfoById(@RequestParam("id") int id) throws JsonProcessingException {
+        return staffServiceObject.getStaffInfoById(id);
+    }
+
+    @PutMapping("updateStaffById")
+    public String updateStaffById(@RequestParam("name") String name,@RequestParam("sex") String sex,
+                           @RequestParam("age") int age,@RequestParam("type") String type,
+                           @RequestParam("phone") String phone,@RequestParam("email") String email,
+                           @RequestParam("username") String username,@RequestParam("id") int id)
+            throws JsonProcessingException {
+        return staffServiceObject.updateStaffById(name,sex,age,type,phone,email,username,id);
+    }
+
+    @DeleteMapping("deleteStaffById")
+    public String deleteStaffById(@RequestParam("id") int id) throws JsonProcessingException {
+        return staffServiceObject.deleteStaffById(id);
+    }
 }

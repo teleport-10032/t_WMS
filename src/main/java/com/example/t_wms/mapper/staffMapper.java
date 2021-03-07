@@ -19,4 +19,13 @@ public interface staffMapper {
                  @Param("age") int age,@Param("type") String type,
                  @Param("phone") String phone,@Param("email") String email,
                  @Param("username") String username,@Param("password") String password);
+    //get staff info
+    staff getStaffInfoById(@Param("id") int id);
+    //update staff by id
+    int updateStaffById(@Param("name") String name,@Param("sex") String sex,
+                        @Param("age") int age,@Param("type") String type,
+                        @Param("phone") String phone,@Param("email") String email,
+                        @Param("username") String username,@Param("id") int id);
+    //delete staff by id
+    int deleteStaffById(@Param("id") int id);
 }
