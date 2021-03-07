@@ -45,18 +45,18 @@ public class pageController {
 //        model.addAttribute("user", userObject);
         return "index2";
     }
-    @RequestMapping("/")
-    public String index() {
-        return "userAdmin";
-    }
+
+
     @RequestMapping("/test")
     public String test() {
         return "test";
+    }
+    @RequestMapping("/")
+    public String index() {
+        return "userAdmin";
     }
     @RequestMapping("userAdmin")
     public String userAdmin(){
         return "userAdmin";
     }
-
-
 }

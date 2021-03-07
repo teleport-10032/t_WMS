@@ -26,4 +26,7 @@
     <delete id="deleteStaffById" parameterType="int">
         delete from staff where id=#{id}
     </delete>
+    <update id="updatePasswordById" parameterType="staff">
+        update staff set password=#{password} where id=#{id}
+    </update>
 </mapper>

@@ -28,4 +28,6 @@ public interface staffMapper {
                         @Param("username") String username,@Param("id") int id);
     //delete staff by id
     int deleteStaffById(@Param("id") int id);
+    //update password by id
+    int updatePasswordById(@Param("id") int id,@Param("password") String password);
 }

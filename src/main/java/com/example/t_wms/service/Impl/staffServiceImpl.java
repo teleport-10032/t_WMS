@@ -77,4 +77,16 @@ public class staffServiceImpl implements staffService {
             s.put("error","1");
         return mapper.writeValueAsString(s);
     }
+
+    @Override
+    public String updatePasswordById(int id, String password) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        int re = staffMapperObject.updatePasswordById(id,password);
+        HashMap s = new HashMap();
+        if(re == 1)
+            s.put("error", "0");
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
+    }
 }

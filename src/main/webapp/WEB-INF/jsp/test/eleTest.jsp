@@ -14,116 +14,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css">
     <script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/md5.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 </head>
 <body>
 
 <div id="app" v-cloak>
-    <el-container>
-        <%@ include file="../public/header.jsp" %>
-        <el-container>
-            <%@ include file="../public/aside.jsp" %>
-            <el-main id="elMain">
-                <div>
-                    <!-- 卡片视图区域 -->
-                    <el-card>
-                        <!-- 搜索与添加区域 -->
-                        <el-row :gutter="20">
-                            <el-col :span="8">
-                                <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getAnnList"
-                                          @keyup.enter.native="getAnnList">
-                                    <el-button slot="append" icon="el-icon-search"></el-button>
-                                </el-input>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-button type="primary" @click="addDialogVisible = true">创建公告</el-button>
-                            </el-col>
-                        </el-row>
-                        <br>
-                        <!-- 列表区域 stripe 斑马-->
-                        <el-table :data="userlist" border stripe v-loading="loading"
-                                  :header-cell-style="{'text-align':'center','font-size':'14px'}"
-                                  :cell-style="{'text-align':'center','font-size':'14px'}">
-                            <!--                索引列-->
-                            <el-table-column label="ID" prop="id" min-width="10%"></el-table-column>
-                            <el-table-column label="标题" prop="title" min-width="10%"></el-table-column>
-                            <el-table-column label="创建时间" prop="date" min-width="20%"></el-table-column>
-                            <el-table-column label="可见性" width="70px">
-                                <template slot-scope="scope">
-                                    <el-switch v-model="scope.row.visible" @change="changeAnnVisible(scope.row.id)">
-                                    </el-switch>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="作者" prop="authorName" min-width="20%"></el-table-column>
-                            <el-table-column label="操作" width="125px">
-                                <template slot-scope="scope">
-                                    <!-- 编辑按钮 -->
-                                    <!--enterable=false表示鼠标进入tooltip区域自动隐藏-->
-                                    <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-                                        <el-button type="primary" icon="el-icon-edit" size="mini"
-                                                   @click="editAnn(scope.row.id)"></el-button>
-                                    </el-tooltip>
-                                    <!-- 删除按钮 -->
-                                    <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-                                        <el-button type="danger" icon="el-icon-delete" size="mini"
-                                                   @click="removeAnnById(scope.row.id)"></el-button>
-                                    </el-tooltip>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <br>
-                        <!-- 分页区域 -->
-                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                                       :current-page="queryInfo.page" :page-sizes="[5, 10]"
-                                       :page-size="queryInfo.pre"
-                                       layout="total, sizes, prev, pager, next, jumper" :total="total">
-                        </el-pagination>
-                    </el-card>
-                    <!-- 创建的对话框 -->
-                    <el-dialog title="创建公告" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
-                               @submit.native.prevent>
-                        <!-- 内容主体区域 -->
-                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
-                            <el-form-item label="标题" prop="title">
-                                <el-input v-model="addForm.title" @keyup.enter.native="createAnn"></el-input>
-                            </el-form-item>
-                            <el-form-item label="内容" prop="content">
-                                <el-input v-model="addForm.content" type="textarea" :rows="8"></el-input>
-                            </el-form-item>
-                        </el-form>
-                        <!-- 底部区域 -->
-                        <span slot="footer" class="dialog-footer">
-                            <el-button @click="addDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="createAnn">确 定</el-button>
-                          </span>
-                    </el-dialog>
 
-                    <!-- 修改公告的对话框 -->
-                    <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
-                               @submit.native.prevent>
-                        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
-                            <el-form-item label="id" prop="id">
-                                <el-input v-model="editForm.id" disabled></el-input>
-                            </el-form-item>
-                            <el-form-item label="标题" prop="title">
-                                <el-input v-model="editForm.title"
-                                          @keyup.enter.native="editAnnSubmit"></el-input>
-                            </el-form-item>
-                            <el-form-item label="内容" prop="content">
-                                <el-input v-model="editForm.content"
-                                          type="textarea" :rows="8">
-                                </el-input>
-                            </el-form-item>
-                        </el-form>
-                        <span slot="footer" class="dialog-footer">
-                            <el-button @click="editDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="editAnnSubmit">确 定</el-button>
-                        </span>
-                    </el-dialog>
-                </div>
-            </el-main>
-        </el-container>
-    </el-container>
 </div>
 <script>
     new Vue({
@@ -193,8 +90,9 @@
         }
         ,
         created() {
-            this.getAnnList()
-            this.init()
+            console.log(md5("111111"))
+            // this.getAnnList()
+            // this.init()
         },
         methods: {
             init()

@@ -49,4 +49,9 @@ public class staffController {
     public String deleteStaffById(@RequestParam("id") int id) throws JsonProcessingException {
         return staffServiceObject.deleteStaffById(id);
     }
+
+    @PutMapping("updatePasswordById")
+    public String updatePasswordById(@RequestParam("id") int id,@RequestParam("password") String password) throws JsonProcessingException {
+        return staffServiceObject.updatePasswordById(id,password);
+    }
 }

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css">
     <script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/md5.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 </head>
 <body>
@@ -63,11 +64,16 @@
                                     </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="操作" width="125px">
+                            <el-table-column label="操作" width="187px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
                                         <el-button type="primary" icon="el-icon-edit" size="mini"
                                                    @click="editStaff(scope.row.id)"></el-button>
+                                    </el-tooltip>
+                                    <el-tooltip effect="dark" content="重置密码" placement="top" :enterable="false">
+                                        <el-button type="warning" icon="el-icon-lock" size="mini"
+                                                   @click="changePasswordDialogVisible=true;
+                                                        changePasswordForm.id = scope.row.id"></el-button>
                                     </el-tooltip>
                                     <!-- 删除按钮 -->
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
@@ -191,6 +197,26 @@
                             <el-button type="primary" @click="editStaffSubmit">确 定</el-button>
                         </span>
                     </el-dialog>
+
+
+                    <!-- 重置密码对话框-->
+                    <el-dialog title="重置密码" :visible.sync="changePasswordDialogVisible" width="500px" @close="changePasswordDialogClosed"
+                               @submit.native.prevent>
+                        <el-form :model="changePasswordForm"   :rules="addFormRules" ref="changePasswordFormRef" label-width="70px">
+                            <el-form-item label="id" prop="id">
+                                <el-input v-model="changePasswordForm.id" disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="密码" prop="password">
+                                <el-input v-model="changePasswordForm.password"></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="changePasswordDialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="changePasswordSubmit">确 定</el-button>
+                        </span>
+                    </el-dialog>
+
+
                 </div>
             </el-main>
         </el-container>
@@ -288,6 +314,22 @@
                             trigger: "blur"
                         }
                     ],
+
+
+                    password: [
+                        { required: true, message: '密码必须是6-20位', trigger: 'blur' },
+                        {
+                            validator: function(rule, value, callback) {
+                                if (
+                                    /^[a-zA-Z0-9_]{6,20}$/.test(value) == false) {
+                                    callback(new Error("密码必须是6-20位"));
+                                } else {
+                                    callback();
+                                }
+                            },
+                            trigger: "blur"
+                        }
+                    ],
                 },
                 editDialogVisible: false,
                 editForm: {
@@ -299,6 +341,11 @@
                     type:'',
                     phone:'',
                     email:''
+                },
+                changePasswordDialogVisible:false,
+                changePasswordForm:{
+                    id:'',
+                    password:''
                 }
             }
 
@@ -434,6 +481,35 @@
                         {
                             this.getStaffList()
                             this.editDialogClosed()
+                            this.$message.success("success")
+                        }
+                    })
+                })
+            },
+            // 修改信息并提交
+            changePasswordDialogClosed()
+            {
+                this.$refs.changePasswordFormRef.resetFields()
+                this.changePasswordDialogVisible = false
+            },
+            // 重置密码提交
+            changePasswordSubmit(){
+                this.$refs.changePasswordFormRef.validate(async valid => {
+                    if (!valid) return
+                    // console.log("success")
+                    let result =  axios({
+                        method: 'put',
+                        url: 'updatePasswordById',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: Qs.stringify({
+                            id:this.changePasswordForm.id,
+                            password:md5(this.changePasswordForm.password)
+                        })
+                    });
+                    result.then(res=>{
+                        if(res.data.error === "0")
+                        {
+                            this.changePasswordDialogClosed()
                             this.$message.success("success")
                         }
                     })
