@@ -1,0 +1,25 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+jumpToStaffAdmin()
+{
+    window.location.href="/staffAdmin";
+},
+jumpToGoodsAdmin()
+{
+    window.location.href="/goodsAdmin";
+},
+jumpToInAdmin()
+{
+    window.location.href="/inAdmin";
+}
+jumpToOutAdmin()
+{
+    window.location.href="/outAdmin";
+}
+jumpToInventoryAdmin()
+{
+    window.location.href="/inventoryAdmin";
+}
+jumpToCrmAdmin()
+{
+    window.location.href="/crmAdmin";
+}

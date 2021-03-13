@@ -314,8 +314,6 @@
                             trigger: "blur"
                         }
                     ],
-
-
                     password: [
                         { required: true, message: '密码必须是6-20位', trigger: 'blur' },
                         {
@@ -362,6 +360,7 @@
                 document.getElementById("staffAdmin").style.color = "#409EFF";
                 document.getElementById("staffAdminIco").style.color = "#409EFF"
             },
+            <%@ include file="public/setJump.jsp" %>
             async getStaffList() {
                 this.loading = true;
                 let url =  'getStaffList';

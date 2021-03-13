@@ -47,16 +47,32 @@ public class pageController {
     }
 
 
-    @RequestMapping("/test")
-    public String test() {
-        return "test";
-    }
     @RequestMapping("/")
     public String index() {
-        return "userAdmin";
+        return "staffAdmin";
     }
-    @RequestMapping("userAdmin")
-    public String userAdmin(){
-        return "userAdmin";
+    @RequestMapping("staffAdmin")
+    public String staffAdmin(){
+        return "staffAdmin";
+    }
+    @RequestMapping("goodsAdmin")
+    public String goodsAdmin(){
+        return "goodsAdmin";
+    }
+    @RequestMapping("inAdmin")
+    public String inAdmin(){
+        return "inAdmin";
+    }
+    @RequestMapping("outAdmin")
+    public String outAdmin(){
+        return "outAdmin";
+    }
+    @RequestMapping("inventoryAdmin")
+    public String inventoryAdmin() {
+        return "outAdmin";
+    }
+    @RequestMapping("outAdmin")
+    public String outAdmin(){
+        return "outAdmin";
     }
 }
