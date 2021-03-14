@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>原料与产品信息管理</title>
+    <title>员工信息管理</title>
     <script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">

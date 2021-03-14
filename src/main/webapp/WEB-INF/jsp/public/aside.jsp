@@ -4,7 +4,7 @@
              text-color="#fff"  class="el-menu-vertical-demo">
         <el-menu-item index="1" style="width: 220px" @Click="jumpToStaffAdmin">
             <i class="el-icon-user-solid"  id="staffAdminIco"></i>
-            <span slot="title"  id="staffAdmin">员工管理</span>
+            <span slot="title"  id="staffAdmin">员工信息管理</span>
         </el-menu-item>
         <el-menu-item index="2" style="width: 220px" @Click="jumpToGoodsAdmin">
             <i class="el-icon-s-goods" id="goodsAdminIco"></i>

@@ -69,10 +69,10 @@ public class pageController {
     }
     @RequestMapping("inventoryAdmin")
     public String inventoryAdmin() {
-        return "outAdmin";
+        return "inventoryAdmin";
     }
-    @RequestMapping("outAdmin")
-    public String outAdmin(){
-        return "outAdmin";
+    @RequestMapping("crmAdmin")
+    public String crmAdmin() {
+        return "crmAdmin";
     }
 }
