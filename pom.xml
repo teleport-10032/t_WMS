@@ -15,7 +15,7 @@
     <name>t_wms</name>
     <description>t_WMS Project</description>
     <properties>
-        <java.version>15</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.0</version>
         </dependency>
 
         <dependency>
