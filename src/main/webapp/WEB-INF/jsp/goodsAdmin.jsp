@@ -31,13 +31,16 @@
                         <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="查找登录名或姓名" v-model="queryInfo.key" clearable @clear="getStaffList"
+                                <el-input placeholder="查找产品" v-model="queryInfo.key" clearable @clear="getStaffList"
                                           @keyup.enter.native="getStaffList">
                                     <el-button slot="append" icon="el-icon-search"></el-button>
                                 </el-input>
                             </el-col>
+                            <el-col :span="12">
+                                <el-button type="primary" @click="addDialogOpen">添加信息</el-button>
+                            </el-col>
                             <el-col :span="4">
-                                <el-button type="primary" @click="addDialogOpen">新建员工信息</el-button>
+                                <el-button type="primary" @click="addDialogOpen">产品类别管理</el-button>
                             </el-col>
                         </el-row>
                         <br>
@@ -227,6 +230,7 @@
         data()
         {
             return{
+                username:'',
                 loading:true,
                 queryInfo: {
                     page: 1,

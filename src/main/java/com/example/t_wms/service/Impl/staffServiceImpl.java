@@ -163,7 +163,6 @@ public class staffServiceImpl implements staffService {
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token).getType() != null &&
                 !"admin".equals(staffMapperObject.getStaffByToken(token))) {
-
             int re = staffMapperObject.updatePasswordById(id,password);
             if(re == 1)
                 s.put("error", "0");

@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Main
+ Source Server         : test
  Source Server Type    : MySQL
  Source Server Version : 50717
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 15/03/2021 10:55:15
+ Date: 30/03/2021 18:28:23
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `crm` (
   `texNumber` varchar(105) DEFAULT NULL,
   `arrears` double(15,0) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of crm
@@ -60,9 +60,9 @@ CREATE TABLE `in` (
 -- Records of in
 -- ----------------------------
 BEGIN;
-INSERT INTO `in` VALUES (1000, 'in1', '1', 100);
-INSERT INTO `in` VALUES (1001, 'in2', '2', 121);
-INSERT INTO `in` VALUES (1002, 'in3', '1', 1200);
+INSERT INTO `in` VALUES (1000, 'in1', '1000', 100);
+INSERT INTO `in` VALUES (1001, 'in2', '1001', 121);
+INSERT INTO `in` VALUES (1002, 'in3', '1002', 1200);
 COMMIT;
 
 -- ----------------------------
@@ -81,7 +81,7 @@ CREATE TABLE `out` (
 -- Records of out
 -- ----------------------------
 BEGIN;
-INSERT INTO `out` VALUES (1000, 'out1', 1, 105);
+INSERT INTO `out` VALUES (1000, 'out1', 1000, 105);
 COMMIT;
 
 -- ----------------------------
@@ -90,20 +90,21 @@ COMMIT;
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(105) DEFAULT NULL,
-  `type` varchar(105) DEFAULT NULL,
+  `productName` varchar(105) DEFAULT NULL,
+  `typeId` varchar(11) DEFAULT NULL,
   `unit` varchar(105) DEFAULT NULL,
   `info` varchar(105) DEFAULT NULL,
   `price` double(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
 BEGIN;
-INSERT INTO `product` VALUES (1000, '肥皂', '日用品', '件', '无详情', 2.00);
-INSERT INTO `product` VALUES (1001, '地瓜', '食品', '千克', '无详情', 1.00);
+INSERT INTO `product` VALUES (1000, '肥皂', '1000', '件', '无详情', 2.00);
+INSERT INTO `product` VALUES (1001, '地瓜', '1002', '千克', '无详情', 1.00);
+INSERT INTO `product` VALUES (1002, 'm1mba', '1001', '件', '无', 7199.00);
 COMMIT;
 
 -- ----------------------------
@@ -120,36 +121,27 @@ CREATE TABLE `staff` (
   `phone` varchar(105) DEFAULT NULL,
   `email` varchar(105) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1024 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1025 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of staff
 -- ----------------------------
 BEGIN;
-INSERT INTO `staff` VALUES (1000, 'root', '马騳骉', '男', 20, '管理员', '13867481033', '1@q.com', '123123');
-INSERT INTO `staff` VALUES (1001, 'user', 'Mace', '男', 21, '员工', '13864781033', '22@qq.com', '96e79218965eb72c92a549dd5a330112');
-INSERT INTO `staff` VALUES (1002, 'user1', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1003, 'user3', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1004, 'user4', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1005, 'user5', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1006, 'user6', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1007, 'user7', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1008, 'user8', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1009, 'user9', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1010, 'user10', 'u1', '女', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1011, 'user11', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1012, 'user12', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1013, 'user13', 'u1', '男', 21, '员工', '13864781033', '3@q.com', '123123');
-INSERT INTO `staff` VALUES (1014, 'user14', 'u2', '男', 21, '员工', '13864781033', '1@q.com', '123123');
-INSERT INTO `staff` VALUES (1015, 'user', 'name1', '男', 15, '员工', '13864781033', '', '111111');
-INSERT INTO `staff` VALUES (1016, 'sad', '112', '男', 111, '员工', '13864781033', 'ad@qasd.com', '111111');
-INSERT INTO `staff` VALUES (1017, '13867481033', '13867481033', '男', 2, '员工', '13867481033', '13867481033@s.qom', '111111');
-INSERT INTO `staff` VALUES (1018, 'user', 'name1', '男', 15, '员工', '13864781033', '', '111111');
-INSERT INTO `staff` VALUES (1019, 'nm', 'n', '男', 1, '员工', '13867481033', 'sdklj@qq.com', '1111111');
-INSERT INTO `staff` VALUES (1020, '123', 'asdj', '女', 12, '管理员', '13864781033', 'adqwe@qq.com', '111111');
-INSERT INTO `staff` VALUES (1021, '12', 'asd111', '男', 12, '员工', '15154622580', 'aqwe@qq.com', '111111');
-INSERT INTO `staff` VALUES (1023, '111', 'hh', '男', 12, '员工', '13867481033', '1@qq.om', '1111111');
+INSERT INTO `staff` VALUES (1000, 'root', '马騳骉', '男', 20, 'admin', '13867481033', '1@q.com', '4297f44b13955235245b2497399d7a93', '161708655489153045497');
+INSERT INTO `staff` VALUES (1001, 'mace', 'Mace', '男', 21, 'operator', '13864781033', '22@qq.com', '4297f44b13955235245b2497399d7a93', NULL);
+INSERT INTO `staff` VALUES (1002, 'user', 'user', '男', 21, 'user', '13864781033', '3@q.com', '4297f44b13955235245b2497399d7a93', '161708585196509530185');
+INSERT INTO `staff` VALUES (1003, 'user3', 'user3', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1004, 'user4', 'user4', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1005, 'user5', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1006, 'user6', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1007, 'user7', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1008, 'user8', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1009, 'user9', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1010, 'user10', 'u1', '女', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1011, 'user11', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
+INSERT INTO `staff` VALUES (1012, 'user12', 'u1', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -168,6 +160,25 @@ CREATE TABLE `stock` (
 BEGIN;
 INSERT INTO `stock` VALUES (1, 1195);
 INSERT INTO `stock` VALUES (2, 121);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for type
+-- ----------------------------
+DROP TABLE IF EXISTS `type`;
+CREATE TABLE `type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `typeName` varchar(105) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of type
+-- ----------------------------
+BEGIN;
+INSERT INTO `type` VALUES (1000, '日用品');
+INSERT INTO `type` VALUES (1001, '电器');
+INSERT INTO `type` VALUES (1002, '食品');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
