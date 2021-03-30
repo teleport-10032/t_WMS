@@ -17,4 +17,5 @@ public class staff {
     String type;
     String phone;
     String email;
+    String token;
 }

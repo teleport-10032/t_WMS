@@ -52,13 +52,18 @@
                             <el-table-column label="年龄" prop="age" min-width="3%"></el-table-column>
                             <el-table-column label="类型" prop="type" min-width="5%">
                                 <template slot-scope= "scope">
-                                    <div v-if="scope.row.type==='管理员'">
+                                    <div v-if="scope.row.type==='admin'">
                                         <el-tag type="success" effect="light" size="mini">
                                             管理员
                                         </el-tag>
                                     </div>
-                                    <div v-else>
+                                    <div v-else-if="scope.row.type==='operator'">
                                         <el-tag effect="light" size="mini">
+                                            操作员
+                                        </el-tag>
+                                    </div>
+                                    <div v-else>
+                                        <el-tag type="info" effect="light" size="mini">
                                             用户
                                         </el-tag>
                                     </div>
@@ -149,14 +154,14 @@
                     <el-dialog title="编辑员工信息" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
                                @submit.native.prevent>
                         <el-form :model="editForm" :rules="addFormRules"  ref="editFormRef" label-width="70px">
-                            <el-form-item label="id" prop="id">
+                            <el-form-item label="id" prop="id" >
                                 <el-input v-model="editForm.id" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="姓名" prop="name">
-                                <el-input v-model="editForm.name"></el-input>
+                                <el-input v-model="editForm.name" @keyup.enter.native="editStaffSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="登录名" prop="username">
-                                <el-input v-model="editForm.username"></el-input>
+                                <el-input v-model="editForm.username" @keyup.enter.native="editStaffSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="性别" prop="sex">
                                 <template>
@@ -171,7 +176,7 @@
                                 </template>
                             </el-form-item>
                             <el-form-item label="年龄" prop="age">
-                                <el-input v-model="editForm.age"></el-input>
+                                <el-input v-model="editForm.age" @keyup.enter.native="editStaffSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="类型" prop="type">
                                 <template>
@@ -186,10 +191,10 @@
                                 </template>
                             </el-form-item>
                             <el-form-item label="手机" prop="phone">
-                                <el-input v-model="editForm.phone"></el-input>
+                                <el-input v-model="editForm.phone" @keyup.enter.native="editStaffSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="邮箱" prop="email">
-                                <el-input v-model="editForm.email"></el-input>
+                                <el-input v-model="editForm.email" @keyup.enter.native="editStaffSubmit"></el-input>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
@@ -215,8 +220,6 @@
                             <el-button type="primary" @click="changePasswordSubmit">确 定</el-button>
                         </span>
                     </el-dialog>
-
-
                 </div>
             </el-main>
         </el-container>
@@ -233,7 +236,8 @@
                 queryInfo: {
                     page: 1,
                     pre: 5,
-                    key:""
+                    key:"",
+                    token:""
                 },
                 staffList:[],
                 total: 0,
@@ -314,6 +318,8 @@
                             trigger: "blur"
                         }
                     ],
+
+
                     password: [
                         { required: true, message: '密码必须是6-20位', trigger: 'blur' },
                         {
@@ -362,6 +368,7 @@
             },
             <%@ include file="public/setJump.jsp" %>
             async getStaffList() {
+                this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
                 let url =  'getStaffList';
                 axios.get(url, {
@@ -379,7 +386,7 @@
                         return this.$message.error('获取数据失败！')
                     }
                 }).catch(err => {
-                    console.log(err);
+                    // console.log(err);
                 })
             },
             handleSizeChange(newSize) {
@@ -416,7 +423,8 @@
                             phone:this.addForm.phone,
                             email:this.addForm.email,
                             type:this.typeValue,
-                            sex:this.sexValue
+                            sex:this.sexValue,
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
@@ -424,7 +432,7 @@
                         {
                             this.getStaffList()
                             this.addDialogClosed()
-                            this.$message.success("success")
+                            this.$message.success("添加员工成功")
                         }
                     })
                 })
@@ -435,7 +443,7 @@
                 this.editDialogVisible = true
                 // console.log(id)
                 const { data: res } = await axios.get('/getStaffInfoById'
-                    ,{params:{id:id}})
+                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')
                 }
@@ -472,7 +480,8 @@
                             email:this.editForm.email,
                             type:this.typeValue,
                             username:this.editForm.username,
-                            id:this.editForm.id
+                            id:this.editForm.id,
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
@@ -502,7 +511,8 @@
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             id:this.changePasswordForm.id,
-                            password:md5(this.changePasswordForm.password)
+                            password:md5(this.changePasswordForm.password),
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
@@ -533,7 +543,7 @@
                     {
                         params: {
                             id: id,
-                            // token: window.localStorage.getItem("token")
+                            token: window.localStorage.getItem("token")
                         }
                     })
                 if (res.error !== "0") {

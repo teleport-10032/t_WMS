@@ -18,40 +18,43 @@ public class staffController {
     }
 
     @GetMapping("getStaffList")
-    public String getStaffList(@RequestParam("page") int page,@RequestParam("pre") int pre,@RequestParam("key") String key)
+    public String getStaffList(@RequestParam("page") int page,@RequestParam("pre") int pre,
+                               @RequestParam("key") String key,@RequestParam("token") String token)
             throws JsonProcessingException {
-        return staffServiceObject.getStaffList(page,pre,key);
+        return staffServiceObject.getStaffList(page,pre,key,token);
     }
 
     @PostMapping("addStaff")
     public String addStaff(@RequestParam("name") String name,@RequestParam("sex") String sex,
                            @RequestParam("age") int age,@RequestParam("type") String type,
                            @RequestParam("phone") String phone,@RequestParam("email") String email,
-                           @RequestParam("username") String username) throws JsonProcessingException {
-        return staffServiceObject.addStaff(name,sex,age,type,phone,email,username);
+                           @RequestParam("username") String username,@RequestParam("token") String token) throws JsonProcessingException {
+        return staffServiceObject.addStaff(name,sex,age,type,phone,email,username,token);
     }
 
     @GetMapping("getStaffInfoById")
-    public String getStaffInfoById(@RequestParam("id") int id) throws JsonProcessingException {
-        return staffServiceObject.getStaffInfoById(id);
+    public String getStaffInfoById(@RequestParam("id") int id,@RequestParam("token") String token) throws JsonProcessingException {
+        return staffServiceObject.getStaffInfoById(id,token);
     }
 
     @PutMapping("updateStaffById")
     public String updateStaffById(@RequestParam("name") String name,@RequestParam("sex") String sex,
                            @RequestParam("age") int age,@RequestParam("type") String type,
                            @RequestParam("phone") String phone,@RequestParam("email") String email,
-                           @RequestParam("username") String username,@RequestParam("id") int id)
+                           @RequestParam("username") String username,@RequestParam("id") int id,
+                                  @RequestParam("token") String token)
             throws JsonProcessingException {
-        return staffServiceObject.updateStaffById(name,sex,age,type,phone,email,username,id);
+        return staffServiceObject.updateStaffById(name,sex,age,type,phone,email,username,id,token);
     }
 
     @DeleteMapping("deleteStaffById")
-    public String deleteStaffById(@RequestParam("id") int id) throws JsonProcessingException {
-        return staffServiceObject.deleteStaffById(id);
+    public String deleteStaffById(@RequestParam("id") int id,@RequestParam("token") String token) throws JsonProcessingException {
+        return staffServiceObject.deleteStaffById(id,token);
     }
 
     @PutMapping("updatePasswordById")
-    public String updatePasswordById(@RequestParam("id") int id,@RequestParam("password") String password) throws JsonProcessingException {
-        return staffServiceObject.updatePasswordById(id,password);
+    public String updatePasswordById(@RequestParam("id") int id,@RequestParam("password") String password,
+                                     @RequestParam("token") String token) throws JsonProcessingException {
+        return staffServiceObject.updatePasswordById(id,password,token);
     }
 }

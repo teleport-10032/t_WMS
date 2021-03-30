@@ -10,6 +10,20 @@ import java.util.List;
 @Mapper
 @Repository
 public interface staffMapper {
+
+    //login
+    //check a user is exist by username,password,type
+    int loginCheck(@Param("username") String username,
+                   @Param("password") String password,@Param("type") String type);
+    //write token to db by username and token
+    int createTokenByUsername(@Param("username") String username,
+                              @Param("token") String token);
+
+    //ver
+    //get staff by token
+    staff getStaffByToken(@Param("token") String token);
+
+    //admin
     //staff list
     List<staff> getStaffList(@Param("start") int start,@Param("num") int num,@Param("key") String key);
     //the sum of staff

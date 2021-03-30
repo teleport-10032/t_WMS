@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>生产销售出库信息管理</title>
+    <title>生产销售出库管理</title>
     <script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
@@ -231,7 +231,8 @@
                 queryInfo: {
                     page: 1,
                     pre: 5,
-                    key:""
+                    key:"",
+                    token:""
                 },
                 staffList:[],
                 total: 0,
@@ -362,6 +363,7 @@
             },
             <%@ include file="public/setJump.jsp" %>
             async getStaffList() {
+                this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
                 let url =  'getStaffList';
                 axios.get(url, {
@@ -379,7 +381,7 @@
                         return this.$message.error('获取数据失败！')
                     }
                 }).catch(err => {
-                    console.log(err);
+                    // console.log(err);
                 })
             },
             handleSizeChange(newSize) {
@@ -416,7 +418,8 @@
                             phone:this.addForm.phone,
                             email:this.addForm.email,
                             type:this.typeValue,
-                            sex:this.sexValue
+                            sex:this.sexValue,
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
@@ -435,7 +438,7 @@
                 this.editDialogVisible = true
                 // console.log(id)
                 const { data: res } = await axios.get('/getStaffInfoById'
-                    ,{params:{id:id}})
+                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')
                 }
@@ -472,7 +475,8 @@
                             email:this.editForm.email,
                             type:this.typeValue,
                             username:this.editForm.username,
-                            id:this.editForm.id
+                            id:this.editForm.id,
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
@@ -502,7 +506,8 @@
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             id:this.changePasswordForm.id,
-                            password:md5(this.changePasswordForm.password)
+                            password:md5(this.changePasswordForm.password),
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
@@ -533,7 +538,7 @@
                     {
                         params: {
                             id: id,
-                            // token: window.localStorage.getItem("token")
+                            token: window.localStorage.getItem("token")
                         }
                     })
                 if (res.error !== "0") {

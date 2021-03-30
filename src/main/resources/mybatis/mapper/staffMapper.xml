@@ -4,6 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.t_wms.mapper.staffMapper">
+
+    <!--    login-->
+    <select id="loginCheck" resultType="int">
+        select count(id) from staff where username=#{username} and password=#{password} and type=#{type}
+    </select>
+    <update id="createTokenByUsername" parameterType="staff">
+        update staff
+        set token=#{token} where username=#{username}
+    </update>
+    <!--    ver-->
+    <select id="getStaffByToken" resultType="staff">
+        select * from staff where token=#{token}
+    </select>
+    <!--    admin -->
     <select id="getStaffList" resultType="staff">
         select id,username,name,sex,age,type from staff
             where username like "%"#{key}"%" or name like "%"#{key}"%"

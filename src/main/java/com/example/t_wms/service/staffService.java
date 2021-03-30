@@ -3,16 +3,29 @@ package com.example.t_wms.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface staffService {
+
+    //login,if successful then return token
+    String login(String username,String password,String type) throws JsonProcessingException;
+
+    //ver
+    String getStaffTypeByToken(String token);
+    String getStaffNameByToken(String token);
+
     //get staff list
-    String getStaffList(int page,int pre,String key) throws JsonProcessingException;
+    String getStaffList(int page,int pre,String key,String token) throws JsonProcessingException;
     //add a staff
-    String addStaff(String name, String sex, int age, String type, String phone, String email, String username) throws JsonProcessingException;
+    String addStaff(String name, String sex, int age, String type, String phone,
+                    String email, String username,String token) throws JsonProcessingException;
     //get staff info
-    String getStaffInfoById(int id) throws JsonProcessingException;
+    String getStaffInfoById(int id,String token) throws JsonProcessingException;
     //update staff by id
-    String updateStaffById(String name, String sex, int age, String type, String phone, String email, String username,int id) throws JsonProcessingException;
+    String updateStaffById(String name, String sex, int age, String type, String phone,
+                           String email, String username,int id,String token) throws JsonProcessingException;
     //delete staff by id
-    String deleteStaffById(int id) throws JsonProcessingException;
+    String deleteStaffById(int id,String token) throws JsonProcessingException;
     //update password by id
-    String updatePasswordById(int id, String password) throws JsonProcessingException;
+    String updatePasswordById(int id, String password,String token) throws JsonProcessingException;
+
+
+
 }

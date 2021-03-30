@@ -13,7 +13,7 @@ class TWmsApplicationTests {
     private staffMapper staffMapperObject;
     @Test
     void contextLoads() {
-        System.out.println(DigestUtils.md5DigestAsHex("1234".getBytes()));
+        System.out.println(staffMapperObject.getStaffByToken("1617085477008994302131"));
     }
 
 }

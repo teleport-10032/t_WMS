@@ -49,7 +49,11 @@ public class pageController {
 
     @RequestMapping("/")
     public String index() {
-        return "staffAdmin";
+        return "login";
+    }
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
     }
     @RequestMapping("staffAdmin")
     public String staffAdmin(){
