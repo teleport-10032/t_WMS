@@ -10,5 +10,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface goodsMapper {
-    List<goods> getGoodsList(@Param("token") String token);
+    List<goods> getGoodsList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
+    int getGoodsNum();
 }

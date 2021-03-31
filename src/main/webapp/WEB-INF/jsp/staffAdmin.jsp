@@ -232,6 +232,7 @@
         data()
         {
             return{
+                username:'',
                 loading:true,
                 queryInfo: {
                     page: 1,
