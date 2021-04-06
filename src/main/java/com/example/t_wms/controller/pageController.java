@@ -59,6 +59,10 @@ public class pageController {
     public String staffAdmin(){
         return "staffAdmin";
     }
+    @RequestMapping("typeAdmin")
+    public String typeAdmin(){
+        return "typeAdmin";
+    }
     @RequestMapping("goodsAdmin")
     public String goodsAdmin(){
         return "goodsAdmin";

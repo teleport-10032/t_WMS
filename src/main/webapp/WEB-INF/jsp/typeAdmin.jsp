@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>出库管理</title>
+    <title>产品类别管理</title>
     <script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
@@ -347,8 +347,8 @@
             init()
             {
                 <%@ include file="public/setHeight.jsp" %>
-                document.getElementById("outAdmin").style.color = "#409EFF";
-                document.getElementById("outAdminIco").style.color = "#409EFF"
+                document.getElementById("typeAdmin").style.color = "#409EFF";
+                document.getElementById("typeAdminIco").style.color = "#409EFF"
             },
             <%@ include file="public/setJump.jsp" %>
             async getGoodsList() {

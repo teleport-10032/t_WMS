@@ -63,7 +63,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token)))
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType()))
         {
             int start = pre * (page - 1);
             int num = pre;
@@ -86,7 +86,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token))) {
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int re = staffMapperObject.addStaff(name,sex,age,type,phone,email,username, DigestUtils.md5DigestAsHex("parrot".getBytes()));
             if(re == 1)
                 s.put("error", "0");
@@ -105,7 +105,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token))) {
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             staff staffObject = staffMapperObject.getStaffInfoById(id);
             s.put("data", staffObject);
             s.put("error", "0");
@@ -123,7 +123,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token))) {
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
 
             int re = staffMapperObject.updateStaffById(name,sex,age,type,phone,email,username, id);
             if(re == 1)
@@ -143,7 +143,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token))) {
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int re = staffMapperObject.deleteStaffById(id);
             if(re == 1)
                 s.put("error", "0");
@@ -162,7 +162,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token))) {
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int re = staffMapperObject.updatePasswordById(id,password);
             if(re == 1)
                 s.put("error", "0");

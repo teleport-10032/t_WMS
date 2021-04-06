@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>采购入库信息管理</title>
+    <title>入库管理</title>
     <script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/qs.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
@@ -18,7 +18,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 </head>
 <body>
-
+<%-- goods.id,goodsName,typeName,unit,info,price --%>
 <div id="app" v-cloak>
     <el-container>
         <%@ include file="public/header.jsp" %>
@@ -31,39 +31,28 @@
                         <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="查找登录名或姓名" v-model="queryInfo.key" clearable @clear="getStaffList"
-                                          @keyup.enter.native="getStaffList">
+                                <el-input placeholder="查找产品" v-model="queryInfo.key" clearable @clear="getGoodsList"
+                                          @keyup.enter.native="getGoodsList">
                                     <el-button slot="append" icon="el-icon-search"></el-button>
                                 </el-input>
                             </el-col>
-                            <el-col :span="4">
-                                <el-button type="primary" @click="addDialogOpen">新建员工信息</el-button>
+                            <el-col style="width: 120px">
+                                <el-button type="primary" @click="addDialogOpen">添加信息</el-button>
+                            </el-col>
+                            <el-col style="width: 120px">
+                                <el-button type="primary" @click="addDialogOpen">产品类别管理</el-button>
                             </el-col>
                         </el-row>
                         <br>
                         <%--                        id,username,name,sex,age,type--%>
-                        <el-table :data="staffList" border stripe v-loading="loading"
+                        <el-table :data="GoodsList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="姓名" prop="name" min-width="10%"></el-table-column>
-                            <el-table-column label="登录名" prop="username" min-width="10%"></el-table-column>
-                            <el-table-column label="性别" prop="sex" min-width="3%"></el-table-column>
-                            <el-table-column label="年龄" prop="age" min-width="3%"></el-table-column>
-                            <el-table-column label="类型" prop="type" min-width="5%">
-                                <template slot-scope= "scope">
-                                    <div v-if="scope.row.type==='管理员'">
-                                        <el-tag type="success" effect="light" size="mini">
-                                            管理员
-                                        </el-tag>
-                                    </div>
-                                    <div v-else>
-                                        <el-tag effect="light" size="mini">
-                                            用户
-                                        </el-tag>
-                                    </div>
-                                </template>
-                            </el-table-column>
+                            <el-table-column label="物品名" prop="goodsName" min-width="10%"></el-table-column>
+                            <el-table-column label="类型" prop="typeName" min-width="10%"></el-table-column>
+                            <el-table-column label="单位" prop="unit" min-width="3%"></el-table-column>
+                            <el-table-column label="价格(元)" prop="price" min-width="3%"></el-table-column>
                             <el-table-column label="操作" width="187px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
@@ -227,6 +216,7 @@
         data()
         {
             return{
+                username:'',
                 loading:true,
                 queryInfo: {
                     page: 1,
@@ -234,7 +224,7 @@
                     key:"",
                     token:""
                 },
-                staffList:[],
+                GoodsList:[],
                 total: 0,
                 addDialogVisible: false,
                 sexOptions: [{
@@ -269,17 +259,16 @@
                     username: [
                         { required: true, message: '请输入登录名', trigger: 'blur' }
                     ],
-                    phone: [
-                        {
-                            validator: function(rule, value, callback) {
-                                if (/^1[34578]\d{9}$/.test(value) == false && value != '') {
-                                    callback(new Error("请输入正确的手机号"));
-                                } else {
-                                    callback();
-                                }
-                            },
-                            trigger: "blur"
-                        }
+                    phone: [{
+                        validator: function(rule, value, callback) {
+                            if (/^1[34578]\d{9}$/.test(value) == false && value != '') {
+                                callback(new Error("请输入正确的手机号"));
+                            } else {
+                                callback();
+                            }
+                        },
+                        trigger: "blur"
+                    }
                     ],
                     email: [
                         {
@@ -351,7 +340,7 @@
         }
         ,
         created() {
-            this.getStaffList()
+            this.getGoodsList()
             this.init()
         },
         methods: {
@@ -362,17 +351,17 @@
                 document.getElementById("inAdminIco").style.color = "#409EFF"
             },
             <%@ include file="public/setJump.jsp" %>
-            async getStaffList() {
+            async getGoodsList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
-                let url =  'getStaffList';
+                let url =  'getGoodsList';
                 axios.get(url, {
                     params: this.queryInfo
                 }).then(res => {
                     if(res.data.error === "0")
                     {
                         this.loading = false;
-                        this.staffList = res.data.data;
+                        this.GoodsList = res.data.data;
                         this.total = res.data.total;
                         // this.$message.success("success")
                     }
@@ -386,11 +375,11 @@
             },
             handleSizeChange(newSize) {
                 this.queryInfo.pre = newSize
-                this.getStaffList()
+                this.getGoodsList()
             },
             handleCurrentChange(newPage) {
                 this.queryInfo.page = newPage
-                this.getStaffList()
+                this.getGoodsList()
             },
             addDialogOpen()
             {
@@ -425,7 +414,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getStaffList()
+                            this.getGoodsList()
                             this.addDialogClosed()
                             this.$message.success("success")
                         }
@@ -482,7 +471,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getStaffList()
+                            this.getGoodsList()
                             this.editDialogClosed()
                             this.$message.success("success")
                         }
@@ -545,7 +534,7 @@
                     return this.$message.error('删除失败！')
                 }
                 this.$message.success('删除员工成功！')
-                await this.getStaffList()
+                await this.getGoodsList()
             }
         }
     })

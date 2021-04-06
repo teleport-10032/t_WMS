@@ -27,7 +27,7 @@ public class goodsServiceImpl implements goodsService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                !"admin".equals(staffMapperObject.getStaffByToken(token))) {
+                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int start = pre * (page - 1);
             int num = pre;
 

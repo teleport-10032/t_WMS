@@ -3,6 +3,10 @@ jumpToStaffAdmin()
 {
     window.location.href="/staffAdmin";
 },
+jumpToTypeAdmin()
+{
+window.location.href="/typeAdmin";
+},
 jumpToGoodsAdmin()
 {
     window.location.href="/goodsAdmin";
@@ -21,5 +25,5 @@ jumpToInventoryAdmin()
 },
 jumpToCrmAdmin()
 {
-    window.location.href="/crmAdmin";
+window.location.href="/crmAdmin";
 },
