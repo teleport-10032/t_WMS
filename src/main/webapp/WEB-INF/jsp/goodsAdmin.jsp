@@ -43,7 +43,7 @@
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="物品名" prop="goodsName" min-width="10%"></el-table-column>
+                            <el-table-column label="物品名" prop="productName" min-width="10%"></el-table-column>
                             <el-table-column label="类型" prop="typeName" min-width="10%"></el-table-column>
                             <el-table-column label="单位" prop="unit" min-width="3%"></el-table-column>
                             <el-table-column label="价格(元)" prop="price" min-width="3%"></el-table-column>

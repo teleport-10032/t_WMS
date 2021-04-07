@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class goods{
     int id;
-    String goodsName;
+    String productName;
     int typeId;
     String typeName;
     String unit;
