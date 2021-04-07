@@ -1,6 +1,6 @@
 package com.example.t_wms;
 
-import com.example.t_wms.mapper.staffMapper;
+import com.example.t_wms.mapper.innMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,11 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TWmsApplicationTests {
 
-    @Autowired
-    private staffMapper staffMapperObject;
+//    @Autowired
+//    private innMapper innMapperO;
     @Test
     void contextLoads() {
-        System.out.println(staffMapperObject.getStaffByToken("1617085477008994302131"));
+//        System.out.println(innMapperO.getInnNum());
+//        System.out.println(innMapperO.getInnList(1,10,""));
     }
 
 }

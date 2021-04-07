@@ -25,16 +25,13 @@
                         <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="查找产品" v-model="queryInfo.key" clearable @clear="getGoodsList"
+                                <el-input placeholder="按产品名称查找" v-model="queryInfo.key" clearable @clear="getGoodsList"
                                           @keyup.enter.native="getGoodsList">
-                                    <el-button slot="append" icon="el-icon-search"></el-button>
+                                    <el-button slot="append" icon="el-icon-search" @Click="getGoodsList"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col style="width: 120px">
                                 <el-button type="primary" @click="addDialogOpen">添加信息</el-button>
-                            </el-col>
-                            <el-col style="width: 120px">
-                                <el-button type="primary" @click="addDialogOpen">产品类别管理</el-button>
                             </el-col>
                         </el-row>
                         <br>
@@ -43,7 +40,7 @@
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="物品名" prop="productName" min-width="10%"></el-table-column>
+                            <el-table-column label="产品名称" prop="productName" min-width="10%"></el-table-column>
                             <el-table-column label="类型" prop="typeName" min-width="10%"></el-table-column>
                             <el-table-column label="单位" prop="unit" min-width="3%"></el-table-column>
                             <el-table-column label="价格(元)" prop="price" min-width="3%"></el-table-column>

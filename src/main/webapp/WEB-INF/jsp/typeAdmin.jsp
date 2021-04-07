@@ -27,7 +27,7 @@
                             <el-col :span="8">
                                 <el-input placeholder="按类别名称查找" v-model="queryInfo.key" clearable @clear="getTypeList"
                                           @keyup.enter.native="getTypeList">
-                                    <el-button slot="append" icon="el-icon-search"></el-button>
+                                    <el-button slot="append" icon="el-icon-search" @Click="getTypeList"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col style="width: 120px">

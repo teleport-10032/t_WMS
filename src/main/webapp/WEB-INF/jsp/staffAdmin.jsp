@@ -27,7 +27,7 @@
                             <el-col :span="8">
                                 <el-input placeholder="按登录名或姓名查找" v-model="queryInfo.key" clearable @clear="getStaffList"
                                           @keyup.enter.native="getStaffList">
-                                    <el-button slot="append" icon="el-icon-search"></el-button>
+                                    <el-button slot="append" icon="el-icon-search" @Click="getStaffList"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col :span="4">

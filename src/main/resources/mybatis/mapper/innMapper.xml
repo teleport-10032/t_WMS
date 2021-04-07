@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.t_wms.mapper.innMapper">
+    <select id="getInnList" resultType="inn">
+        select inn.id,orderId,product.productName,productNum from inn,product
+        where orderId like "%"#{key}"%" and product.Id = inn.productId
+        order by id limit #{start},#{num}
+    </select>
+    <select id="getInnNum" resultType="int">
+        select count(id) from inn
+    </select>
+</mapper>
