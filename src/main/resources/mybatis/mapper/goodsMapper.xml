@@ -5,12 +5,12 @@
 
 <mapper namespace="com.example.t_wms.mapper.goodsMapper">
     <select id="getGoodsList" resultType="goods">
-        select goods.id,goodsName,typeName,unit,info,price
-            from goods,type where type.id = goods.typeId and goodsName like "%"#{key}"%"
+        select product.id,productName,typeName,unit,product.info,price
+            from product,type where type.id = product.typeId and productName like "%"#{key}"%"
             order by id limit #{start},#{num};
     </select>
 
     <select id="getGoodsNum" resultType="int">
-        select count(id) from goods
+        select count(id) from product
     </select>
 </mapper>

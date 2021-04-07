@@ -25,38 +25,28 @@
                         <!-- 搜索 -->
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="查找产品" v-model="queryInfo.key" clearable @clear="getGoodsList"
-                                          @keyup.enter.native="getGoodsList">
+                                <el-input placeholder="按类别名称查找" v-model="queryInfo.key" clearable @clear="getTypeList"
+                                          @keyup.enter.native="getTypeList">
                                     <el-button slot="append" icon="el-icon-search"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col style="width: 120px">
-                                <el-button type="primary" @click="addDialogOpen">添加信息</el-button>
-                            </el-col>
-                            <el-col style="width: 120px">
-                                <el-button type="primary" @click="addDialogOpen">产品类别管理</el-button>
+                                <el-button type="primary" @click="addDialogOpen">添加类别</el-button>
                             </el-col>
                         </el-row>
                         <br>
                         <%--                        id,username,name,sex,age,type--%>
-                        <el-table :data="GoodsList" border stripe v-loading="loading"
+                        <el-table :data="TypeList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="物品名" prop="goodsName" min-width="10%"></el-table-column>
-                            <el-table-column label="类型" prop="typeName" min-width="10%"></el-table-column>
-                            <el-table-column label="单位" prop="unit" min-width="3%"></el-table-column>
-                            <el-table-column label="价格(元)" prop="price" min-width="3%"></el-table-column>
-                            <el-table-column label="操作" width="187px">
+                            <el-table-column label="类别名称" prop="typeName" min-width="10%"></el-table-column>
+                            <el-table-column label="备注" prop="info" min-width="15%"></el-table-column>
+                            <el-table-column label="操作" width="130px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
                                         <el-button type="primary" icon="el-icon-edit" size="mini"
                                                    @click="editStaff(scope.row.id)"></el-button>
-                                    </el-tooltip>
-                                    <el-tooltip effect="dark" content="重置密码" placement="top" :enterable="false">
-                                        <el-button type="warning" icon="el-icon-lock" size="mini"
-                                                   @click="changePasswordDialogVisible=true;
-                                                        changePasswordForm.id = scope.row.id"></el-button>
                                     </el-tooltip>
                                     <!-- 删除按钮 -->
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
@@ -218,7 +208,7 @@
                     key:"",
                     token:""
                 },
-                GoodsList:[],
+                TypeList:[],
                 total: 0,
                 addDialogVisible: false,
                 sexOptions: [{
@@ -334,7 +324,7 @@
         }
         ,
         created() {
-            this.getGoodsList()
+            this.getTypeList()
             this.init()
         },
         methods: {
@@ -345,17 +335,17 @@
                 document.getElementById("typeAdminIco").style.color = "#409EFF"
             },
             <%@ include file="public/setJump.jsp" %>
-            async getGoodsList() {
+            async getTypeList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
-                let url =  'getGoodsList';
+                let url =  'getTypeList';
                 axios.get(url, {
                     params: this.queryInfo
                 }).then(res => {
                     if(res.data.error === "0")
                     {
                         this.loading = false;
-                        this.GoodsList = res.data.data;
+                        this.TypeList = res.data.data;
                         this.total = res.data.total;
                         // this.$message.success("success")
                     }
@@ -369,11 +359,11 @@
             },
             handleSizeChange(newSize) {
                 this.queryInfo.pre = newSize
-                this.getGoodsList()
+                this.getTypeList()
             },
             handleCurrentChange(newPage) {
                 this.queryInfo.page = newPage
-                this.getGoodsList()
+                this.getTypeList()
             },
             addDialogOpen()
             {
@@ -408,7 +398,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getGoodsList()
+                            this.getTypeList()
                             this.addDialogClosed()
                             this.$message.success("success")
                         }
@@ -465,7 +455,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getGoodsList()
+                            this.getTypeList()
                             this.editDialogClosed()
                             this.$message.success("success")
                         }
@@ -528,7 +518,7 @@
                     return this.$message.error('删除失败！')
                 }
                 this.$message.success('删除员工成功！')
-                await this.getGoodsList()
+                await this.getTypeList()
             }
         }
     })

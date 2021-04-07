@@ -1,9 +1,9 @@
 package com.example.t_wms.service.Impl;
 
-import com.example.t_wms.mapper.goodsMapper;
 import com.example.t_wms.mapper.staffMapper;
-import com.example.t_wms.pojo.goods;
-import com.example.t_wms.service.goodsService;
+import com.example.t_wms.mapper.typeMapper;
+import com.example.t_wms.pojo.type;
+import com.example.t_wms.service.typeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,15 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class goodsServiceImpl implements goodsService {
+public class typeServiceImpl implements typeService {
 
     @Autowired
     staffMapper staffMapperObject;
     @Autowired
-    goodsMapper goodsMapperObject;
+    typeMapper typeMapperObject;
 
     @Override
-    public String getGoodsList(int page, int pre, String key, String token) throws JsonProcessingException {
-
+    public String getTypeList(int page, int pre, String key, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -31,10 +30,10 @@ public class goodsServiceImpl implements goodsService {
             int start = pre * (page - 1);
             int num = pre;
 
-            List<goods> list = goodsMapperObject.getGoodsList(start,num,key);
+            List<type> list = typeMapperObject.getTypeList(start,num,key);
 
             s.put("data",list);
-            s.put("total",goodsMapperObject.getGoodsNum());
+            s.put("total",typeMapperObject.getTypeNum());
             s.put("error","0");
         }
         else

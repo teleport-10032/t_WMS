@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.t_wms.mapper.typeMapper">
+    <select id="getTypeList" resultType="type">
+        select * from type
+        where typeName like "%"#{key}"%"
+        order by id limit #{start},#{num}
+    </select>
+    <select id="getTypeNum" resultType="int">
+        select count(*) from type
+    </select>
+</mapper>
