@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 30/03/2021 18:28:23
+ Date: 07/04/2021 14:13:14
 */
 
 SET NAMES utf8mb4;
@@ -45,31 +45,31 @@ INSERT INTO `crm` VALUES (1000, 'sx', '熙来顺有限公司', 'customer', 'QD.C
 COMMIT;
 
 -- ----------------------------
--- Table structure for in
+-- Table structure for inn
 -- ----------------------------
-DROP TABLE IF EXISTS `in`;
-CREATE TABLE `in` (
+DROP TABLE IF EXISTS `inn`;
+CREATE TABLE `inn` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `number` varchar(105) DEFAULT NULL COMMENT '单号',
+  `orderId` varchar(105) DEFAULT NULL COMMENT '单号',
   `productId` varchar(105) DEFAULT NULL,
   `productNum` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of in
+-- Records of inn
 -- ----------------------------
 BEGIN;
-INSERT INTO `in` VALUES (1000, 'in1', '1000', 100);
-INSERT INTO `in` VALUES (1001, 'in2', '1001', 121);
-INSERT INTO `in` VALUES (1002, 'in3', '1002', 1200);
+INSERT INTO `inn` VALUES (1000, 'inId1', '1000', 100);
+INSERT INTO `inn` VALUES (1001, 'inId2', '1001', 121);
+INSERT INTO `inn` VALUES (1002, 'inId3', '1002', 1200);
 COMMIT;
 
 -- ----------------------------
--- Table structure for out
+-- Table structure for outt
 -- ----------------------------
-DROP TABLE IF EXISTS `out`;
-CREATE TABLE `out` (
+DROP TABLE IF EXISTS `outt`;
+CREATE TABLE `outt` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `number` varchar(105) DEFAULT NULL,
   `productId` int(10) DEFAULT NULL,
@@ -78,10 +78,10 @@ CREATE TABLE `out` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of out
+-- Records of outt
 -- ----------------------------
 BEGIN;
-INSERT INTO `out` VALUES (1000, 'out1', 1000, 105);
+INSERT INTO `outt` VALUES (1000, 'out1', 1000, 105);
 COMMIT;
 
 -- ----------------------------
@@ -104,7 +104,7 @@ CREATE TABLE `product` (
 BEGIN;
 INSERT INTO `product` VALUES (1000, '肥皂', '1000', '件', '无详情', 2.00);
 INSERT INTO `product` VALUES (1001, '地瓜', '1002', '千克', '无详情', 1.00);
-INSERT INTO `product` VALUES (1002, 'm1mba', '1001', '件', '无', 7199.00);
+INSERT INTO `product` VALUES (1002, '马的脱毛器', '1001', '件', '无', 7199.00);
 COMMIT;
 
 -- ----------------------------
@@ -129,7 +129,7 @@ CREATE TABLE `staff` (
 -- Records of staff
 -- ----------------------------
 BEGIN;
-INSERT INTO `staff` VALUES (1000, 'root', '马騳骉', '男', 20, 'admin', '13867481033', '1@q.com', '4297f44b13955235245b2497399d7a93', '161708655489153045497');
+INSERT INTO `staff` VALUES (1000, 'root', '马騳骉', '男', 20, 'admin', '13867481033', '1@q.com', '4297f44b13955235245b2497399d7a93', '161777384032705451254');
 INSERT INTO `staff` VALUES (1001, 'mace', 'Mace', '男', 21, 'operator', '13864781033', '22@qq.com', '4297f44b13955235245b2497399d7a93', NULL);
 INSERT INTO `staff` VALUES (1002, 'user', 'user', '男', 21, 'user', '13864781033', '3@q.com', '4297f44b13955235245b2497399d7a93', '161708585196509530185');
 INSERT INTO `staff` VALUES (1003, 'user3', 'user3', '男', 21, 'user', '13864781033', '3@q.com', '123123', NULL);
@@ -169,6 +169,7 @@ DROP TABLE IF EXISTS `type`;
 CREATE TABLE `type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `typeName` varchar(105) DEFAULT '',
+  `info` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4;
 
@@ -176,9 +177,9 @@ CREATE TABLE `type` (
 -- Records of type
 -- ----------------------------
 BEGIN;
-INSERT INTO `type` VALUES (1000, '日用品');
-INSERT INTO `type` VALUES (1001, '电器');
-INSERT INTO `type` VALUES (1002, '食品');
+INSERT INTO `type` VALUES (1000, '日用品', '无');
+INSERT INTO `type` VALUES (1001, '电器', '无');
+INSERT INTO `type` VALUES (1002, '食品', '无');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
