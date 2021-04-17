@@ -17,6 +17,29 @@ public class staffController {
         return "Hello Traveler";
     }
 
+    @PostMapping("/login")
+    public String String(@RequestParam("username") String username, @RequestParam("password") String password,
+                         @RequestParam("type") String type) throws JsonProcessingException {
+        return staffServiceObject.login(username,password,type);
+    }
+
+    @PostMapping("/getStaffTypeByToken")
+    public String getStaffTypeByToken(@RequestParam("token") String token) throws JsonProcessingException {
+        return staffServiceObject.getStaffTypeByToken(token);
+    }
+
+    @PostMapping("/getStaffNameByToken")
+    public String getStaffNameByToken(@RequestParam("token") String token) throws JsonProcessingException {
+        return staffServiceObject.getStaffNameByToken(token);
+    }
+
+
+    @GetMapping("getStaffNum")
+    public String getStaffNum(@RequestParam("token") String token)
+            throws JsonProcessingException {
+        return staffServiceObject.getStaffNum(token);
+    }
+
     @GetMapping("getStaffList")
     public String getStaffList(@RequestParam("page") int page,@RequestParam("pre") int pre,
                                @RequestParam("key") String key,@RequestParam("token") String token)
@@ -39,9 +62,9 @@ public class staffController {
 
     @PutMapping("updateStaffById")
     public String updateStaffById(@RequestParam("name") String name,@RequestParam("sex") String sex,
-                           @RequestParam("age") int age,@RequestParam("type") String type,
-                           @RequestParam("phone") String phone,@RequestParam("email") String email,
-                           @RequestParam("username") String username,@RequestParam("id") int id,
+                                  @RequestParam("age") int age,@RequestParam("type") String type,
+                                  @RequestParam("phone") String phone,@RequestParam("email") String email,
+                                  @RequestParam("username") String username,@RequestParam("id") int id,
                                   @RequestParam("token") String token)
             throws JsonProcessingException {
         return staffServiceObject.updateStaffById(name,sex,age,type,phone,email,username,id,token);

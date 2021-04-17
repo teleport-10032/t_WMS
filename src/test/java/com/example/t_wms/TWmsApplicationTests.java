@@ -1,6 +1,5 @@
 package com.example.t_wms;
 
-import com.example.t_wms.mapper.innMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -8,11 +8,13 @@ public interface staffService {
     String login(String username,String password,String type) throws JsonProcessingException;
 
     //ver
-    String getStaffTypeByToken(String token);
-    String getStaffNameByToken(String token);
+    String getStaffTypeByToken(String token) throws JsonProcessingException;
+    String getStaffNameByToken(String token) throws JsonProcessingException;
 
     //get staff list
     String getStaffList(int page,int pre,String key,String token) throws JsonProcessingException;
+    //get staff Num
+    String getStaffNum(String token) throws JsonProcessingException;
     //add a staff
     String addStaff(String name, String sex, int age, String type, String phone,
                     String email, String username,String token) throws JsonProcessingException;

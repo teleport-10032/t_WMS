@@ -42,19 +42,31 @@ public class staffServiceImpl implements staffService {
     }
 
     @Override
-    public String getStaffTypeByToken(String token) {
+    public String getStaffTypeByToken(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null)
-            return staffMapperObject.getStaffByToken(token).getType();
+        {
+            s.put("type", staffMapperObject.getStaffByToken(token).getType());
+            s.put("error", "0");
+        }
         else
-            return "error";
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public String getStaffNameByToken(String token) {
+    public String getStaffNameByToken(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null)
-            return staffMapperObject.getStaffByToken(token).getName();
+        {
+            s.put("username", staffMapperObject.getStaffByToken(token).getName());
+            s.put("error", "0");
+        }
         else
-            return "error";
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
@@ -63,7 +75,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType()))
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType()))
         {
             int start = pre * (page - 1);
             int num = pre;
@@ -79,6 +91,23 @@ public class staffServiceImpl implements staffService {
     }
 
     @Override
+    public String getStaffNum(String token) throws JsonProcessingException {
+        //error: -1 means Ultra vires
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType()))
+        {
+            int num = staffMapperObject.getStaffNum();
+            s.put("staffNum", num);
+            s.put("error", "0");
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
     public String addStaff(String name, String sex, int age, String type, String phone,
                            String email, String username,String token) throws JsonProcessingException {
 
@@ -86,7 +115,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int re = staffMapperObject.addStaff(name,sex,age,type,phone,email,username, DigestUtils.md5DigestAsHex("parrot".getBytes()));
             if(re == 1)
                 s.put("error", "0");
@@ -105,7 +134,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             staff staffObject = staffMapperObject.getStaffInfoById(id);
             s.put("data", staffObject);
             s.put("error", "0");
@@ -123,7 +152,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
 
             int re = staffMapperObject.updateStaffById(name,sex,age,type,phone,email,username, id);
             if(re == 1)
@@ -143,7 +172,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int re = staffMapperObject.deleteStaffById(id);
             if(re == 1)
                 s.put("error", "0");
@@ -162,7 +191,7 @@ public class staffServiceImpl implements staffService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int re = staffMapperObject.updatePasswordById(id,password);
             if(re == 1)
                 s.put("error", "0");
