@@ -1,8 +1,8 @@
 package com.example.t_wms.service.Impl;
 
-import com.example.t_wms.mapper.goodsMapper;
+import com.example.t_wms.mapper.productMapper;
 import com.example.t_wms.mapper.staffMapper;
-import com.example.t_wms.pojo.goods;
+import com.example.t_wms.pojo.product;
 import com.example.t_wms.service.goodsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,7 @@ public class goodsServiceImpl implements goodsService {
     @Autowired
     staffMapper staffMapperObject;
     @Autowired
-    goodsMapper goodsMapperObject;
+    productMapper productMapperObject;
 
     @Override
     public String getGoodsList(int page, int pre, String key, String token) throws JsonProcessingException {
@@ -31,10 +31,10 @@ public class goodsServiceImpl implements goodsService {
             int start = pre * (page - 1);
             int num = pre;
 
-            List<goods> list = goodsMapperObject.getGoodsList(start,num,key);
+            List<product> list = productMapperObject.getGoodsList(start,num,key);
 
             s.put("data",list);
-            s.put("total",goodsMapperObject.getGoodsNum());
+            s.put("total",productMapperObject.getGoodsNum());
             s.put("error","0");
         }
         else

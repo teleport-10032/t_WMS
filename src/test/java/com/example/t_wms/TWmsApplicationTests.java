@@ -1,5 +1,6 @@
 package com.example.t_wms;
 
+import com.example.t_wms.mapper.productMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,12 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TWmsApplicationTests {
 
-//    @Autowired
-//    private innMapper innMapperO;
+    @Autowired
+    productMapper productMapperObject;
+
     @Test
     void contextLoads() {
-//        System.out.println(innMapperO.getInnNum());
-//        System.out.println(innMapperO.getInnList(1,10,""));
+        System.out.println(productMapperObject.getGoodsNum());
     }
 
 }

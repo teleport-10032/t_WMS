@@ -13,10 +13,10 @@ public class goodsController {
     @Autowired
     goodsService goodsServiceObject;
 
-    @GetMapping("/getGoodsList")
-    public String getGoodsList(@RequestParam("page") int page,@RequestParam("pre") int pre,
-                               @RequestParam("key") String key,@RequestParam("token") String token) throws JsonProcessingException {
-        return goodsServiceObject.getGoodsList(page,pre,key,token);
-    }
+//    @GetMapping("/getGoodsList")
+//    public String getGoodsList(@RequestParam("page") int page,@RequestParam("pre") int pre,
+//                               @RequestParam("key") String key,@RequestParam("token") String token) throws JsonProcessingException {
+//        return goodsServiceObject.getGoodsList(page,pre,key,token);
+//    }
 
 }

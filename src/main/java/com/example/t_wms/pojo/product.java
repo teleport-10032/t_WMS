@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class goods{
+public class product {
     int id;
     String productName;
     int typeId;
