@@ -65,7 +65,7 @@
                     value: 'crmAdmin',
                     label: 'crm管理员'
                 }, {
-                    value: 'wmAdmin',
+                    value: 'whAdmin',
                     label: '仓库管理员'
                 },],
                 formRules: {
@@ -87,21 +87,22 @@
         ,
         created() {
             this.form.type = 'superAdmin'
-            // let result = axios({
-            //     method: 'post',
-            //     url: '/getStaffTypeByToken',
-            //     headers: { 'content-type': 'application/x-www-form-urlencoded'},
-            //     data: Qs.stringify({
-            //         token: window.localStorage.getItem("token")
-            //     })
-            // });
-            // result.then(res=>{
-            //     // console.log(res.data)
-            //     if(res.data !== 'admin')
-            //     {
-            //
-            //     }
-            // })
+            //get user type
+            let result = axios({
+                method: 'post',
+                url: '/getStaffTypeByToken',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: Qs.stringify({
+                    token: window.localStorage.getItem("token")
+                })
+            });
+            result.then(res=>{
+                console.log(res)
+                if(res.data.type === 'superAdmin')
+                {
+                    return window.location.href="/superAdmin/systemInfo";
+                }
+            })
 
         },
         methods: {

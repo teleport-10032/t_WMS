@@ -13,7 +13,7 @@ class TWmsApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(productMapperObject.getGoodsNum());
+
     }
 
 }

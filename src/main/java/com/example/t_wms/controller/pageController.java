@@ -14,14 +14,24 @@ public class pageController {
     public String login() {
         return "login";
     }
-    @RequestMapping("/systemInfo")
+    @RequestMapping("/superAdmin/systemInfo")
     public String systemInfo()
     {
         return "superAdmin/systemInfo";
     }
-    @RequestMapping("/basicInfoAdmin")
+    @RequestMapping("/superAdmin/basicInfoAdmin")
     public String basicInfoAdmin()
     {
         return "superAdmin/basicInfoAdmin";
+    }
+    @RequestMapping("/superAdmin/staffAdmin")
+    public String staffAdmin()
+    {
+        return "superAdmin/staffAdmin";
+    }
+    @RequestMapping("/superAdmin/warehouseAdmin")
+    public String warehouseAdmin()
+    {
+        return "superAdmin/warehouseAdmin";
     }
 }

@@ -6,10 +6,24 @@
 <mapper namespace="com.example.t_wms.mapper.typeMapper">
     <select id="getTypeList" resultType="type">
         select * from type
-        where typeName like "%"#{key}"%"
+        where name like "%"#{key}"%"
         order by id limit #{start},#{num}
     </select>
     <select id="getTypeNum" resultType="int">
-        select count(*) from type
+        select count(*) from type where name like "%"#{key}"%"
     </select>
+
+    <select id="getTypeById" resultType="type">
+        select * from type
+        where id=#{id}
+    </select>
+    <insert id="addType" parameterType="type">
+        insert into warehouse(name,info) values(#{name},#{info})
+    </insert>
+    <update id="updateTypeById" parameterType="type">
+        update type set name=#{name},info=#{info} where id=#{id}
+    </update>
+    <delete id="deleteTypeById" parameterType="int">
+        delete from type where id=#{id}
+    </delete>
 </mapper>

@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface productMapper {
-    List<product> getGoodsList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
-    int getGoodsNum();
+    List<product> getProductList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
+    int getProductNum();
 }

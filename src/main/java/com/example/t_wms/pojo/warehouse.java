@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class type{
+public class warehouse {
     int id;
     String name;
+    String position;
     String info;
 }

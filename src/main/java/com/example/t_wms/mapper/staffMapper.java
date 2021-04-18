@@ -27,7 +27,7 @@ public interface staffMapper {
     //staff list
     List<staff> getStaffList(@Param("start") int start,@Param("num") int num,@Param("key") String key);
     //the sum of staff
-    int getStaffNum();
+    int getStaffNum(@Param("key") String key);
     //add a staff
     int addStaff(@Param("name") String name,@Param("sex") String sex,
                  @Param("age") int age,@Param("type") String type,

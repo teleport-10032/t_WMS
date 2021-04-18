@@ -24,7 +24,7 @@
             order by id limit #{start},#{num};
    </select>
     <select id="getStaffNum" resultType="int">
-        select count(id) from staff;
+        select count(id) from staff where username like "%"#{key}"%" or name like "%"#{key}"%";
    </select>
     <insert id="addStaff" parameterType="staff">
         insert into staff (name,sex,age,type,phone,email,username,password)

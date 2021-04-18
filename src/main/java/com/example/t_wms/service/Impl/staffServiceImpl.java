@@ -80,7 +80,7 @@ public class staffServiceImpl implements staffService {
             int start = pre * (page - 1);
             int num = pre;
             List<staff> list = staffMapperObject.getStaffList(start,num,key);
-            int total = staffMapperObject.getStaffNum();
+            int total = staffMapperObject.getStaffNum(key);
             s.put("data", list);
             s.put("total", total);
             s.put("error", "0");
@@ -98,7 +98,7 @@ public class staffServiceImpl implements staffService {
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType()))
         {
-            int num = staffMapperObject.getStaffNum();
+            int num = staffMapperObject.getStaffNum("");
             s.put("staffNum", num);
             s.put("error", "0");
         }
@@ -116,7 +116,7 @@ public class staffServiceImpl implements staffService {
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-            int re = staffMapperObject.addStaff(name,sex,age,type,phone,email,username, DigestUtils.md5DigestAsHex("parrot".getBytes()));
+            int re = staffMapperObject.addStaff(name,sex,age,type,phone,email,username, DigestUtils.md5DigestAsHex("123123".getBytes()));
             if(re == 1)
                 s.put("error", "0");
             else

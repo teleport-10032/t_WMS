@@ -26,7 +26,7 @@ public class innServiceImpl implements innService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
-                "admin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             int start = pre * (page - 1);
             int num = pre;
 

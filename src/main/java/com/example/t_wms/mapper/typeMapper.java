@@ -10,8 +10,10 @@ import java.util.List;
 @Mapper
 @Repository
 public interface typeMapper {
-    //get type list
     List<type> getTypeList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
-    //get type num
-    int getTypeNum();
+    int getTypeNum(@Param("key") String key);
+    type getTypeById(@Param("id") int id);
+    int addType(@Param("name") String name,@Param("info") String info);
+    int updateTypeById(@Param("id") int id,@Param("name") String name, @Param("info") String info);
+    int deleteTypeById(@Param("id") int id);
 }
