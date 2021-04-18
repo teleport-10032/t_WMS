@@ -5,11 +5,25 @@
 
 <mapper namespace="com.example.t_wms.mapper.innMapper">
     <select id="getInnList" resultType="inn">
-        select inn.id,orderId,product.productName,productNum from inn,product
+        select inn.id,orderId,product.productName,productNum,createdDate,lastModifyDate,info from inn,product
         where orderId like "%"#{key}"%" and product.Id = inn.productId
         order by id limit #{start},#{num}
     </select>
     <select id="getInnNum" resultType="int">
-        select count(id) from inn
+        select count(id) from inn where orderId like "%"#{key}"%"
     </select>
+
+    <select id="getInnById" resultType="inn">
+        select inn.id,orderId,product.productName,productNum,createdDate,lastModifyDate,info from inn,product
+        where orderId like "%"#{key}"%" and product.Id = inn.productIdw
+    </select>
+    <insert id="addInn" parameterType="inn">
+        insert into Inn(name,info) values(#{name},#{info})
+    </insert>
+    <update id="updateInnById" parameterType="inn">
+        update Inn set name=#{name},info=#{info} where id=#{id}
+    </update>
+    <delete id="deleteInnById" parameterType="int">
+        delete from Inn where id=#{id}
+    </delete>
 </mapper>

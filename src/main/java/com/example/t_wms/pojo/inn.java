@@ -13,4 +13,7 @@ public class inn {
     int productId;
     String productName;
     int productNum;
+    String createdDate;
+    String lastModifyDate;
+    String info;
 }

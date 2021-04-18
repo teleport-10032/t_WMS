@@ -33,7 +33,7 @@ public class innServiceImpl implements innService {
             List<inn> list = innMapperObject.getInnList(start,num,key);
 
             s.put("data",list);
-            s.put("total",innMapperObject.getInnNum());
+            s.put("total",innMapperObject.getInnNum(key));
             s.put("error","0");
         }
         else

@@ -42,7 +42,7 @@
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
                             <el-table-column label="产品名" prop="name" min-width="5%"></el-table-column>
                             <el-table-column label="类型" prop="typeName" min-width="5%"></el-table-column>
-                            <el-table-column label="供应商" prop="supplierName" min-width="5%"></el-table-column>
+                            <el-table-column label="默认供应商" prop="supplierName" min-width="5%"></el-table-column>
                             <el-table-column label="单位" prop="unit" min-width="5%"></el-table-column>
                             <el-table-column label="单价" prop="price" min-width="5%"></el-table-column>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
@@ -73,15 +73,33 @@
                     <el-dialog title="新建产品" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
                                @submit.native.prevent>
                         <!-- 内容主体区域 -->
-                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
+                        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
                             <el-form-item label="产品名" prop="name">
                                 <el-input v-model="addForm.name" @keyup.enter.native="addProduct"></el-input>
                             </el-form-item>
-                            <el-form-item label="类型Id" prop="typeId">
-                                <el-input v-model="addForm.typeId" @keyup.enter.native="addProduct"></el-input>
+                            <el-form-item label="类型">
+                                <template>
+                                    <el-select v-model="addForm.typeId" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in typeOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
                             </el-form-item>
-                            <el-form-item label="供应商Id" prop="supplierId">
-                                <el-input v-model="addForm.supplierId" @keyup.enter.native="addProduct"></el-input>
+                            <el-form-item label="默认供应商">
+                                <template>
+                                    <el-select v-model="addForm.supplierId" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in supplierOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
                             </el-form-item>
                             <el-form-item label="单位" prop="unit">
                                 <el-input v-model="addForm.unit" @keyup.enter.native="addProduct"></el-input>
@@ -103,7 +121,7 @@
                     <!-- 修改对话框 -->
                     <el-dialog title="编辑产品信息" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
                                @submit.native.prevent>
-                        <el-form :model="editForm" :rules="addFormRules"  ref="editFormRef" label-width="80px">
+                        <el-form :model="editForm" :rules="addFormRules"  ref="editFormRef" label-width="100px">
                             <el-form-item label="Id" prop="id">
                                 <el-input v-model="editForm.id" @keyup.enter.native="editProductSubmit" disabled></el-input>
                             </el-form-item>
@@ -122,7 +140,7 @@
                                     </el-select>
                                 </template>
                             </el-form-item>
-                            <el-form-item label="供应商">
+                            <el-form-item label="默认供应商">
                                 <template>
                                     <el-select v-model="editForm.supplierId" placeholder="请选择">
                                         <el-option
@@ -333,6 +351,8 @@
                 this.addDialogVisible = false
             },
             addProduct() {
+                this.getSupplierIdAndName()
+                this.getTypeIdAndName()
                 this.$refs.addFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  axios({
