@@ -58,15 +58,15 @@
                         <el-row>
                             <el-tag effect="dark" size="mini">产品</el-tag>
                             &nbsp;
-                            <el-button type="primary" size="mini" plain>类型管理</el-button>
+                            <el-button type="primary" size="mini" plain @click="jumpToTypeAdmin">类型管理</el-button>
                             <el-button type="primary" size="mini" plain>产品管理</el-button>
                         </el-row>
                         <el-row style="height: 10px"></el-row>
                         <el-row>
                             <el-tag effect="dark" size="mini">人员</el-tag>
                             &nbsp;
+                            <el-button type="primary" size="mini" plain @click="jumpToSupplierAdmin">供应商管理</el-button>
                             <el-button type="primary" size="mini" plain>客户管理</el-button>
-                            <el-button type="primary" size="mini" plain>供应商管理</el-button>
                             <el-button type="primary" size="mini" plain @click="jumpToStaffAdmin">员工管理</el-button>
                         </el-row>
                     </el-card>
@@ -107,6 +107,14 @@
             jumpToWarehouseAdmin()
             {
                 window.location.href="/superAdmin/warehouseAdmin";
+            },
+            jumpToTypeAdmin()
+            {
+                window.location.href="/superAdmin/typeAdmin";
+            },
+            jumpToSupplierAdmin()
+            {
+                window.location.href="/superAdmin/supplierAdmin";
             },
         }
     })

@@ -26,13 +26,13 @@
                                 <el-button type="primary" @click="back()" size="middle">返回</el-button>
                             </el-col>
                             <el-col :span="8">
-                                <el-input placeholder="按仓库名查找" v-model="queryInfo.key" clearable @clear="getWarehouseList"
-                                          @keyup.enter.native="getWarehouseList">
-                                    <el-button slot="append" icon="el-icon-search" @Click="getWarehouseList"></el-button>
+                                <el-input placeholder="按类型名查找" v-model="queryInfo.key" clearable @clear="getTypeList"
+                                          @keyup.enter.native="getTypeList">
+                                    <el-button slot="append" icon="el-icon-search" @Click="getTypeList"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col :span="2">
-                                <el-button type="primary" @click="addDialogOpen">新建仓库信息</el-button>
+                                <el-button type="primary" @click="addDialogOpen">新建类型</el-button>
                             </el-col>
                         </el-row>
                         <br>
@@ -40,18 +40,17 @@
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="仓库名" prop="name" min-width="5%"></el-table-column>
-                            <el-table-column label="所在地" prop="position" mind-width="5%"></el-table-column>
+                            <el-table-column label="类型名" prop="name" min-width="5%"></el-table-column>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="187px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
                                         <el-button type="primary" icon="el-icon-edit" size="mini"
-                                                   @click="editWarehouse(scope.row.id)"></el-button>
+                                                   @click="editType(scope.row.id)"></el-button>
                                     </el-tooltip>
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
-                                                   @click="deleteWarehouseById(scope.row.id)"
+                                                   @click="deleteTypeById(scope.row.id)"
                                         ></el-button>
                                     </el-tooltip>
                                 </template>
@@ -67,15 +66,12 @@
                     </el-card>
 
                     <!-- 创建对话框 -->
-                    <el-dialog title="新建仓库" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
+                    <el-dialog title="新建类型" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
                                @submit.native.prevent>
                         <!-- 内容主体区域 -->
                         <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
-                            <el-form-item label="仓库名" prop="name">
+                            <el-form-item label="类型名" prop="name">
                                 <el-input v-model="addForm.name"></el-input>
-                            </el-form-item>
-                            <el-form-item label="所在地" prop="position">
-                                <el-input v-model="addForm.position"></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="addForm.info"></el-input>
@@ -84,30 +80,27 @@
                         <!-- 底部区域 -->
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="addDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="addWarehouse">确 定</el-button>
+                            <el-button type="primary" @click="addType">确 定</el-button>
                           </span>
                     </el-dialog>
 
                     <!-- 修改对话框 -->
-                    <el-dialog title="编辑仓库信息" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
+                    <el-dialog title="编辑类型信息" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed"
                                @submit.native.prevent>
                         <el-form :model="editForm" :rules="addFormRules"  ref="editFormRef" label-width="70px">
                             <el-form-item label="id" prop="id" >
                                 <el-input v-model="editForm.id" disabled></el-input>
                             </el-form-item>
-                            <el-form-item label="仓库名" prop="name">
-                                <el-input v-model="editForm.name" @keyup.enter.native="editWarehouseSubmit"></el-input>
-                            </el-form-item>
-                            <el-form-item label="所在地" prop="position">
-                                <el-input v-model="editForm.position" @keyup.enter.native="editWarehouseSubmit"></el-input>
+                            <el-form-item label="类型名" prop="name">
+                                <el-input v-model="editForm.name" @keyup.enter.native="editTypeSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
-                                <el-input v-model="editForm.info" @keyup.enter.native="editWarehouseSubmit"></el-input>
+                                <el-input v-model="editForm.info" @keyup.enter.native="editTypeSubmit"></el-input>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="editDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="editWarehouseSubmit">确 定</el-button>
+                            <el-button type="primary" @click="editTypeSubmit">确 定</el-button>
                         </span>
                     </el-dialog>
 
@@ -136,15 +129,11 @@
                 addDialogVisible: false,
                 addForm: {
                     name:'',
-                    position:'',
                     info:''
                 },
                 addFormRules: {
                     name: [
-                        { required: true, message: '请输入仓库名', trigger: 'blur' }
-                    ],
-                    position: [
-                        { required: true, message: '请输入所在地', trigger: 'blur' }
+                        { required: true, message: '请输入类型名', trigger: 'blur' }
                     ],
                     info: [
                         { required: true, message: '请输入备注', trigger: 'blur' }
@@ -154,15 +143,14 @@
                 editForm: {
                     id:'',
                     name:'',
-                    position:'',
                     info:''
-                }
+                },
             }
 
         }
         ,
         created() {
-            this.getWarehouseList()
+            this.getTypeList()
             this.init()
         },
         methods: {
@@ -175,10 +163,10 @@
                 document.getElementById("basicInfoAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
-            async getWarehouseList() {
+            async getTypeList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
-                let url =  '/getWarehouseList';
+                let url =  '/getTypeList';
                 axios.get(url, {
                     params: this.queryInfo
                 }).then(res => {
@@ -197,11 +185,11 @@
             },
             handleSizeChange(newSize) {
                 this.queryInfo.pre = newSize
-                this.getWarehouseList()
+                this.getTypeList()
             },
             handleCurrentChange(newPage) {
                 this.queryInfo.page = newPage
-                this.getWarehouseList()
+                this.getTypeList()
             },
             addDialogOpen()
             {
@@ -215,12 +203,12 @@
                 this.$refs.addFormRef.resetFields()
                 this.addDialogVisible = false
             },
-            addWarehouse() {
+            addType() {
                 this.$refs.addFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  axios({
                         method: 'post',
-                        url: '/addWarehouse',
+                        url: '/addType',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             name:this.addForm.name,
@@ -233,18 +221,18 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getWarehouseList()
+                            this.getTypeList()
                             this.addDialogClosed()
                             this.$message.success("操作成功")
                         }
                     })
                 })
             },
-            async editWarehouse(id){
+            async editType(id){
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // console.log(id)
-                const { data: res } = await axios.get('/getWarehouseById'
+                const { data: res } = await axios.get('/getTypeById'
                     ,{params:{id:id,token:window.localStorage.getItem("token")}})
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')
@@ -262,12 +250,12 @@
                 this.editDialogVisible = false
             },
             // 修改信息并提交
-            editWarehouseSubmit() {
+            editTypeSubmit() {
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  axios({
                         method: 'put',
-                        url: '/updateWarehouseById',
+                        url: '/updateTypeById',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             id:this.editForm.id,
@@ -280,7 +268,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getWarehouseList()
+                            this.getTypeList()
                             this.editDialogClosed()
                             this.$message.success("操作成功")
                         }
@@ -288,9 +276,9 @@
                 })
             },
             // 根据Id删除
-            async deleteWarehouseById(id) {
+            async deleteTypeById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该仓库, 是否继续?',
+                    '此操作将永久删除该种类, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',
@@ -302,7 +290,7 @@
                     return this.$message.info('已取消删除')
                 }
 
-                const {data: res} = await axios.delete('/deleteWarehouseById',
+                const {data: res} = await axios.delete('/deleteTypeById',
                     {
                         params: {
                             id: id,
@@ -313,7 +301,7 @@
                     return this.$message.error('操作失败')
                 }
                 this.$message.success('操作成功')
-                await this.getWarehouseList()
+                await this.getTypeList()
             },
             back()
             {

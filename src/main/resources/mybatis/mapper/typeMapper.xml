@@ -18,7 +18,7 @@
         where id=#{id}
     </select>
     <insert id="addType" parameterType="type">
-        insert into warehouse(name,info) values(#{name},#{info})
+        insert into type(name,info) values(#{name},#{info})
     </insert>
     <update id="updateTypeById" parameterType="type">
         update type set name=#{name},info=#{info} where id=#{id}
