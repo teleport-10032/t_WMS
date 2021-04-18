@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class product {
     int id;
-    String productName;
+    String name;
     int typeId;
+    int supplierId;
     String typeName;
+    String supplierName;
     String unit;
-    String info;
     double price;
+    String info;
 }

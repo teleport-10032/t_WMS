@@ -22,7 +22,7 @@
                 <div>
                     <el-card>
                         <el-row :gutter="20">
-                            <el-col :span="1" style="margin-right: 10px">
+                            <el-col :span="2">
                                 <el-button type="primary" @click="back()" size="middle">返回</el-button>
                             </el-col>
                             <el-col :span="8">
@@ -39,10 +39,10 @@
                         <el-table :data="warehouseList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
-                            <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="仓库名" prop="name" min-width="5%"></el-table-column>
-                            <el-table-column label="所在地" prop="position" mind-width="5%"></el-table-column>
-                            <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
+                            <el-table-column label="ID" prop="id" min-width="10%"></el-table-column>
+                            <el-table-column label="仓库名" prop="name" min-width="20%"></el-table-column>
+                            <el-table-column label="所在地" prop="position" mind-width="20%"></el-table-column>
+                            <el-table-column label="备注" prop="info" min-width="20%"></el-table-column>
                             <el-table-column label="操作" width="187px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
@@ -72,13 +72,13 @@
                         <!-- 内容主体区域 -->
                         <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
                             <el-form-item label="仓库名" prop="name">
-                                <el-input v-model="addForm.name"></el-input>
+                                <el-input v-model="addForm.name" @keyup.enter.native="addWarehouse"></el-input>
                             </el-form-item>
                             <el-form-item label="所在地" prop="position">
-                                <el-input v-model="addForm.position"></el-input>
+                                <el-input v-model="addForm.position" @keyup.enter.native="addWarehouse"></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
-                                <el-input v-model="addForm.info"></el-input>
+                                <el-input v-model="addForm.info" @keyup.enter.native="addWarehouse"></el-input>
                             </el-form-item>
                         </el-form>
                         <!-- 底部区域 -->
@@ -206,12 +206,8 @@
             addDialogOpen()
             {
                 this.addDialogVisible = true
-                this.sexValue = "男"
-                this.typeValue = "员工"
             },
             addDialogClosed() {
-                this.sexValue = ""
-                this.typeValue = ""
                 this.$refs.addFormRef.resetFields()
                 this.addDialogVisible = false
             },
@@ -256,8 +252,6 @@
             },
             // 监听修改对话框的关闭事件
             editDialogClosed() {
-                this.sexValue = ""
-                this.typeValue = ""
                 this.$refs.editFormRef.resetFields()
                 this.editDialogVisible = false
             },

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>供应商管理</title>
+    <title>客户管理</title>
     <%@ include file="../public/include.jsp"%>
 </head>
 <body>
@@ -26,22 +26,22 @@
                                 <el-button type="primary" @click="back()" size="middle">返回</el-button>
                             </el-col>
                             <el-col :span="8">
-                                <el-input placeholder="按供应商名查找" v-model="queryInfo.key" clearable @clear="getSupplierList"
-                                          @keyup.enter.native="getSupplierList">
-                                    <el-button slot="append" icon="el-icon-search" @Click="getSupplierList"></el-button>
+                                <el-input placeholder="按客户名查找" v-model="queryInfo.key" clearable @clear="getCustomerList"
+                                          @keyup.enter.native="getCustomerList">
+                                    <el-button slot="append" icon="el-icon-search" @Click="getCustomerList"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col :span="2">
-                                <el-button type="primary" @click="addDialogOpen">新建供应商</el-button>
+                                <el-button type="primary" @click="addDialogOpen">新建客户</el-button>
                             </el-col>
                         </el-row>
                         <br>
 <%--                        id,name,companyName,address,telephone, email,site, bank,bankAccount,bankName,taxNumber,debts,info,token--%>
-                        <el-table :data="supplierList" border stripe v-loading="loading"
+                        <el-table :data="CustomerList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="Id" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="供应商名" prop="name" min-width="5%"></el-table-column>
+                            <el-table-column label="客户名" prop="name" min-width="5%"></el-table-column>
                             <el-table-column label="所在公司" prop="companyName" min-width="5%"></el-table-column>
                             <el-table-column label="地址" prop="address" min-width="5%"></el-table-column>
                             <el-table-column label="手机" prop="telephone" min-width="5%"></el-table-column>
@@ -57,11 +57,11 @@
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
                                         <el-button type="primary" icon="el-icon-edit" size="mini"
-                                                   @click="editSupplier(scope.row.id)"></el-button>
+                                                   @click="editCustomer(scope.row.id)"></el-button>
                                     </el-tooltip>
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
-                                                   @click="deleteSupplierById(scope.row.id)"
+                                                   @click="deleteCustomerById(scope.row.id)"
                                         ></el-button>
                                     </el-tooltip>
                                 </template>
@@ -77,51 +77,51 @@
                     </el-card>
 
                     <!-- 创建对话框 -->
-                    <el-dialog title="新建供应商" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
+                    <el-dialog title="新建客户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed"
                                @submit.native.prevent>
                         <!-- 内容主体区域 -->
                         <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
-                            <el-form-item label="供应商名" prop="name">
-                                <el-input v-model="addForm.name" @keyup.enter.native="addSupplier"></el-input>
+                            <el-form-item label="客户名" prop="name">
+                                <el-input v-model="addForm.name" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="所在公司" prop="companyName">
-                                <el-input v-model="addForm.companyName" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.companyName" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="地址" prop="address">
-                                <el-input v-model="addForm.address" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.address" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="手机" prop="telephone">
-                                <el-input v-model="addForm.telephone" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.telephone" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
-                            <el-form-item label="邮箱" prop="email" @keyup.enter.native="addSupplier">
+                            <el-form-item label="邮箱" prop="email" @keyup.enter.native="addCustomer">
                                 <el-input v-model="addForm.email"></el-input>
                             </el-form-item>
                             <el-form-item label="网站" prop="site">
-                                <el-input v-model="addForm.site" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.site" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="开户行" prop="bank">
-                                <el-input v-model="addForm.bank" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.bank" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="银行账户" prop="bankAccount">
-                                <el-input v-model="addForm.bankAccount" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.bankAccount" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="开户名" prop="bankName">
-                                <el-input v-model="addForm.bankName" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.bankName" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="税号" prop="taxNumber">
-                                <el-input v-model="addForm.taxNumber" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.taxNumber" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                             <el-form-item label="欠款" prop="debts">
-                                <el-input v-model="addForm.debts"> @keyup.enter.native="addSupplier"</el-input>
+                                <el-input v-model="addForm.debts"> @keyup.enter.native="addCustomer"</el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
-                                <el-input v-model="addForm.info" @keyup.enter.native="addSupplier"></el-input>
+                                <el-input v-model="addForm.info" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
                         </el-form>
                         <!-- 底部区域 -->
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="addDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="addSupplier">确 定</el-button>
+                            <el-button type="primary" @click="addCustomer">确 定</el-button>
                           </span>
                     </el-dialog>
 
@@ -132,46 +132,46 @@
                             <el-form-item label="id" prop="id" >
                                 <el-input v-model="editForm.id" disabled></el-input>
                             </el-form-item>
-                            <el-form-item label="供应商名" prop="name">
-                                <el-input v-model="editForm.name" @keyup.enter.native="editSupplierSubmit"></el-input>
+                            <el-form-item label="客户名" prop="name">
+                                <el-input v-model="editForm.name" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="所在公司" prop="companyName">
-                                <el-input v-model="editForm.companyName" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.companyName" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="地址" prop="address">
-                                <el-input v-model="editForm.address" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.address" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="手机" prop="telephone">
-                                <el-input v-model="editForm.telephone" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.telephone" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="邮箱" prop="email">
-                                <el-input v-model="editForm.email" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.email" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="网站" prop="site">
-                                <el-input v-model="editForm.site" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.site" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="开户行" prop="bank">
-                                <el-input v-model="editForm.bank" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.bank" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="银行账户" prop="bankAccount">
-                                <el-input v-model="editForm.bankAccount" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.bankAccount" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="开户名" prop="bankName">
-                                <el-input v-model="editForm.bankName" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.bankName" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="税号" prop="taxNumber">
-                                <el-input v-model="editForm.taxNumber" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.taxNumber" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="欠款" prop="debts">
-                                <el-input v-model="editForm.debts" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.debts" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
-                                <el-input v-model="editForm.info" @keyup.enter.native="editSupplierSubmit"></el-input>
+                                <el-input v-model="editForm.info" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="editDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="editSupplierSubmit">确 定</el-button>
+                            <el-button type="primary" @click="editCustomerSubmit">确 定</el-button>
                         </span>
                     </el-dialog>
 
@@ -195,7 +195,7 @@
                     key:"",
                     token:""
                 },
-                supplierList:[],
+                CustomerList:[],
                 total: 0,
                 addDialogVisible: false,
                 addForm: {
@@ -214,7 +214,7 @@
                 },
                 addFormRules: {
                     name: [
-                        { required: true, message: '请输入供应商名', trigger: 'blur' }
+                        { required: true, message: '请输入客户名', trigger: 'blur' }
                     ],
                     companyName: [
                         { required: true, message: '请输入所在公司', trigger: 'blur' }
@@ -293,7 +293,7 @@
         }
         ,
         created() {
-            this.getSupplierList()
+            this.getCustomerList()
             this.init()
         },
         methods: {
@@ -306,17 +306,17 @@
                 document.getElementById("basicInfoAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
-            async getSupplierList() {
+            async getCustomerList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
-                let url =  '/getSupplierList';
+                let url =  '/getCustomerList';
                 axios.get(url, {
                     params: this.queryInfo
                 }).then(res => {
                     if(res.data.error === "0")
                     {
                         this.loading = false;
-                        this.supplierList = res.data.data;
+                        this.CustomerList = res.data.data;
                         this.total = res.data.total;
                     }
                     else
@@ -328,11 +328,11 @@
             },
             handleSizeChange(newSize) {
                 this.queryInfo.pre = newSize
-                this.getSupplierList()
+                this.getCustomerList()
             },
             handleCurrentChange(newPage) {
                 this.queryInfo.page = newPage
-                this.getSupplierList()
+                this.getCustomerList()
             },
             addDialogOpen()
             {
@@ -342,12 +342,12 @@
                 this.$refs.addFormRef.resetFields()
                 this.addDialogVisible = false
             },
-            addSupplier() {
+            addCustomer() {
                 this.$refs.addFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  axios({
                         method: 'post',
-                        url: '/addSupplier',
+                        url: '/addCustomer',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             name:this.addForm.name,
@@ -368,18 +368,18 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getSupplierList()
+                            this.getCustomerList()
                             this.addDialogClosed()
                             this.$message.success("操作成功")
                         }
                     })
                 })
             },
-            async editSupplier(id){
+            async editCustomer(id){
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // console.log(id)
-                const { data: res } = await axios.get('/getSupplierById'
+                const { data: res } = await axios.get('/getCustomerById'
                     ,{params:{id:id,token:window.localStorage.getItem("token")}})
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')
@@ -404,12 +404,12 @@
                 this.editDialogVisible = false
             },
             // 修改信息并提交
-            editSupplierSubmit() {
+            editCustomerSubmit() {
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  axios({
                         method: 'put',
-                        url: '/updateSupplierById',
+                        url: '/updateCustomerById',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             id:this.editForm.id,
@@ -431,7 +431,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getSupplierList()
+                            this.getCustomerList()
                             this.editDialogClosed()
                             this.$message.success("操作成功")
                         }
@@ -439,9 +439,9 @@
                 })
             },
             // 根据Id删除
-            async deleteSupplierById(id) {
+            async deleteCustomerById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该供应商, 是否继续?',
+                    '此操作将永久删除该客户, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',
@@ -453,7 +453,7 @@
                     return this.$message.info('已取消删除')
                 }
 
-                const {data: res} = await axios.delete('/deleteSupplierById',
+                const {data: res} = await axios.delete('/deleteCustomerById',
                     {
                         params: {
                             id: id,
@@ -464,7 +464,7 @@
                     return this.$message.error('操作失败')
                 }
                 this.$message.success('操作成功')
-                await this.getSupplierList()
+                await this.getCustomerList()
             },
             back()
             {

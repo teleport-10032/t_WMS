@@ -26,4 +26,9 @@
     <delete id="deleteTypeById" parameterType="int">
         delete from type where id=#{id}
     </delete>
+
+    <select id="getIdAndNameList" resultType="type">
+        select id,name from type
+    </select>
+
 </mapper>

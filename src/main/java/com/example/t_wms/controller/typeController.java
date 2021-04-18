@@ -38,4 +38,9 @@ public class typeController {
         return typeServiceObject.deleteTypeById(id,token);
     }
 
+    @GetMapping("getTypeIdAndName")
+    public String getTypeIdAndName(@RequestParam("token") String token) throws JsonProcessingException {
+        return typeServiceObject.getIdAndNameList(token);
+    }
+
 }

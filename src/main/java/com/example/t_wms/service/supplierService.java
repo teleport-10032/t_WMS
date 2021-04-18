@@ -14,4 +14,5 @@ public interface supplierService {
                               String email,String site,String bank,String bankAccount,String bankName,
                               String taxNumber, double debts,String info, String token) throws JsonProcessingException;
     String deleteSupplierById(int id,String token) throws JsonProcessingException;
+    String getIdAndName(String token) throws JsonProcessingException;
 }

@@ -1,9 +1,9 @@
 package com.example.t_wms.service.Impl;
 
-import com.example.t_wms.mapper.productMapper;
+import com.example.t_wms.mapper.customerMapper;
 import com.example.t_wms.mapper.staffMapper;
-import com.example.t_wms.pojo.product;
-import com.example.t_wms.service.productService;
+import com.example.t_wms.pojo.customer;
+import com.example.t_wms.service.customerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements productService {
+public class customerServiceImpl implements customerService {
 
     @Autowired
     staffMapper staffMapperObject;
     @Autowired
-    productMapper productMapperObject;
+    customerMapper customerMapperObject;
 
     @Override
-    public String getProductList(int page, int pre, String key, String token) throws JsonProcessingException {
+    public String getCustomerList(int page, int pre, String key, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -30,10 +30,10 @@ public class ProductServiceImpl implements productService {
             int start = pre * (page - 1);
             int num = pre;
 
-            List<product> list = productMapperObject.getProductList(start,num,key);
+            List<customer> list = customerMapperObject.getCustomerList(start,num,key);
 
             s.put("data",list);
-            s.put("total",productMapperObject.getProductNum(key));
+            s.put("total",customerMapperObject.getCustomerNum(key));
             s.put("error","0");
         }
         else
@@ -42,14 +42,14 @@ public class ProductServiceImpl implements productService {
     }
 
     @Override
-    public String getProductNum(String token) throws JsonProcessingException {
+    public String getCustomerById(int id, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
 
-            s.put("productNum",productMapperObject.getProductNum(""));
+            s.put("data",customerMapperObject.getCustomerById(id));
             s.put("error","0");
         }
         else
@@ -58,29 +58,14 @@ public class ProductServiceImpl implements productService {
     }
 
     @Override
-    public String getProductById(int id, String token) throws JsonProcessingException {
+    public String addCustomer(String name, String companyName, String address, String telephone, String email, String site, String bank, String bankAccount, String bankName, String taxNumber, double debts, String info, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-
-            s.put("data",productMapperObject.getProductById(id));
-            s.put("error","0");
-        }
-        else
-            s.put("error","-1");
-        return mapper.writeValueAsString(s);
-    }
-
-    @Override
-    public String addProduct(String name, int typeId, int supplierId, String unit, double price, String info,String token) throws JsonProcessingException {
-        //error: -1 means Ultra vires,-2 means system error
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-            if(productMapperObject.addProduct(name,typeId,supplierId,unit,price,info) == 1)
+            if(customerMapperObject.addCustomer(name,companyName,address,telephone, email,site,
+                    bank,bankAccount,bankName,taxNumber,debts,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");
@@ -91,14 +76,14 @@ public class ProductServiceImpl implements productService {
     }
 
     @Override
-    public String updateProductById(int id, String name, int typeId, int supplierId, String unit, double price, String info,String token) throws JsonProcessingException {
+    public String updateCustomerById(int id, String name, String companyName, String address, String telephone, String email, String site, String bank, String bankAccount, String bankName, String taxNumber, double debts, String info, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-
-            if(productMapperObject.updateProductById(id,name,typeId,supplierId,unit,price,info) == 1)
+            if(customerMapperObject.updateCustomerById(id,name,companyName,address,telephone, email,site,
+                    bank,bankAccount,bankName,taxNumber,debts,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");
@@ -109,14 +94,14 @@ public class ProductServiceImpl implements productService {
     }
 
     @Override
-    public String deleteProductById(int id, String token) throws JsonProcessingException {
+    public String deleteCustomerById(int id, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
 
-            if(productMapperObject.deleteProductById(id) == 1)
+            if(customerMapperObject.deleteCustomerById(id) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");
@@ -125,6 +110,4 @@ public class ProductServiceImpl implements productService {
             s.put("error","-1");
         return mapper.writeValueAsString(s);
     }
-
-
 }

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>仓库管理</title>
+    <title>类型管理</title>
     <%@ include file="../public/include.jsp"%>
 </head>
 <body>
@@ -22,7 +22,7 @@
                 <div>
                     <el-card>
                         <el-row :gutter="20">
-                            <el-col :span="1" style="margin-right: 10px">
+                            <el-col :span="2">
                                 <el-button type="primary" @click="back()" size="middle">返回</el-button>
                             </el-col>
                             <el-col :span="8">
@@ -71,10 +71,10 @@
                         <!-- 内容主体区域 -->
                         <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
                             <el-form-item label="类型名" prop="name">
-                                <el-input v-model="addForm.name"></el-input>
+                                <el-input v-model="addForm.name" @keyup.enter.native="addType"></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
-                                <el-input v-model="addForm.info"></el-input>
+                                <el-input v-model="addForm.info" @keyup.enter.native="addType"></el-input>
                             </el-form-item>
                         </el-form>
                         <!-- 底部区域 -->

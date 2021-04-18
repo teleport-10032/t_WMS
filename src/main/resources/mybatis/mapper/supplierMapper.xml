@@ -28,4 +28,9 @@
     <delete id="deleteSupplierById" parameterType="int">
         delete from supplier where id=#{id}
     </delete>
+
+    <select id="getIdAndName" resultType="supplier">
+        select id,name from supplier
+    </select>
+
 </mapper>

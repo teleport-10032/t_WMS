@@ -22,7 +22,7 @@
                 <div>
                     <el-card>
                         <el-row :gutter="20">
-                            <el-col :span="1" style="margin-right: 10px">
+                            <el-col :span="2">
                                 <el-button type="primary" @click="back()" size="middle">返回</el-button>
                             </el-col>
                             <el-col :span="8">

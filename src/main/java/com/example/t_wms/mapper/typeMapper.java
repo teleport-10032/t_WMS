@@ -16,4 +16,5 @@ public interface typeMapper {
     int addType(@Param("name") String name,@Param("info") String info);
     int updateTypeById(@Param("id") int id,@Param("name") String name, @Param("info") String info);
     int deleteTypeById(@Param("id") int id);
+    List<type> getIdAndNameList();
 }

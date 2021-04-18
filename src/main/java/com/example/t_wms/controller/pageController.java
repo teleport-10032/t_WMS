@@ -44,4 +44,14 @@ public class pageController {
     {
         return "superAdmin/supplierAdmin";
     }
+    @RequestMapping("/superAdmin/customerAdmin")
+    public String customerAdmin()
+    {
+        return "superAdmin/customerAdmin";
+    }
+    @RequestMapping("/superAdmin/productAdmin")
+    public String productAdmin()
+    {
+        return "superAdmin/productAdmin";
+    }
 }

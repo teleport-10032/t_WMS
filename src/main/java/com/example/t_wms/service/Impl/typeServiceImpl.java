@@ -110,5 +110,21 @@ public class typeServiceImpl implements typeService {
         return mapper.writeValueAsString(s);
     }
 
+    @Override
+    public String getIdAndNameList(String token) throws JsonProcessingException {
+        //error: -1 means Ultra vires,-2 means system error
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+            List<type> list = typeMapperObject.getIdAndNameList();
+            s.put("error","0");
+            s.put("data",list);
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
 
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.t_wms.mapper.customerMapper">
+    <select id="getCustomerList" resultType="customer">
+        select * from customer
+        where name like "%"#{key}"%"
+        order by id limit #{start},#{num}
+    </select>
+    <select id="getCustomerNum" resultType="int">
+        select count(*) from Customer where name like "%"#{key}"%"
+    </select>
+
+    <select id="getCustomerById" resultType="customer">
+        select * from customer
+        where id=#{id}
+    </select>
+    <insert id="addCustomer" parameterType="customer">
+        insert into customer(name,companyName,address,telephone,email,site,bank,bankAccount,bankName,taxNumber,debts,info)
+         values(#{name},#{companyName},#{address},#{telephone},#{email},#{site},#{bank},#{bankAccount},#{bankName},#{taxNumber},#{debts},#{info})
+    </insert>
+    <update id="updateCustomerById" parameterType="customer">
+        update Customer set name=#{name},companyName=#{companyName},address=#{address},telephone=#{telephone},email=#{email},
+                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},debts=#{debts},info=#{info}
+        where id=#{id}
+    </update>
+    <delete id="deleteCustomerById" parameterType="int">
+        delete from customer where id=#{id}
+    </delete>
+</mapper>
