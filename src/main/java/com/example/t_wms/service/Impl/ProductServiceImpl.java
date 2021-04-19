@@ -127,4 +127,18 @@ public class ProductServiceImpl implements productService {
     }
 
 
+    @Override
+    public String getIdAndName(String token) throws JsonProcessingException {
+        //error: -1 means Ultra vires,-2 means system error
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+            s.put("data",productMapperObject.getIdAndName());
+            s.put("error","0");
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
 }

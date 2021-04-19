@@ -43,4 +43,10 @@ public class customerController {
     public String deleteCustomerById(@RequestParam("id") int id, @RequestParam("token") String token) throws JsonProcessingException {
         return customerServiceObject.deleteCustomerById(id,token);
     }
+
+    @GetMapping("getCustomerIdAndName")
+    public String getCustomerIdAndName(@RequestParam("token") String token) throws JsonProcessingException {
+        return customerServiceObject.getIdAndName(token);
+    }
+
 }

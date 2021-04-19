@@ -7,3 +7,15 @@ jumpToBasicInfoAdmin()
 {
     window.location.href="/superAdmin/basicInfoAdmin";
 },
+jumpToInnAdmin()
+{
+    window.location.href="/superAdmin/innAdmin";
+},
+jumpToOuttAdmin()
+{
+    window.location.href="/superAdmin/outtAdmin";
+},
+jumpToStockAdmin()
+{
+    window.location.href="/superAdmin/stockAdmin";
+},

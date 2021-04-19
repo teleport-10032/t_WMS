@@ -28,7 +28,10 @@
     <delete id="deleteProductById" parameterType="int">
         delete from product where id=#{id}
     </delete>
-
+    
+    <select id="getIdAndName" resultType="product">
+        select id,name from product
+    </select>
 
 
 </mapper>

@@ -28,4 +28,7 @@
     <delete id="deleteCustomerById" parameterType="int">
         delete from customer where id=#{id}
     </delete>
+    <select id="getIdAndName" resultType="customer">
+        select id,name from customer
+    </select>
 </mapper>

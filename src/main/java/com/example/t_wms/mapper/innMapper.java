@@ -12,4 +12,14 @@ import java.util.List;
 public interface innMapper {
     List<inn> getInnList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
     int getInnNum(String key);
+
+    inn getInnById(@Param("id") int id);
+    int addInn(@Param("orderId") String orderId,@Param("productId") int productId,
+               @Param("supplierId") int supplierId,@Param("productNum") int productNum,
+               @Param("createdDate") String createdDate,@Param("lastModifyDate") String lastModifyDate,
+               @Param("info") String info);
+    int updateInnById(@Param("id") int id,@Param("orderId") String orderId,@Param("productId") int productId,
+                      @Param("supplierId") int supplierId,@Param("productNum") int productNum,
+                      @Param("lastModifyDate") String lastModifyDate,@Param("info") String info);
+    int deleteInnById(@Param("id") int id);
 }

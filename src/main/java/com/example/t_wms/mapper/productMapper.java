@@ -19,4 +19,6 @@ public interface productMapper {
                           @Param("supplierId") int supplierId,@Param("unit") String unit,
                           @Param("price") double price,@Param("info") String info);
     int deleteProductById(@Param("id") int id);
+    List<product> getIdAndName();
 }
+

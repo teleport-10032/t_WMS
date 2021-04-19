@@ -125,7 +125,7 @@
                         {
                             this.$message.success("登录成功")
                             window.localStorage.setItem('token',res.data.token);
-                            window.location.href="/systemInfo";
+                            window.location.href="/superAdmin/systemInfo";
 
                         }
                         else

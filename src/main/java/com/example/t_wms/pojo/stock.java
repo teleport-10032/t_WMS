@@ -1,5 +1,4 @@
 package com.example.t_wms.pojo;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,15 +6,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class inn {
+public class stock {
     int id;
-    String orderId;
-    int productId;
+    int num;
     String productName;
-    int supplierId;
-    String supplierName;
-    int productNum;
-    String createdDate;
-    String lastModifyDate;
-    String info;
 }

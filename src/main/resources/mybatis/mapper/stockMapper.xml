@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.t_wms.mapper.stockMapper">
+    <select id="getStockList" resultType="stock">
+        select stock.id,product.name as productName,stock.num from stock,product
+        where stock.productId = product.id
+        order by id limit #{start},#{num}
+    </select>
+    <select id="getStockNum" resultType="int">
+        select count(*) from stock,product where stock.productId = product.id
+    </select>
+
+
+</mapper>

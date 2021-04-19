@@ -47,6 +47,11 @@ public class ProductController {
         return productServiceObject.deleteProductById(id,token);
     }
 
+    @GetMapping("getProductIdAndName")
+    public String getProductIdAndNameList(@RequestParam("token") String token) throws JsonProcessingException {
+        return productServiceObject.getIdAndName(token);
+    }
+
 
 
 }

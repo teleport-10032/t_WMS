@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.t_wms.mapper.outtMapper">
+    <select id="getOuttList" resultType="outt">
+        select outt.id,orderId,product.name as productName,customer.name as customerName,productNum,createdDate,lastModifyDate,outt.info
+        from outt,product,customer
+        where orderId like "%"#{key}"%" and product.Id = outt.productId and outt.customerId=customer.id
+        order by outt.id limit #{start},#{num}
+    </select>
+    <select id="getOuttNum" resultType="int">
+        select count(id) from outt where orderId like "%"#{key}"%"
+    </select>
+
+    <select id="getOuttById" resultType="outt">
+        select outt.id,orderId,product.id as productId,customer.id as customerId,product.name as productName,customer.name as productName,productNum,createdDate,lastModifyDate,outt.info
+        from outt,product,customer
+        where product.Id = outt.productId and outt.customerId=customer.id and outt.id=#{id}
+    </select>
+    <insert id="addOutt" parameterType="outt">
+        insert into outt(orderId,productId,customerId,productNum,createdDate,lastModifyDate,info)
+         values(#{orderId},#{productId},#{customerId},#{productNum},#{createdDate},#{lastModifyDate},#{info})
+    </insert>
+    <update id="updateOuttById" parameterType="outt">
+        update outt set orderId=#{orderId},productId=#{productId},customerId=#{customerId},
+                       productNum=#{productNum},
+                       lastModifyDate=#{lastModifyDate},info=#{info}
+                       where id=#{id}
+    </update>
+    <delete id="deleteOuttById" parameterType="int">
+        delete from outt where id=#{id}
+    </delete>
+</mapper>

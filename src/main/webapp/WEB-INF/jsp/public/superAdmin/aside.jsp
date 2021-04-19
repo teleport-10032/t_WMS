@@ -6,10 +6,23 @@
             <i class="el-icon-info"  id="systemInfoIco"></i>
             <span slot="title"  id="systemInfo">系统信息</span>
         </el-menu-item>
-        <el-menu-item index="1" style="width: 220px" @Click="jumpToBasicInfoAdmin">
-            <i class="el-icon-s-grid"  id="basicInfoAdminIco"></i>
+        <el-menu-item index="2" style="width: 220px" @Click="jumpToBasicInfoAdmin">
+            <i class="el-icon-s-order"  id="basicInfoAdminIco"></i>
             <span slot="title"  id="basicInfoAdmin">基本信息管理</span>
         </el-menu-item>
+        <el-menu-item index="3" style="width: 220px" @Click="jumpToInnAdmin">
+            <i class="el-icon-s-home"  id="innAdminIco"></i>
+            <span slot="title"  id="innAdmin">入库管理</span>
+        </el-menu-item>
+        <el-menu-item index="4" style="width: 220px" @Click="jumpToOuttAdmin">
+            <i class="el-icon-s-shop"  id="outtAdminIco"></i>
+            <span slot="title"  id="outtAdmin">出库管理</span>
+        </el-menu-item>
+        <el-menu-item index="4" style="width: 220px" @Click="jumpToStockAdmin">
+            <i class="el-icon-s-grid"  id="stockAdminIco"></i>
+            <span slot="title"  id="stockAdmin">库存管理</span>
+        </el-menu-item>
+
 
     </el-menu>
 </el-aside>

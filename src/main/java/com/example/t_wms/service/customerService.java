@@ -13,4 +13,5 @@ public interface customerService {
                               String email,String site,String bank,String bankAccount,String bankName,
                               String taxNumber, double debts,String info, String token) throws JsonProcessingException;
     String deleteCustomerById(int id,String token) throws JsonProcessingException;
+    String getIdAndName(String token) throws JsonProcessingException;
 }

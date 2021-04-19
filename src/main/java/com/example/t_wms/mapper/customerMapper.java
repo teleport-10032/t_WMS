@@ -27,4 +27,5 @@ public interface customerMapper {
                            @Param("taxNumber") String taxNumber, @Param("debts") double debts,
                            @Param("info") String info);
     int deleteCustomerById(@Param("id") int id);
+    List<customer> getIdAndName();
 }
