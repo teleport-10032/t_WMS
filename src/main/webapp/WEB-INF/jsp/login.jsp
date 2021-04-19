@@ -136,7 +136,7 @@
             resetForm()
             {
                 this.$refs.formRef.resetFields()
-            }
+            },
         }
     })
 </script>

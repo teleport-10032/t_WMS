@@ -21,7 +21,7 @@
             <el-main id="elMain">
                 <div>
                     <el-card>
-                        <el-tag  effect="dark" size="small" type="warning">基本信息设置</el-tag>
+                        <el-tag effect="dark" size="small" type="warning">基本信息设置</el-tag>
                         <el-tooltip class="item" effect="dark" content="打开帮助信息" placement="top-start">
                             <el-button @click="dialogTableVisible = true" icon="el-icon-question" type="text"></el-button>
                         </el-tooltip>

@@ -19,3 +19,9 @@ jumpToStockAdmin()
 {
     window.location.href="/superAdmin/stockAdmin";
 },
+logout()
+{
+    window.localStorage.clear()
+    this.$message.success('退出成功')
+    window.location.href="/";
+},

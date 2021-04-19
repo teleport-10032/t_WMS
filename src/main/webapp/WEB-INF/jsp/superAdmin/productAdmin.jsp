@@ -242,6 +242,8 @@
         created() {
             this.getProductList()
             this.init()
+            this.getSupplierIdAndName()
+            this.getTypeIdAndName()
         },
         methods: {
             init()
@@ -351,8 +353,6 @@
                 this.addDialogVisible = false
             },
             addProduct() {
-                this.getSupplierIdAndName()
-                this.getTypeIdAndName()
                 this.$refs.addFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  axios({
@@ -381,8 +381,6 @@
                 })
             },
             async editProduct(id){
-                await this.getSupplierIdAndName()
-                await this.getTypeIdAndName()
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // console.log(id)

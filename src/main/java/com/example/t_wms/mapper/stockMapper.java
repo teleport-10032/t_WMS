@@ -12,4 +12,5 @@ import java.util.List;
 public interface stockMapper {
     List<stock> getStockList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
     int getStockNum(@Param("key") String key);
+    int addProductNumById(@Param("num") int num,@Param("productId") int productId);
 }

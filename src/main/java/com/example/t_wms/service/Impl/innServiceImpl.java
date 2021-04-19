@@ -2,6 +2,7 @@ package com.example.t_wms.service.Impl;
 
 import com.example.t_wms.mapper.innMapper;
 import com.example.t_wms.mapper.staffMapper;
+import com.example.t_wms.mapper.stockMapper;
 import com.example.t_wms.pojo.inn;
 import com.example.t_wms.service.innService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +23,8 @@ public class innServiceImpl implements innService {
     staffMapper staffMapperObject;
     @Autowired
     innMapper innMapperObject;
+    @Autowired
+    stockMapper stockMapperObject;
 
     @Override
     public String getInnList(int page, int pre, String key, String token) throws JsonProcessingException {
@@ -70,7 +73,8 @@ public class innServiceImpl implements innService {
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String createdDate = simpleDateFormat.format(new Date());
-            if(innMapperObject.addInn(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1)
+            if(innMapperObject.addInn(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1
+                && stockMapperObject.addProductNumById(productNum,productId) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

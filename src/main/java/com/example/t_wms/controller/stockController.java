@@ -20,4 +20,10 @@ public class stockController {
         return stockServiceObject.getStockList(page,pre,key,token);
     }
 
+    @GetMapping("addProductNumById")
+    public String addProductNumById(@RequestParam("num") int num,@RequestParam("productId") int productId,
+                                    @RequestParam("token") String token) throws JsonProcessingException {
+        return stockServiceObject.addProductNumById(num,productId,token);
+    }
+
 }

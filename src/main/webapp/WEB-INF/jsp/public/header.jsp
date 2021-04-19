@@ -5,5 +5,5 @@
             <el-tag effect="dark" size="mini" style="margin-left: 3px">{{username}}</el-tag>
         </p>
     </div>
-    <el-button type="success">退出</el-button>
+    <el-button type="success" @click="logout">退出</el-button>
 </el-header>

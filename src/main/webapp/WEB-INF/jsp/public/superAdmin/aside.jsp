@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<el-aside width="220px" id="elAside">
+<el-aside width="200px" id="elAside">
     <el-menu background-color="#333744"
              text-color="#fff"  class="el-menu-vertical-demo">
         <el-menu-item index="1" style="width: 220px" @Click="jumpToSystemInfo">

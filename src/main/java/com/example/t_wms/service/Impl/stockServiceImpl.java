@@ -42,4 +42,21 @@ public class stockServiceImpl implements stockService {
             s.put("error","-1");
         return mapper.writeValueAsString(s);
     }
+
+    @Override
+    public String addProductNumById(int num, int productId, String token) throws JsonProcessingException {
+        //error: -1 means Ultra vires,-2 means system error
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+            if(stockMapperObject.addProductNumById(num,productId) == 1)
+                s.put("error","0");
+            else
+                s.put("error","-2");
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
 }
