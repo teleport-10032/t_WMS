@@ -57,9 +57,14 @@
                                             仓库管理员
                                         </el-tag>
                                     </div>
-                                    <div v-else>
-                                        <el-tag type="info" effect="light" size="mini">
+                                    <div v-else-if="scope.row.type==='crmAdmin'">
+                                        <el-tag effect="light" size="mini">
                                             crm管理员
+                                        </el-tag>
+                                    </div>
+                                    <div v-else>
+                                        <el-tag effect="light" size="mini">
+                                            管理员
                                         </el-tag>
                                     </div>
                                 </template>
@@ -249,6 +254,9 @@
                 typeOptions: [{
                     value: 'superAdmin',
                     label: '超级管理员'
+                },{
+                    value: 'admin',
+                    label: '管理员'
                 }, {
                     value: 'crmAdmin',
                     label: 'crm管理员'

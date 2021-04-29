@@ -68,7 +68,6 @@ public class innServiceImpl implements innService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -69,5 +69,15 @@ public class pageController {
     {
         return "superAdmin/stockAdmin";
     }
+    @RequestMapping("/superAdmin/reportAdmin")
+    public String reportAdmin()
+    {
+        return "superAdmin/reportAdmin";
+    }
+    @RequestMapping("/superAdmin/crmAdmin")
+    public String crmAdmin()
+    {
+        return "superAdmin/crmAdmin";
+    }
 
 }

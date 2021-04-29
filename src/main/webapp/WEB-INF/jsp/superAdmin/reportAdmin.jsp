@@ -8,8 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>库存信息</title>
+    <title>数据报表</title>
     <%@ include file="../public/include.jsp"%>
+    <script src="${pageContext.request.contextPath}/resources/js/eCharts.js"></script>
 </head>
 <body>
 
@@ -21,29 +22,9 @@
             <el-main id="elMain">
                 <div>
                     <el-card>
-                        <el-row :gutter="20">
-                            <el-col :span="8">
-                                <el-input placeholder="按产品名查找" v-model="queryInfo.key" clearable @clear="getStockList"
-                                          @keyup.enter.native="getStockList">
-                                    <el-button slot="append" icon="el-icon-search" @Click="getStockList"></el-button>
-                                </el-input>
-                            </el-col>
-                        </el-row>
+                        <div id="chartMain1" style="width:1000px; height: 400px;"></div>
                         <br>
-                        <el-table :data="stockList" border stripe v-loading="loading"
-                                  :header-cell-style="{'text-align':'center','font-size':'14px'}"
-                                  :cell-style="{'text-align':'center','font-size':'14px'}">
-                            <el-table-column label="Id" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="产品名" prop="productName" min-width="5%"></el-table-column>
-                            <el-table-column label="数量" prop="num" min-width="5%"></el-table-column>
-                        </el-table>
-                        <br>
-                        <!-- 分页区域 -->
-                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                                       :current-page="queryInfo.page" :page-sizes="[5, 10]"
-                                       :page-size="queryInfo.pre"
-                                       layout="total, sizes, prev, pager, next, jumper" :total="total">
-                        </el-pagination>
+                        <div id="chartMain2" style="width:1000px; height: 400px;"></div>
                     </el-card>
                 </div>
             </el-main>
@@ -72,7 +53,6 @@
         }
         ,
         created() {
-            this.getStockList()
             this.init()
         },
         methods: {
@@ -81,8 +61,8 @@
                 <%@ include file="../public/setHeight.jsp" %>
                 <%@ include file="../public/getUsername.jsp" %>
                 <%@ include file="../public/superAdmin/roleJudge.jsp" %>
-                document.getElementById("stockAdmin").style.color = "#409EFF";
-                document.getElementById("stockAdminIco").style.color = "#409EFF"
+                document.getElementById("reportAdmin").style.color = "#409EFF";
+                document.getElementById("reportAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
             async getStockList() {
@@ -126,6 +106,52 @@
             },
         }
     })
+</script>
+<script type="text/javascript">
+    let option1 = {
+        title:{
+            text:'年度出库报表'
+        },
+        tooltip:{},
+        legend:{
+            data:['出库量']
+        },
+        xAxis:{
+            data:["第一季度","第二季度","第三季度","第四季度"]
+        },
+        yAxis:{
+
+        },
+        series:[{
+            name:'出库量',
+            type:'line',
+            data:[300,100,120,150,10,10]
+        }]
+    };
+    let option2 = {
+        title:{
+            text:'年度客户报表'
+        },
+        tooltip:{},
+        legend:{
+            data:['客户量']
+        },
+        xAxis:{
+            data:["第一季度","第二季度","第三季度","第四季度"]
+        },
+        yAxis:{
+
+        },
+        series:[{
+            name:'客户量',
+            type:'line',
+            data:[100,300,150,150,400,410]
+        }]
+    };
+    let myChart1 = echarts.init(document.getElementById('chartMain1'));
+    myChart1.setOption(option1);
+    let myChart2 = echarts.init(document.getElementById('chartMain2'));
+    myChart2.setOption(option2);
 </script>
 </body>
 </html>

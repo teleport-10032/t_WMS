@@ -7,3 +7,4 @@
 <%--<script src="${pageContext.request.contextPath}/resources/js/vue-router.js"></script>--%>
 <script src="${pageContext.request.contextPath}/resources/js/element-ui/lib/index.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/element-ui/lib/theme-chalk/index.css">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/ico/favicon.ico" type="image/x-icon">

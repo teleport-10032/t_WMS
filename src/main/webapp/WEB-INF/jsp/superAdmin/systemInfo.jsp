@@ -21,7 +21,7 @@
             <el-main id="elMain">
                 <div>
                     <el-card>
-                        <el-tag  effect="dark" size="small" type="warning">SystemInfo</el-tag>
+                        <el-tag  effect="dark" size="small" type="warning">基本信息</el-tag>
                         <el-tooltip class="item" effect="dark" content="打开帮助信息" placement="top-start">
                             <el-button @click="dialogTableVisible = true" icon="el-icon-question" type="text"></el-button>
                         </el-tooltip>
@@ -34,7 +34,7 @@
                                     <el-collapse  style="width: 100%;align-self: center;margin-top:15px" v-model="activeNames">
                                         <el-collapse-item title="该系统如何管控用户权限？" name="1">
                                             <p>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                该系统一共有三种权限，分别为superAdmin(超级管理员)、whAdmin(仓库管理员)、crmAdmin(crm管理员)。
+                                                该系统一共有三种权限，分别为superAdmin(超级管理员)、admin(管理员)、whAdmin(仓库管理员)、crmAdmin(crm管理员)。
                                                 <br>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                                 您是superAdmin用户，同时拥有仓库管理员和crm管理员的权限，并可对用户账户进行管理。
@@ -45,16 +45,11 @@
                                 <br>
                             </el-card>
                         </el-dialog>
-
                         <br><br>
-                        <el-tooltip class="item" effect="dark" content="系统中已录入的员工数量" placement="top-start">
-                            <el-tag effect="plain" size="mini" @click="jumpToStaffAdmin">员工数量</el-tag>
-                        </el-tooltip>
-                        <el-tag effect="plain" size="mini" @click="jumpToStaffAdmin">{{staffNum}}</el-tag>
+                        <el-tag effect="plain" size="mini">已录入的员工数量</el-tag>
+                        <el-tag effect="plain" size="mini">{{staffNum}}</el-tag>
                         <br><br>
-                        <el-tooltip class="item" effect="dark" content="系统中已录入的产品数量" placement="top-start">
-                            <el-tag effect="plain" size="mini">产品数量</el-tag>
-                        </el-tooltip>
+                        <el-tag effect="plain" size="mini">已录入的产品数量</el-tag>
                         <el-tag effect="plain" size="mini">{{productNum}}</el-tag>
                     </el-card>
                     <br><br>

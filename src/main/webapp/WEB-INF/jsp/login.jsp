@@ -62,6 +62,9 @@
                     value: 'superAdmin',
                     label: '超级管理员'
                 }, {
+                    value: 'admin',
+                    label: '管理员'
+                }, {
                     value: 'crmAdmin',
                     label: 'crm管理员'
                 }, {

@@ -44,12 +44,12 @@
                             <el-table-column label="创建日期" prop="createdDate" min-width="5%"></el-table-column>
                             <el-table-column label="最后修改日期" prop="lastModifyDate" min-width="5%"></el-table-column>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
-                            <el-table-column label="操作" width="187px">
+                            <el-table-column label="操作" width="90px">
                                 <template slot-scope="scope">
-                                    <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-                                        <el-button type="primary" icon="el-icon-edit" size="mini"
-                                                   @click="editInn(scope.row.id)"></el-button>
-                                    </el-tooltip>
+<%--                                    <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">--%>
+<%--                                        <el-button type="primary" icon="el-icon-edit" size="mini"--%>
+<%--                                                   @click="editInn(scope.row.id)"></el-button>--%>
+<%--                                    </el-tooltip>--%>
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
                                                    @click="deleteInnById(scope.row.id)">

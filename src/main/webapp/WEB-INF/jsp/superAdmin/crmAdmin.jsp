@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>库存信息</title>
+    <title>crm管理</title>
     <%@ include file="../public/include.jsp"%>
 </head>
 <body>
@@ -23,19 +23,32 @@
                     <el-card>
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="按产品名查找" v-model="queryInfo.key" clearable @clear="getStockList"
+                                <el-input placeholder="按客户名查找" v-model="queryInfo.key" clearable @clear="getStockList"
                                           @keyup.enter.native="getStockList">
                                     <el-button slot="append" icon="el-icon-search" @Click="getStockList"></el-button>
                                 </el-input>
                             </el-col>
                         </el-row>
                         <br>
-                        <el-table :data="stockList" border stripe v-loading="loading"
+                        <el-table :data="crmList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="Id" prop="id" min-width="5%"></el-table-column>
-                            <el-table-column label="产品名" prop="productName" min-width="5%"></el-table-column>
-                            <el-table-column label="数量" prop="num" min-width="5%"></el-table-column>
+                            <el-table-column label="客户名称" prop="customerName" min-width="5%"></el-table-column>
+                            <el-table-column label="成交订单数" prop="orderNum" min-width="5%"></el-table-column>
+                            <el-table-column label="欠款(元)" prop="oweNum" min-width="5%"></el-table-column>
+                            <el-table-column label="近30天回访数" prop="visitNum" min-width="5%"></el-table-column>
+                            <el-table-column label="操作" width="180px">
+                                <template slot-scope="scope">
+                                    <el-tooltip effect="dark" content="增加回访次数" placement="top" :enterable="false">
+                                        <el-button type="primary" icon="el-icon-plus" size="mini"></el-button>
+                                    </el-tooltip>
+                                    <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
+                                        <el-button type="danger" icon="el-icon-delete" size="mini">
+                                        </el-button>
+                                    </el-tooltip>
+                                </template>
+                            </el-table-column>
                         </el-table>
                         <br>
                         <!-- 分页区域 -->
@@ -66,11 +79,16 @@
                     token:""
                 },
                 stockList:[],
+                crmList:[
+                    {id:1000,customerName:"徐三",orderNum:'30',oweNum:'0',visitNum:'3'},
+                    {id:1000,customerName:"徐四",orderNum:'13',oweNum:'0',visitNum:'4'},
+                    {id:1000,customerName:"徐五",orderNum:'14',oweNum:'0',visitNum:'5'},
+                    {id:1000,customerName:"徐六",orderNum:'5',oweNum:'0',visitNum:'1'},
+                    {id:1000,customerName:"徐七",orderNum:'11',oweNum:'0',visitNum:'2'},
+                    ],
                 total: 0,
             }
-
-        }
-        ,
+        },
         created() {
             this.getStockList()
             this.init()
@@ -81,8 +99,8 @@
                 <%@ include file="../public/setHeight.jsp" %>
                 <%@ include file="../public/getUsername.jsp" %>
                 <%@ include file="../public/superAdmin/roleJudge.jsp" %>
-                document.getElementById("stockAdmin").style.color = "#409EFF";
-                document.getElementById("stockAdminIco").style.color = "#409EFF"
+                document.getElementById("crmAdmin").style.color = "#409EFF";
+                document.getElementById("crmAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
             async getStockList() {

@@ -2,6 +2,7 @@ package com.example.t_wms.service.Impl;
 
 import com.example.t_wms.mapper.outtMapper;
 import com.example.t_wms.mapper.staffMapper;
+import com.example.t_wms.mapper.stockMapper;
 import com.example.t_wms.pojo.outt;
 import com.example.t_wms.service.outtService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +23,8 @@ public class outtServiceImpl implements outtService {
     staffMapper staffMapperObject;
     @Autowired
     outtMapper outtMapperObject;
+    @Autowired
+    stockMapper stockMapperObject;
 
     @Override
     public String getOuttList(int page, int pre, String key, String token) throws JsonProcessingException {
@@ -70,7 +73,8 @@ public class outtServiceImpl implements outtService {
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String createdDate = simpleDateFormat.format(new Date());
-            if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1)
+            if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1
+                    && stockMapperObject.addProductNumById(productNum*(-1),productId) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

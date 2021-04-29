@@ -20,9 +20,16 @@
         </el-menu-item>
         <el-menu-item index="4" style="width: 220px" @Click="jumpToStockAdmin">
             <i class="el-icon-s-grid"  id="stockAdminIco"></i>
-            <span slot="title"  id="stockAdmin">库存管理</span>
+            <span slot="title"  id="stockAdmin">库存信息</span>
         </el-menu-item>
-
+        <el-menu-item index="5" style="width: 220px" @Click="jumpToReportAdmin">
+            <i class="el-icon-s-marketing"  id="reportAdminIco"></i>
+            <span slot="title"  id="reportAdmin">数据报表</span>
+        </el-menu-item>
+        <el-menu-item index="6" style="width: 220px" @Click="jumpToCrmAdmin">
+            <i class="el-icon-s-custom"  id="crmAdminIco"></i>
+            <span slot="title"  id="crmAdmin">crm管理</span>
+        </el-menu-item>
 
     </el-menu>
 </el-aside>

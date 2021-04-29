@@ -19,6 +19,14 @@ jumpToStockAdmin()
 {
     window.location.href="/superAdmin/stockAdmin";
 },
+jumpToReportAdmin()
+{
+    window.location.href="/superAdmin/reportAdmin";
+},
+jumpToCrmAdmin()
+{
+    window.location.href="/superAdmin/crmAdmin";
+},
 logout()
 {
     window.localStorage.clear()
