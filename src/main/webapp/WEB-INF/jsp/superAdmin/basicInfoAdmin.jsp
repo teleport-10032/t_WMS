@@ -49,11 +49,11 @@
                             </el-card>
                         </el-dialog>
                         <br><br>
-                        <el-row>
-                            <el-tag effect="dark" size="mini">仓库</el-tag>
-                            &nbsp;
-                            <el-button type="primary" size="mini" plain @click="jumpToWarehouseAdmin">仓库管理</el-button>
-                        </el-row>
+<%--                        <el-row>--%>
+<%--                            <el-tag effect="dark" size="mini">仓库</el-tag>--%>
+<%--                            &nbsp;--%>
+<%--                            <el-button type="primary" size="mini" plain @click="jumpToWarehouseAdmin">仓库管理</el-button>--%>
+<%--                        </el-row>--%>
                         <el-row style="height: 10px"></el-row>
                         <el-row>
                             <el-tag effect="dark" size="mini">产品</el-tag>

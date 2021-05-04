@@ -239,6 +239,16 @@
                 document.getElementById("innAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
+            getInnNumber() {
+                let code = '';
+                let codeLength = 4;
+                let random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+                for (let i = 0; i < codeLength; i++) {
+                    let index = Math.floor(Math.random() * 9);
+                    code += random[index];
+                }
+                this.addForm.orderId = 'In' + new Date().getTime() + code
+            },
             async getInnList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
@@ -331,6 +341,7 @@
             addDialogOpen()
             {
                 this.addDialogVisible = true
+                this.getInnNumber()
             },
             addDialogClosed() {
                 this.$refs.addFormRef.resetFields()

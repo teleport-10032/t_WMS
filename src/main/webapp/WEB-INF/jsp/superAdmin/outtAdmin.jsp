@@ -23,9 +23,9 @@
                     <el-card>
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="按订单号查找" v-model="queryInfo.key" clearable @clear="getoutList"
-                                          @keyup.enter.native="getoutList">
-                                    <el-button slot="append" icon="el-icon-search" @Click="getoutList"></el-button>
+                                <el-input placeholder="按订单号查找" v-model="queryInfo.key" clearable @clear="getOutList"
+                                          @keyup.enter.native="getOutList">
+                                    <el-button slot="append" icon="el-icon-search" @Click="getOutList"></el-button>
                                 </el-input>
                             </el-col>
                             <el-col :span="4">
@@ -224,7 +224,7 @@
         }
         ,
         created() {
-            this.getoutList()
+            this.getOutList()
             this.init()
             this.getCustomerIdAndName()
             this.getProductIdAndName()
@@ -239,7 +239,17 @@
                 document.getElementById("outtAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
-            async getoutList() {
+            getOuttNumber() {
+                let code = '';
+                let codeLength = 4;
+                let random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+                for (let i = 0; i < codeLength; i++) {
+                    let index = Math.floor(Math.random() * 9);
+                    code += random[index];
+                }
+                this.addForm.orderId = 'Out' + new Date().getTime() + code
+            },
+            async getOutList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
                 let url =  '/getOuttList';
@@ -323,15 +333,16 @@
             },
             handleSizeChange(newSize) {
                 this.queryInfo.pre = newSize
-                this.getoutList()
+                this.getOutList()
             },
             handleCurrentChange(newPage) {
                 this.queryInfo.page = newPage
-                this.getoutList()
+                this.getOutList()
             },
             addDialogOpen()
             {
                 this.addDialogVisible = true
+                this.getOuttNumber()
             },
             addDialogClosed() {
                 this.$refs.addFormRef.resetFields()
@@ -356,7 +367,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getoutList()
+                            this.getOutList()
                             this.addDialogClosed()
                             this.$message.success("操作成功")
                         }
@@ -409,7 +420,7 @@
                     result.then(res=>{
                         if(res.data.error === "0")
                         {
-                            this.getoutList()
+                            this.getOutList()
                             this.editDialogClosed()
                             this.$message.success("操作成功")
                         }
@@ -442,7 +453,7 @@
                     return this.$message.error('操作失败')
                 }
                 this.$message.success('操作成功')
-                await this.getoutList()
+                await this.getOutList()
             },
             back()
             {
