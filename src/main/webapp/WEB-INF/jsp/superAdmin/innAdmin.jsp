@@ -204,11 +204,26 @@
                         { required: true, message: '请输入供应商', trigger: 'blur' }
                     ],
                     productNum: [
-                        { required: true, message: '请输入数量(件)', trigger: 'blur' }
-                    ],
-                    info: [
-                        { required: true, message: '请输入备注', trigger: 'blur' }
-                    ],
+                        { required: true, message: '请输入数量(件)', trigger: 'blur' },
+                        {
+                            type: 'number',
+                            message: '请输入正整数',
+                            trigger: 'blur',
+                            transform(value) {
+                                if(value !== null && value !== '') {
+                                    if (String(value).trim() === '' || Number(value) <= 0) {
+                                        return false
+                                    }else if (String(value).indexOf('.') !== -1 || String(value).indexOf('-') !== -1) {
+                                        return false
+                                    }else{
+                                        return Number(value)
+                                    }
+                                }else {
+                                    return null
+                                }
+                            }
+                        }
+                    ]
                 },
                 editDialogVisible: false,
                 editForm: {
@@ -429,7 +444,7 @@
             // 根据Id删除
             async deleteInnById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该种类, 是否继续?',
+                    '此操作将永久删除该记录, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',
@@ -448,10 +463,15 @@
                             token: window.localStorage.getItem("token")
                         }
                     })
-                if (res.error !== "0") {
-                    return this.$message.error('操作失败')
+                if (res.error === "0") {
+                    this.$message.success('操作成功')
                 }
-                this.$message.success('操作成功')
+                else if (res.error === "-3") {
+                    return this.$message.error('操作失败，因为删除该记录后库存为负数')
+                }
+                else{
+                    this.$message.error('操作失败')
+                }
                 await this.getInnList()
             },
             back()

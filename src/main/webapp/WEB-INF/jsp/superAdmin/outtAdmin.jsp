@@ -204,11 +204,26 @@
                         { required: true, message: '请输入客户', trigger: 'blur' }
                     ],
                     productNum: [
-                        { required: true, message: '请输入数量(件)', trigger: 'blur' }
-                    ],
-                    info: [
-                        { required: true, message: '请输入备注', trigger: 'blur' }
-                    ],
+                        { required: true, message: '请输入数量(件)', trigger: 'blur' },
+                        {
+                            type: 'number',
+                            message: '请输入正整数',
+                            trigger: 'blur',
+                            transform(value) {
+                                if(value !== null && value !== '') {
+                                    if (String(value).trim() === '' || Number(value) <= 0) {
+                                        return false
+                                    }else if (String(value).indexOf('.') !== -1 || String(value).indexOf('-') !== -1) {
+                                        return false
+                                    }else{
+                                        return Number(value)
+                                    }
+                                }else {
+                                    return null
+                                }
+                            }
+                        }
+                    ]
                 },
                 editDialogVisible: false,
                 editForm: {
@@ -279,7 +294,7 @@
                     {
                         let len = res.data.data.length
                         let len2 = this.customerOptions.length
-                        console.log(len2)
+                        // console.log(len2)
                         if(len2 === 0)
                         {
                             for(let i = 0 ; i < len ; i ++)
@@ -310,7 +325,7 @@
                     {
                         let len = res.data.data.length
                         let len2 = this.productOptions.length
-                        console.log(len2)
+                        // console.log(len2)
                         if(len2 === 0)
                         {
                             for(let i = 0 ; i < len ; i ++)
@@ -371,6 +386,10 @@
                             this.addDialogClosed()
                             this.$message.success("操作成功")
                         }
+                        else if(res.data.error === "-3")
+                            this.$message.error("操作失败，因为增加该记录后库存为负数")
+                        else
+                            this.$message.error("操作失败")
                     })
                 })
             },
@@ -430,7 +449,7 @@
             // 根据Id删除
             async deleteOuttById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该种类, 是否继续?',
+                    '此操作将永久删除该记录, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',

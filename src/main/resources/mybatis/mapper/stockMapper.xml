@@ -17,5 +17,11 @@
         update stock,product set num=num+#{num} where stock.productId = product.id and product.id = #{productId}
     </update>
 
+    <select id="getStockById" resultType="stock">
+
+        select stock.id,product.name as productName,stock.num from stock,product
+        where stock.productId = product.id and product.id=#{id}
+    </select>
+
 
 </mapper>

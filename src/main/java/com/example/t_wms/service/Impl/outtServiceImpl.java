@@ -73,11 +73,19 @@ public class outtServiceImpl implements outtService {
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String createdDate = simpleDateFormat.format(new Date());
-            if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1
-                    && stockMapperObject.addProductNumById(productNum*(-1),productId) == 1)
-                s.put("error","0");
+            if(productNum > stockMapperObject.getStockById(productId).getNum())
+            {
+                s.put("error","-3");
+                return mapper.writeValueAsString(s);
+            }
             else
-                s.put("error","-2");
+            {
+                if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1
+                        && stockMapperObject.addProductNumById(productNum*(-1),productId) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","-2");
+            }
         }
         else
             s.put("error","-1");
@@ -110,11 +118,15 @@ public class outtServiceImpl implements outtService {
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-
-            if(outtMapperObject.deleteOuttById(id) == 1)
+//            System.out.println(id);
+            int num = outtMapperObject.getOuttById(id).getProductNum();
+            int productId = outtMapperObject.getOuttById(id).getProductId();
+            if(stockMapperObject.addProductNumById(num,productId) == 1 && outtMapperObject.deleteOuttById(id) == 1){
                 s.put("error","0");
-            else
+            }
+            else{
                 s.put("error","-2");
+            }
         }
         else
             s.put("error","-1");

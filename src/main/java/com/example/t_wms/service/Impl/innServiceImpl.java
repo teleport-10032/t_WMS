@@ -109,11 +109,25 @@ public class innServiceImpl implements innService {
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+//            System.out.println(id);
+            int num = innMapperObject.getInnById(id).getProductNum();
+            int productId = innMapperObject.getInnById(id).getProductId();
 
-            if(innMapperObject.deleteInnById(id) == 1)
-                s.put("error","0");
+            int stockNum = stockMapperObject.getStockById(productId).getNum();
+            if(num > stockNum)
+            {
+                s.put("error","-3");
+                return mapper.writeValueAsString(s);
+            }
             else
-                s.put("error","-2");
+            {
+                if(stockMapperObject.addProductNumById(num*(-1),productId) == 1 && innMapperObject.deleteInnById(id) == 1){
+                    s.put("error","0");
+                }
+                else{
+                    s.put("error","-2");
+                }
+            }
         }
         else
             s.put("error","-1");
