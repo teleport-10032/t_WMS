@@ -18,4 +18,5 @@ public class outt {
     String createdDate;
     String lastModifyDate;
     String info;
+    double price;
 }

@@ -93,7 +93,7 @@ public class outtServiceImpl implements outtService {
     }
 
     @Override
-    public String updateOuttById(int id, String orderId, int productId, int supplierId, int productNum, String info, String token) throws JsonProcessingException {
+    public String updateOuttById(int id,String info, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -101,7 +101,7 @@ public class outtServiceImpl implements outtService {
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String lastModifyDate = simpleDateFormat.format(new Date());
-            if(outtMapperObject.updateOuttById(id,orderId,productId,supplierId,productNum,lastModifyDate,info) == 1)
+            if(outtMapperObject.updateOuttById(id,lastModifyDate,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

@@ -7,6 +7,6 @@ public interface outtService {
 
     String getOuttById(int id,String token) throws JsonProcessingException;
     String addOutt(String orderId,int productId,int customerId,int productNum,String info,String token) throws JsonProcessingException;
-    String updateOuttById(int id,String orderId,int productId,int customerId,int productNum,String info,String token) throws JsonProcessingException;
+    String updateOuttById(int id,String info,String token) throws JsonProcessingException;
     String deleteOuttById(int id,String token) throws JsonProcessingException;
 }

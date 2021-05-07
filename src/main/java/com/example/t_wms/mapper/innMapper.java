@@ -18,8 +18,9 @@ public interface innMapper {
                @Param("supplierId") int supplierId,@Param("productNum") int productNum,
                @Param("createdDate") String createdDate,@Param("lastModifyDate") String lastModifyDate,
                @Param("info") String info);
-    int updateInnById(@Param("id") int id,@Param("orderId") String orderId,@Param("productId") int productId,
+/*    int updateInnById(@Param("id") int id,@Param("orderId") String orderId,@Param("productId") int productId,
                       @Param("supplierId") int supplierId,@Param("productNum") int productNum,
-                      @Param("lastModifyDate") String lastModifyDate,@Param("info") String info);
+                      @Param("lastModifyDate") String lastModifyDate,@Param("info") String info);*/
+    int updateInnById(@Param("id") int id,@Param("lastModifyDate") String lastModifyDate,@Param("info") String info);
     int deleteInnById(@Param("id") int id);
 }

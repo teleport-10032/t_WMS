@@ -83,8 +83,27 @@ public class innServiceImpl implements innService {
         return mapper.writeValueAsString(s);
     }
 
+//    @Override
+//    public String updateInnById(int id, String orderId, int productId, int supplierId, int productNum, String info, String token) throws JsonProcessingException {
+//        //error: -1 means Ultra vires,-2 means system error
+//        ObjectMapper mapper = new ObjectMapper();
+//        HashMap s = new HashMap();
+//        if(staffMapperObject.getStaffByToken(token) != null &&
+//                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+//            DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String lastModifyDate = simpleDateFormat.format(new Date());
+//            if(innMapperObject.updateInnById(id,orderId,productId,supplierId,productNum,lastModifyDate,info) == 1)
+//                s.put("error","0");
+//            else
+//                s.put("error","-2");
+//        }
+//        else
+//            s.put("error","-1");
+//        return mapper.writeValueAsString(s);
+//    }
+
     @Override
-    public String updateInnById(int id, String orderId, int productId, int supplierId, int productNum, String info, String token) throws JsonProcessingException {
+    public String updateInnById(int id,String info, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -92,7 +111,7 @@ public class innServiceImpl implements innService {
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String lastModifyDate = simpleDateFormat.format(new Date());
-            if(innMapperObject.updateInnById(id,orderId,productId,supplierId,productNum,lastModifyDate,info) == 1)
+            if(innMapperObject.updateInnById(id,lastModifyDate,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

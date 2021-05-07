@@ -41,15 +41,20 @@
                             <el-table-column label="产品名" prop="productName" min-width="5%"></el-table-column>
                             <el-table-column label="供应商" prop="supplierName" min-width="5%"></el-table-column>
                             <el-table-column label="数量(件)" prop="productNum" min-width="5%"></el-table-column>
+                            <el-table-column label="单价(元)" prop="price" min-width="5%"></el-table-column>
                             <el-table-column label="创建日期" prop="createdDate" min-width="5%"></el-table-column>
-                            <el-table-column label="最后修改日期" prop="lastModifyDate" min-width="5%"></el-table-column>
+<%--                            <el-table-column label="最后修改日期" prop="lastModifyDate" min-width="5%"></el-table-column>--%>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
-                            <el-table-column label="操作" width="90px">
+                            <el-table-column label="操作" width="210px">
                                 <template slot-scope="scope">
-<%--                                    <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">--%>
-<%--                                        <el-button type="primary" icon="el-icon-edit" size="mini"--%>
-<%--                                                   @click="editInn(scope.row.id)"></el-button>--%>
-<%--                                    </el-tooltip>--%>
+                                    <el-tooltip effect="dark" content="查看" placement="top" :enterable="false">
+                                        <el-button type="warning" icon="el-icon-search" size="mini"
+                                                   @click="viewInn(scope.row.id)"></el-button>
+                                    </el-tooltip>
+                                    <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
+                                        <el-button type="primary" icon="el-icon-edit" size="mini"
+                                                   @click="editInn(scope.row.id)"></el-button>
+                                    </el-tooltip>
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
                                                    @click="deleteInnById(scope.row.id)">
@@ -118,15 +123,14 @@
                                @submit.native.prevent>
                         <el-form :model="editForm" :rules="addFormRules"  ref="editFormRef" label-width="70px">
                             <el-form-item label="Id" prop="id">
-                                <el-input v-model="editForm.id" @keyup.enter.native="editInnSubmit" disabled></el-input>
+                                <el-input v-model="editForm.id" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="订单号" prop="orderId">
-                                <el-input v-model="editForm.orderId" @keyup.enter.native="editInnSubmit"></el-input>
+                                <el-input v-model="editForm.orderId" disabled></el-input>
                             </el-form-item>
-
                             <el-form-item label="产品" prop="productId">
                                 <template>
-                                    <el-select v-model="editForm.productId" placeholder="请选择">
+                                    <el-select v-model="editForm.productId" placeholder="请选择" disabled>
                                         <el-option
                                                 v-for="item in productOptions"
                                                 :key="item.value"
@@ -138,7 +142,7 @@
                             </el-form-item>
                             <el-form-item label="供应商" prop="supplierId">
                                 <template>
-                                    <el-select v-model="editForm.supplierId" placeholder="请选择">
+                                    <el-select v-model="editForm.supplierId" placeholder="请选择" disabled>
                                         <el-option
                                                 v-for="item in supplierOptions"
                                                 :key="item.value"
@@ -149,7 +153,7 @@
                                 </template>
                             </el-form-item>
                             <el-form-item label="数量" prop="productNum">
-                                <el-input v-model="editForm.productNum" @keyup.enter.native="editInnSubmit"></el-input>
+                                <el-input v-model="editForm.productNum" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="editForm.info" @keyup.enter.native="editInnSubmit"></el-input>
@@ -160,6 +164,66 @@
                             <el-button type="primary" @click="editInnSubmit">确 定</el-button>
                         </span>
                     </el-dialog>
+
+
+                    <el-dialog title="查看入库信息" :visible.sync="viewDialogVisible" width="500px" @close="viewDialogClosed"
+                               @submit.native.prevent>
+                        <el-form :model="editForm" ref="viewFormRef" label-width="100px">
+                            <el-form-item label="Id">
+                                <el-input v-model="editForm.id" readonly></el-input>
+                            </el-form-item>
+                            <el-form-item label="订单号">
+                                <el-input v-model="editForm.orderId" readonly></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="产品">
+                                <template>
+                                    <el-select v-model="editForm.productId" placeholder="请选择" disabled>
+                                        <el-option
+                                                v-for="item in productOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-form-item>
+                            <el-form-item label="供应商" prop="supplierId">
+                                <template>
+                                    <el-select v-model="editForm.supplierId" placeholder="请选择" disabled>
+                                        <el-option
+                                                v-for="item in supplierOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-form-item>
+                            <el-form-item label="单价(元)">
+                                <el-input v-model="editForm.price" readonly></el-input>
+                            </el-form-item>
+                            <el-form-item label="数量">
+                                <el-input v-model="editForm.productNum" readonly></el-input>
+                            </el-form-item>
+                            <el-form-item label="总价(元)">
+                                <el-input v-model="editForm.totalPrice" readonly></el-input>
+                            </el-form-item>
+                            <el-form-item label="备注">
+                                <el-input v-model="editForm.info" readonly></el-input>
+                            </el-form-item>
+                            <el-form-item label="创建时间">
+                                <el-input v-model="editForm.createdDate" readonly></el-input>
+                            </el-form-item>
+                            <el-form-item label="最后修改时间">
+                                <el-input v-model="editForm.lastModifyDate" readonly></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="viewDialogVisible = false">关 闭</el-button>
+                        </span>
+                    </el-dialog>
+
 
                 </div>
             </el-main>
@@ -232,10 +296,14 @@
                     productId:'',
                     supplierId:'',
                     productNum:'',
+                    createdDate:'',
+                    lastModifyDate:'',
                     info:'',
+                    price:0,
+                    totalPrice:0
                 },
+                viewDialogVisible:false
             }
-
         }
         ,
         created() {
@@ -402,18 +470,40 @@
                 this.editForm.productId = res.data.productId
                 this.editForm.supplierId = res.data.supplierId
                 this.editForm.productNum = res.data.productNum
+                this.editForm.info = res.data.info
+            },
+            async viewInn(id){
+                this.editForm.id = id
+                this.viewDialogVisible = true
+                // console.log(id)
+                const { data: res } = await axios.get('/getInnById'
+                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
+                if (res.error !== "0") {
+                    return this.$message.error('获取数据失败！')
+                }
+                this.editForm.id = id;
+                this.editForm.orderId = res.data.orderId
+                this.editForm.productId = res.data.productId
+                this.editForm.supplierId = res.data.supplierId
+                this.editForm.productNum = res.data.productNum
                 this.editForm.createdDate = res.data.createdDate
                 this.editForm.lastModifyDate = res.data.lastModifyDate
                 this.editForm.info = res.data.info
+                this.editForm.price = parseFloat(res.data.price).toFixed(2)
+                this.editForm.totalPrice = parseFloat(res.data.price * res.data.productNum).toFixed(2)
             },
-            // 监听修改对话框的关闭事件
             editDialogClosed() {
                 this.sexValue = ""
                 this.typeValue = ""
                 this.$refs.editFormRef.resetFields()
                 this.editDialogVisible = false
             },
-            // 修改信息并提交
+            viewDialogClosed() {
+                this.sexValue = ""
+                this.typeValue = ""
+                this.$refs.viewFormRef.resetFields()
+                this.viewDialogVisible = false
+            },
             editInnSubmit() {
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
@@ -423,10 +513,10 @@
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: Qs.stringify({
                             id:this.editForm.id,
-                            orderId:this.editForm.orderId,
-                            productId:this.editForm.productId,
-                            supplierId:this.editForm.supplierId,
-                            productNum:this.editForm.productNum,
+                            // orderId:this.editForm.orderId,
+                            // productId:this.editForm.productId,
+                            // supplierId:this.editForm.supplierId,
+                            // productNum:this.editForm.productNum,
                             info:this.editForm.info,
                             token:window.localStorage.getItem("token")
                         })

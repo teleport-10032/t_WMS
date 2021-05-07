@@ -25,11 +25,15 @@ public class innController {
                          @RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
         return innServiceObject.addInn(orderId,productId,supplierId,productNum,info,token);
     }
+//    @PutMapping("updateInnById")
+//    public String updateInnById(@RequestParam("id") int id,@RequestParam("orderId") String orderId,@RequestParam("productId") int productId,
+//                                @RequestParam("supplierId") int supplierId, @RequestParam("productNum") int productNum,
+//                                @RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
+//        return innServiceObject.updateInnById(id,orderId,productId,supplierId,productNum,info,token);
+//    }
     @PutMapping("updateInnById")
-    public String updateInnById(@RequestParam("id") int id,@RequestParam("orderId") String orderId,@RequestParam("productId") int productId,
-                                @RequestParam("supplierId") int supplierId, @RequestParam("productNum") int productNum,
-                                @RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
-        return innServiceObject.updateInnById(id,orderId,productId,supplierId,productNum,info,token);
+    public String updateInnById(@RequestParam("id") int id, @RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
+        return innServiceObject.updateInnById(id,info,token);
     }
 
     @DeleteMapping("deleteInnById")
