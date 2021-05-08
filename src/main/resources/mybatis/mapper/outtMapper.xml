@@ -9,7 +9,7 @@
         from outt,product,customer
         where orderId like "%"#{key}"%" and product.Id = outt.productId and outt.customerId=customer.id
         order by outt.id limit #{start},#{num}
-    </select>w
+    </select>
     <select id="getOuttNum" resultType="int">
         select count(id) from outt where orderId like "%"#{key}"%"
     </select>
@@ -21,7 +21,7 @@
     </select>
     <insert id="addOutt" parameterType="outt">
         insert into outt(orderId,productId,customerId,productNum,createdDate,lastModifyDate,info)
-         values(#{orderId},#{productId},#{customerId},#{productNum},#{createdDate},#{lastModifyDate},#{info})
+        values(#{orderId},#{productId},#{customerId},#{productNum},#{createdDate},#{lastModifyDate},#{info})
     </insert>
     <update id="updateOuttById" parameterType="outt">
         update outt set lastModifyDate=#{lastModifyDate},info=#{info} where id=#{id}
