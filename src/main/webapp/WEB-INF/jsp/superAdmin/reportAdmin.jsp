@@ -39,15 +39,6 @@
         {
             return{
                 username:'',
-                loading:true,
-                queryInfo: {
-                    page: 1,
-                    pre: 5,
-                    key:"",
-                    token:""
-                },
-                stockList:[],
-                total: 0,
             }
 
         }
@@ -65,45 +56,6 @@
                 document.getElementById("reportAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
-            async getStockList() {
-                this.queryInfo.token = window.localStorage.getItem("token")
-                this.loading = true;
-                let url =  '/getStockList';
-                axios.get(url, {
-                    params: this.queryInfo
-                }).then(res => {
-                    if(res.data.error === "0")
-                    {
-                        this.loading = false;
-                        this.stockList = res.data.data;
-                        this.total = res.data.total;
-                    }
-                    else
-                    {
-                        return this.$message.error('获取数据失败！')
-                    }
-                }).catch(err => {
-                })
-            },
-            handleSizeChange(newSize) {
-                this.queryInfo.pre = newSize
-                this.getStockList()
-            },
-            handleCurrentChange(newPage) {
-                this.queryInfo.page = newPage
-                this.getStockList()
-            },
-            // 监听修改对话框的关闭事件
-            editDialogClosed() {
-                this.sexValue = ""
-                this.typeValue = ""
-                this.$refs.editFormRef.resetFields()
-                this.editDialogVisible = false
-            },
-            back()
-            {
-                window.location.href="/superAdmin/basicInfoAdmin";
-            },
         }
     })
 </script>

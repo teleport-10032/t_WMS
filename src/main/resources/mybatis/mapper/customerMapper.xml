@@ -4,25 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.t_wms.mapper.customerMapper">
     <select id="getCustomerList" resultType="customer">
-        select * from customer
-        where name like "%"#{key}"%"
-        order by id limit #{start},#{num}
+        select *,staff.name as staffName from customer,staff
+        where customer.name like "%"#{key}"%" and customer.staffId=staff.id
+        order by customer.id limit #{start},#{num}
     </select>
     <select id="getCustomerNum" resultType="int">
         select count(*) from Customer where name like "%"#{key}"%"
     </select>
 
     <select id="getCustomerById" resultType="customer">
-        select * from customer
-        where id=#{id}
+        select *,staff.name as staffName from customer,staff
+        where customer.id=#{id}  and customer.staffId=staff.id
     </select>
     <insert id="addCustomer" parameterType="customer">
-        insert into customer(name,companyName,address,telephone,email,site,bank,bankAccount,bankName,taxNumber,debts,info)
-         values(#{name},#{companyName},#{address},#{telephone},#{email},#{site},#{bank},#{bankAccount},#{bankName},#{taxNumber},#{debts},#{info})
+        insert into customer(name,companyName,address,telephone,email,site,bank,bankAccount,bankName,taxNumber,debts,info,staffId)
+         values(#{name},#{companyName},#{address},#{telephone},#{email},#{site},#{bank},#{bankAccount},#{bankName},#{taxNumber},#{debts},#{info},'1000')
     </insert>
     <update id="updateCustomerById" parameterType="customer">
         update Customer set name=#{name},companyName=#{companyName},address=#{address},telephone=#{telephone},email=#{email},
-                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},debts=#{debts},info=#{info}
+                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},debts=#{debts},info=#{info},staffId=#{staffId}
         where id=#{id}
     </update>
     <delete id="deleteCustomerById" parameterType="int">

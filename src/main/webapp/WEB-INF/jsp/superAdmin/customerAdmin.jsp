@@ -53,6 +53,7 @@
                             <el-table-column label="税号" prop="taxNumber" min-width="5%"></el-table-column>
                             <el-table-column label="欠款(元)" prop="debts" min-width="5%"></el-table-column>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
+                            <el-table-column label="负责人" prop="staffName" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="187px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
@@ -167,6 +168,9 @@
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="editForm.info" @keyup.enter.native="editCustomerSubmit"></el-input>
+                            </el-form-item>
+                            <el-form-item label="负责人" prop="staffName">
+                                <el-input v-model="editForm.staffName" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
@@ -287,6 +291,7 @@
                     taxNumber:'',
                     debts:'',
                     info:'',
+                    staffName:''
                 },
             }
 
@@ -397,6 +402,7 @@
                 this.editForm.taxNumber = res.data.taxNumber
                 this.editForm.debts = res.data.debts
                 this.editForm.info = res.data.info
+                this.editForm.staffName = res.data.staffName
             },
             // 监听修改对话框的关闭事件
             editDialogClosed() {

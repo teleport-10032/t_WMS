@@ -76,14 +76,14 @@ public class customerServiceImpl implements customerService {
     }
 
     @Override
-    public String updateCustomerById(int id, String name, String companyName, String address, String telephone, String email, String site, String bank, String bankAccount, String bankName, String taxNumber, double debts, String info, String token) throws JsonProcessingException {
+    public String updateCustomerById(int id, String name, String companyName, String address, String telephone, String email, String site, String bank, String bankAccount, String bankName, String taxNumber, double debts, String info, int staffId, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             if(customerMapperObject.updateCustomerById(id,name,companyName,address,telephone, email,site,
-                    bank,bankAccount,bankName,taxNumber,debts,info) == 1)
+                    bank,bankAccount,bankName,taxNumber,debts,staffId,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

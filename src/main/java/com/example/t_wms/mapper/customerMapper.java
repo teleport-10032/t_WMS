@@ -24,7 +24,7 @@ public interface customerMapper {
                            @Param("telephone") String telephone, @Param("email") String email,
                            @Param("site") String site, @Param("bank") String bank,
                            @Param("bankAccount") String bankAccount,@Param("bankName") String bankName,
-                           @Param("taxNumber") String taxNumber, @Param("debts") double debts,
+                           @Param("taxNumber") String taxNumber, @Param("debts") double debts,@Param("staffId") int staffId,
                            @Param("info") String info);
     int deleteCustomerById(@Param("id") int id);
     List<customer> getIdAndName();

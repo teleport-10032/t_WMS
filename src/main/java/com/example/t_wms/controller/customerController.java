@@ -35,8 +35,8 @@ public class customerController {
                                      @RequestParam("telephone") String telephone,@RequestParam("email") String email,@RequestParam("site") String site,
                                      @RequestParam("bank") String bank,@RequestParam("bankAccount") String bankAccount,@RequestParam("bankName") String bankName,
                                      @RequestParam("taxNumber") String taxNumber,@RequestParam("debts") double debts,@RequestParam("info") String info,
-                                     @RequestParam("token") String token) throws JsonProcessingException {
-        return customerServiceObject.updateCustomerById(id,name,companyName,address,telephone, email,site, bank,bankAccount,bankName,taxNumber,debts,info,token);
+                                     @RequestParam("staffId") int staffId,@RequestParam("token") String token) throws JsonProcessingException {
+        return customerServiceObject.updateCustomerById(id,name,companyName,address,telephone, email,site, bank,bankAccount,bankName,taxNumber,debts,info,staffId,token);
     }
 
     @DeleteMapping("deleteCustomerById")

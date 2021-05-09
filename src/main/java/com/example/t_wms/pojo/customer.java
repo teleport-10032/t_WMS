@@ -21,4 +21,5 @@ public class customer {
     String taxNumber;
     double debts;
     String info;
+    String staffName;
 }

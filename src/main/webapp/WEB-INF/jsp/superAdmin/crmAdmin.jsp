@@ -33,19 +33,19 @@
                         <el-table :data="crmList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
-                            <el-table-column label="Id" prop="id" min-width="5%"></el-table-column>
+                            <el-table-column label="客户Id" prop="id" min-width="5%"></el-table-column>
                             <el-table-column label="客户名称" prop="customerName" min-width="5%"></el-table-column>
+                            <el-table-column label="负责人" prop="orderNum" min-width="5%"></el-table-column>
                             <el-table-column label="成交订单数" prop="orderNum" min-width="5%"></el-table-column>
-                            <el-table-column label="欠款(元)" prop="oweNum" min-width="5%"></el-table-column>
-                            <el-table-column label="近30天回访数" prop="visitNum" min-width="5%"></el-table-column>
-                            <el-table-column label="操作" width="180px">
+                            <el-table-column label="成交总额" prop="orderNum" min-width="5%"></el-table-column>
+                            <el-table-column label="欠款" prop="orderNum" min-width="5%"></el-table-column>
+                            <el-table-column label="回访次数" prop="orderNum" min-width="5%"></el-table-column>
+                            <el-table-column label="近30天回访次数" prop="orderNum" min-width="5%"></el-table-column>
+                            <el-table-column label="操作" width="80px">
                                 <template slot-scope="scope">
-                                    <el-tooltip effect="dark" content="增加回访次数" placement="top" :enterable="false">
-                                        <el-button type="primary" icon="el-icon-plus" size="mini"></el-button>
-                                    </el-tooltip>
-                                    <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-                                        <el-button type="danger" icon="el-icon-delete" size="mini">
-                                        </el-button>
+                                    <el-tooltip effect="dark" content="查看回访详情" placement="top" :enterable="false">
+                                        <el-button type="warning" icon="el-icon-search" size="mini"
+                                                   @click=""></el-button>
                                     </el-tooltip>
                                 </template>
                             </el-table-column>
