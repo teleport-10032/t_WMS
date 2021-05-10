@@ -4,33 +4,35 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.t_wms.mapper.supplierMapper">
     <select id="getSupplierList" resultType="supplier">
-        select * from supplier
-        where name like "%"#{key}"%"
-        order by id limit #{start},#{num}
+        select *,staff.name as staffName from supplier,staff
+        where supplier.name like "%"#{key}"%" and supplier.staffId=staff.id
+        order by supplier.id limit #{start},#{num}
     </select>
     <select id="getSupplierNum" resultType="int">
         select count(*) from supplier where name like "%"#{key}"%"
     </select>
 
     <select id="getSupplierById" resultType="supplier">
-        select * from supplier
-        where id=#{id}
+        select *,staff.name as staffName from supplier,staff
+        where supplier.id=#{id}  and supplier.staffId=staff.id
     </select>
     <insert id="addSupplier" parameterType="supplier">
-        insert into supplier(name,companyName,address,telephone,email,site,bank,bankAccount,bankName,taxNumber,debts,info)
-         values(#{name},#{companyName},#{address},#{telephone},#{email},#{site},#{bank},#{bankAccount},#{bankName},#{taxNumber},#{debts},#{info})
+        insert into supplier(name,companyName,address,telephone,email,site,bank,bankAccount,bankName,taxNumber,debts,info,staffId)
+         values(#{name},#{companyName},#{address},#{telephone},#{email},#{site},#{bank},#{bankAccount},#{bankName},#{taxNumber},#{debts},#{info},'1000')
     </insert>
     <update id="updateSupplierById" parameterType="supplier">
         update supplier set name=#{name},companyName=#{companyName},address=#{address},telephone=#{telephone},email=#{email},
-                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},debts=#{debts},info=#{info}
+                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},info=#{info},staffId=#{staffId}
         where id=#{id}
     </update>
     <delete id="deleteSupplierById" parameterType="int">
         delete from supplier where id=#{id}
     </delete>
-
     <select id="getIdAndName" resultType="supplier">
         select id,name from supplier
     </select>
+    <update id="addDebtsById" parameterType="supplier">
+        update supplier set debts=debts+#{debts} where id=#{id}
+    </update>
 
 </mapper>

@@ -17,4 +17,5 @@ public class product {
     String unit;
     double price;
     String info;
+    int alertNum;
 }

@@ -1,6 +1,7 @@
 package com.example.t_wms.mapper;
 
 import com.example.t_wms.pojo.staff;
+import com.example.t_wms.pojo.type;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -44,4 +45,6 @@ public interface staffMapper {
     int deleteStaffById(@Param("id") int id);
     //update password by id
     int updatePasswordById(@Param("id") int id,@Param("password") String password);
+
+    List<staff> getIdAndNameList();
 }

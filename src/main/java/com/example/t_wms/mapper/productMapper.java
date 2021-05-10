@@ -13,10 +13,10 @@ public interface productMapper {
     List<product> getProductList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
     int getProductNum(String key);
     product getProductById(@Param("id") int id);
-    int addProduct(@Param("name") String name,@Param("typeId") int typeId,@Param("supplierId") int supplierId,
+    int addProduct(@Param("name") String name,@Param("typeId") int typeId,
                    @Param("unit") String unit,@Param("price") double price,@Param("info") String info);
     int updateProductById(@Param("id") int id,@Param("name") String name,@Param("typeId") int typeId,
-                          @Param("supplierId") int supplierId,@Param("unit") String unit,
+                          @Param("unit") String unit,
                           @Param("price") double price,@Param("info") String info);
     int deleteProductById(@Param("id") int id);
     List<product> getIdAndName();

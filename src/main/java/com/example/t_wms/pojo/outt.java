@@ -19,4 +19,5 @@ public class outt {
     String lastModifyDate;
     String info;
     double price;
+    double pay;
 }

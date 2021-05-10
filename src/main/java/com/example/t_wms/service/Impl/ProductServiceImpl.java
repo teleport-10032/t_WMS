@@ -74,13 +74,13 @@ public class ProductServiceImpl implements productService {
     }
 
     @Override
-    public String addProduct(String name, int typeId, int supplierId, String unit, double price, String info,String token) throws JsonProcessingException {
+    public String addProduct(String name, int typeId, String unit, double price, String info,String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-            if(productMapperObject.addProduct(name,typeId,supplierId,unit,price,info) == 1)
+            if(productMapperObject.addProduct(name,typeId,unit,price,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");
@@ -91,14 +91,14 @@ public class ProductServiceImpl implements productService {
     }
 
     @Override
-    public String updateProductById(int id, String name, int typeId, int supplierId, String unit, double price, String info,String token) throws JsonProcessingException {
+    public String updateProductById(int id, String name, int typeId, String unit, double price, String info,String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
 
-            if(productMapperObject.updateProductById(id,name,typeId,supplierId,unit,price,info) == 1)
+            if(productMapperObject.updateProductById(id,name,typeId,unit,price,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

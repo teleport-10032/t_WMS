@@ -22,7 +22,7 @@
     </insert>
     <update id="updateCustomerById" parameterType="customer">
         update Customer set name=#{name},companyName=#{companyName},address=#{address},telephone=#{telephone},email=#{email},
-                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},debts=#{debts},info=#{info},staffId=#{staffId}
+                      site=#{site},bank=#{bank},bankAccount=#{bankAccount},bankName=#{bankName},taxNumber=#{taxNumber},info=#{info},staffId=#{staffId}
         where id=#{id}
     </update>
     <delete id="deleteCustomerById" parameterType="int">
@@ -31,4 +31,7 @@
     <select id="getIdAndName" resultType="customer">
         select id,name from customer
     </select>
+    <update id="addDebtsById" parameterType="customer">
+        update customer set debts=debts+#{debts} where id=#{id}
+    </update>
 </mapper>

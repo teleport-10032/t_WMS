@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -23,7 +24,7 @@ public class stockServiceImpl implements stockService {
     stockMapper stockMapperObject;
 
     @Override
-    public String getStockList(int page, int pre, String key, String token) throws JsonProcessingException {
+    public String getStockList(int page, int pre, String key,int typeId, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -32,10 +33,24 @@ public class stockServiceImpl implements stockService {
             int start = pre * (page - 1);
             int num = pre;
 
-            List<stock> list = stockMapperObject.getStockList(start,num,key);
+            List<stock> list = new LinkedList<>();
+            if(typeId == -1){
+                list = stockMapperObject.getStockListByKey(start,num,key);
+            }
+            else{
+
+                list = stockMapperObject.getStockListByTypeAndKey(start,num,key,typeId);
+            }
+            int len = list.size();
+            for(int i = 0 ; i < len ; i ++){
+                if(list.get(i).getNum() < list.get(i).getAlertNum()){
+                    list.get(i).setAlert(true);
+                }else{
+                    list.get(i).setAlert(false);
+                }
+            }
 
             s.put("data",list);
-            s.put("total",stockMapperObject.getStockNum(key));
             s.put("error","0");
         }
         else
@@ -51,6 +66,36 @@ public class stockServiceImpl implements stockService {
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             if(stockMapperObject.addProductNumById(num,productId) == 1)
+                s.put("error","0");
+            else
+                s.put("error","-2");
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String getAlertNumById(int id,String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+                s.put("error","0");
+                s.put("data",stockMapperObject.getAlertNumById(id));
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String  setAlertNumById(int id, int alertNum,String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+            if(stockMapperObject.setAlertNumById(id,alertNum) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

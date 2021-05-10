@@ -22,8 +22,9 @@ public class innController {
     @PostMapping("addInn")
     public String addInn(@RequestParam("orderId") String orderId,@RequestParam("productId") int productId,
                          @RequestParam("supplierId") int supplierId, @RequestParam("productNum") int productNum,
-                         @RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
-        return innServiceObject.addInn(orderId,productId,supplierId,productNum,info,token);
+                         @RequestParam("info") String info,@RequestParam("pay") double pay,
+                         @RequestParam("token") String token) throws JsonProcessingException {
+        return innServiceObject.addInn(orderId,productId,supplierId,productNum,info,pay,token);
     }
 //    @PutMapping("updateInnById")
 //    public String updateInnById(@RequestParam("id") int id,@RequestParam("orderId") String orderId,@RequestParam("productId") int productId,

@@ -42,7 +42,7 @@
                             <el-table-column label="ID" prop="id" min-width="5%"></el-table-column>
                             <el-table-column label="产品名" prop="name" min-width="5%"></el-table-column>
                             <el-table-column label="类型" prop="typeName" min-width="5%"></el-table-column>
-                            <el-table-column label="默认供应商" prop="supplierName" min-width="5%"></el-table-column>
+<%--                            <el-table-column label="默认供应商" prop="supplierName" min-width="5%"></el-table-column>--%>
                             <el-table-column label="单位" prop="unit" min-width="5%"></el-table-column>
                             <el-table-column label="单价" prop="price" min-width="5%"></el-table-column>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
@@ -89,18 +89,18 @@
                                     </el-select>
                                 </template>
                             </el-form-item>
-                            <el-form-item label="默认供应商">
-                                <template>
-                                    <el-select v-model="addForm.supplierId" placeholder="请选择">
-                                        <el-option
-                                                v-for="item in supplierOptions"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
-                                        </el-option>
-                                    </el-select>
-                                </template>
-                            </el-form-item>
+<%--                            <el-form-item label="默认供应商">--%>
+<%--                                <template>--%>
+<%--                                    <el-select v-model="addForm.supplierId" placeholder="请选择">--%>
+<%--                                        <el-option--%>
+<%--                                                v-for="item in supplierOptions"--%>
+<%--                                                :key="item.value"--%>
+<%--                                                :label="item.label"--%>
+<%--                                                :value="item.value">--%>
+<%--                                        </el-option>--%>
+<%--                                    </el-select>--%>
+<%--                                </template>--%>
+<%--                            </el-form-item>--%>
                             <el-form-item label="单位" prop="unit">
                                 <el-input v-model="addForm.unit" @keyup.enter.native="addProduct"></el-input>
                             </el-form-item>
@@ -140,18 +140,18 @@
                                     </el-select>
                                 </template>
                             </el-form-item>
-                            <el-form-item label="默认供应商">
-                                <template>
-                                    <el-select v-model="editForm.supplierId" placeholder="请选择">
-                                        <el-option
-                                                v-for="item in supplierOptions"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
-                                        </el-option>
-                                    </el-select>
-                                </template>
-                            </el-form-item>
+<%--                            <el-form-item label="默认供应商">--%>
+<%--                                <template>--%>
+<%--                                    <el-select v-model="editForm.supplierId" placeholder="请选择">--%>
+<%--                                        <el-option--%>
+<%--                                                v-for="item in supplierOptions"--%>
+<%--                                                :key="item.value"--%>
+<%--                                                :label="item.label"--%>
+<%--                                                :value="item.value">--%>
+<%--                                        </el-option>--%>
+<%--                                    </el-select>--%>
+<%--                                </template>--%>
+<%--                            </el-form-item>--%>
                             <el-form-item label="单位" prop="unit">
                                 <el-input v-model="editForm.unit" @keyup.enter.native="editProductSubmit"></el-input>
                             </el-form-item>
@@ -315,7 +315,6 @@
                     {
                         let len = res.data.data.length
                         let len2 = this.supplierOptions.length
-                        console.log(len2)
                         if(len2 === 0)
                         {
                             for(let i = 0 ; i < len ; i ++)
@@ -392,7 +391,7 @@
                 this.editForm.id = res.data.id
                 this.editForm.name = res.data.name
                 this.editForm.typeId = res.data.typeId
-                this.editForm.supplierId = res.data.supplierId
+                // this.editForm.supplierId = res.data.supplierId
                 this.editForm.unit = res.data.unit
                 this.editForm.price = res.data.price
                 this.editForm.info = res.data.info
@@ -416,7 +415,7 @@
                             id:this.editForm.id,
                             name:this.editForm.name,
                             typeId:this.editForm.typeId,
-                            supplierId:this.editForm.supplierId,
+                            // supplierId:this.editForm.supplierId,
                             unit:this.editForm.unit,
                             price:this.editForm.price,
                             info:this.editForm.info,

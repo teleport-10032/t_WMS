@@ -23,8 +23,9 @@ public class outtController {
     @PostMapping("addOutt")
     public String addOutt(@RequestParam("orderId") String orderId,@RequestParam("productId") int productId,
                          @RequestParam("customerId") int customerId, @RequestParam("productNum") int productNum,
-                         @RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
-        return OuttServiceObject.addOutt(orderId,productId,customerId,productNum,info,token);
+                         @RequestParam("info") String info,@RequestParam("pay") double pay,
+                              @RequestParam("token") String token) throws JsonProcessingException {
+        return OuttServiceObject.addOutt(orderId,productId,customerId,productNum,info,pay,token);
     }
     @PutMapping("updateOuttById")
     public String updateOuttById(@RequestParam("id") int id,@RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {

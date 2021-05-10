@@ -2,6 +2,7 @@ package com.example.t_wms.service.Impl;
 
 import com.example.t_wms.mapper.staffMapper;
 import com.example.t_wms.pojo.staff;
+import com.example.t_wms.pojo.type;
 import com.example.t_wms.service.staffService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -197,6 +198,21 @@ public class staffServiceImpl implements staffService {
                 s.put("error", "0");
             else
                 s.put("error","-2");
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String getIdAndNameList(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(staffMapperObject.getStaffByToken(token) != null &&
+                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+            List<staff> list = staffMapperObject.getIdAndNameList();
+            s.put("error","0");
+            s.put("data",list);
         }
         else
             s.put("error","-1");

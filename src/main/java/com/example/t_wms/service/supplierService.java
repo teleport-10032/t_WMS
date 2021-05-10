@@ -12,7 +12,7 @@ public interface supplierService {
                        String taxNumber, double debts,String info, String token) throws JsonProcessingException;
     String updateSupplierById(int id,String name,String companyName, String address,String telephone,
                               String email,String site,String bank,String bankAccount,String bankName,
-                              String taxNumber, double debts,String info, String token) throws JsonProcessingException;
+                              String taxNumber, double debts,String info, int staffId, String token) throws JsonProcessingException;
     String deleteSupplierById(int id,String token) throws JsonProcessingException;
     String getIdAndName(String token) throws JsonProcessingException;
 }

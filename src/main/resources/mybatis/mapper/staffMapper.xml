@@ -43,4 +43,8 @@
     <update id="updatePasswordById" parameterType="staff">
         update staff set password=#{password} where id=#{id}
     </update>
+
+    <select id="getIdAndNameList" resultType="type">
+        select id,name from staff where type='superAdmin' or type='admin' or type='crmAdmin'
+    </select>
 </mapper>

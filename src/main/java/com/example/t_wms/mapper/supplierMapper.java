@@ -24,8 +24,8 @@ public interface supplierMapper {
                            @Param("telephone") String telephone, @Param("email") String email,
                            @Param("site") String site, @Param("bank") String bank,
                            @Param("bankAccount") String bankAccount,@Param("bankName") String bankName,
-                           @Param("taxNumber") String taxNumber, @Param("debts") double debts,
-                           @Param("info") String info);
+                           @Param("taxNumber") String taxNumber, @Param("info") String info,@Param("staffId") int staffId);
     int deleteSupplierById(@Param("id") int id);
     List<supplier> getIdAndName();
+    int addDebtsById(@Param("id") int id,@Param("debts") double debts);
 }

@@ -28,6 +28,7 @@ public interface staffService {
     //update password by id
     String updatePasswordById(int id, String password,String token) throws JsonProcessingException;
 
+    String getIdAndNameList(String token) throws JsonProcessingException;
 
 
 }

@@ -1,8 +1,6 @@
 package com.example.t_wms.service.Impl;
 
-import com.example.t_wms.mapper.innMapper;
-import com.example.t_wms.mapper.staffMapper;
-import com.example.t_wms.mapper.stockMapper;
+import com.example.t_wms.mapper.*;
 import com.example.t_wms.pojo.inn;
 import com.example.t_wms.service.innService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,6 +23,10 @@ public class innServiceImpl implements innService {
     innMapper innMapperObject;
     @Autowired
     stockMapper stockMapperObject;
+    @Autowired
+    productMapper productMapperObject;
+    @Autowired
+    supplierMapper supplierMapperObject;
 
     @Override
     public String getInnList(int page, int pre, String key, String token) throws JsonProcessingException {
@@ -64,22 +66,32 @@ public class innServiceImpl implements innService {
     }
 
     @Override
-    public String addInn(String orderId, int productId, int supplierId, int productNum,String info, String token) throws JsonProcessingException {
+    public String addInn(String orderId, int productId, int supplierId, int productNum,String info, double pay,String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
+
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-            DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String createdDate = simpleDateFormat.format(new Date());
-            if(innMapperObject.addInn(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1
-                && stockMapperObject.addProductNumById(productNum,productId) == 1)
-                s.put("error","0");
-            else
-                s.put("error","-2");
+
+            double shouldPay = productMapperObject.getProductById(productId).getPrice() * productNum;
+            if(pay > shouldPay){
+                s.put("error","-3");
+            }
+            else {
+                DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String createdDate = simpleDateFormat.format(new Date());
+                if(innMapperObject.addInn(orderId,productId,supplierId,productNum,createdDate,createdDate,pay,info) == 1
+                        && stockMapperObject.addProductNumById(productNum,productId) == 1
+                        && supplierMapperObject.addDebtsById(supplierId,(-1) * (shouldPay-pay)) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","-2");
+            }
         }
-        else
+        else{
             s.put("error","-1");
+        }
         return mapper.writeValueAsString(s);
     }
 
@@ -140,7 +152,13 @@ public class innServiceImpl implements innService {
             }
             else
             {
-                if(stockMapperObject.addProductNumById(num*(-1),productId) == 1 && innMapperObject.deleteInnById(id) == 1){
+                double pay = innMapperObject.getInnById(id).getPay();
+                int productNum = innMapperObject.getInnById(id).getProductNum();
+                int supplierId = innMapperObject.getInnById(id).getSupplierId();
+                double shouldPay = productMapperObject.getProductById(productId).getPrice() * productNum;
+                if(stockMapperObject.addProductNumById(num*(-1),productId) == 1
+                        && innMapperObject.deleteInnById(id) == 1
+                        && supplierMapperObject.addDebtsById(supplierId,(shouldPay-pay)) == 1){
                     s.put("error","0");
                 }
                 else{

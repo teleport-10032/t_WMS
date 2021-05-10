@@ -10,10 +10,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface stockMapper {
-    List<stock> getStockList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
-    int getStockNum(@Param("key") String key);
+    List<stock> getStockListByTypeAndKey(@Param("start") int start, @Param("num") int num, @Param("key") String key,@Param("typeId") int typeId);
+    List<stock> getStockListByKey(@Param("start") int start, @Param("num") int num, @Param("key") String key);
     int addProductNumById(@Param("num") int num,@Param("productId") int productId);
-
     stock getStockById(@Param("id") int id);
+
+    int getAlertNumById(@Param("id") int id);
+    int setAlertNumById(@Param("id") int id,@Param("alertNum") int alertNum);
 
 }

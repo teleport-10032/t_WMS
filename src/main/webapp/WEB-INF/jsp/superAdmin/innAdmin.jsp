@@ -44,6 +44,7 @@
                             <el-table-column label="单价(元)" prop="price" min-width="5%"></el-table-column>
                             <el-table-column label="创建日期" prop="createdDate" min-width="5%"></el-table-column>
 <%--                            <el-table-column label="最后修改日期" prop="lastModifyDate" min-width="5%"></el-table-column>--%>
+<%--                            <el-table-column label="实付款(元)" prop="pay" min-width="5%"></el-table-column>--%>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="210px">
                                 <template slot-scope="scope">
@@ -107,6 +108,9 @@
                             <el-form-item label="数量" prop="productNum">
                                 <el-input v-model="addForm.productNum" @keyup.enter.native="addInn"></el-input>
                             </el-form-item>
+                            <el-form-item label="实付款(元)" prop="pay">
+                                <el-input v-model="addForm.pay" @keyup.enter.native="addInn"></el-input>
+                            </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="addForm.info" @keyup.enter.native="addInn"></el-input>
                             </el-form-item>
@@ -154,6 +158,9 @@
                             </el-form-item>
                             <el-form-item label="数量" prop="productNum">
                                 <el-input v-model="editForm.productNum" disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="实付款(元)" prop="pay">
+                                <el-input v-model="editForm.pay" @keyup.enter.native="editInnSubmit" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="editForm.info" @keyup.enter.native="editInnSubmit"></el-input>
@@ -209,6 +216,9 @@
                             <el-form-item label="总价(元)">
                                 <el-input v-model="editForm.totalPrice" readonly></el-input>
                             </el-form-item>
+                            <el-form-item label="实付款(元)">
+                                <el-input v-model="editForm.pay" readonly></el-input>
+                            </el-form-item>
                             <el-form-item label="备注">
                                 <el-input v-model="editForm.info" readonly></el-input>
                             </el-form-item>
@@ -254,6 +264,7 @@
                     supplierId:'',
                     productNum:'',
                     info:'',
+                    pay:0.0
                 },
                 supplierOptions: [],
                 productOptions: [],
@@ -443,6 +454,7 @@
                             supplierId:this.addForm.supplierId,
                             productNum:this.addForm.productNum,
                             info:this.addForm.info,
+                            pay:this.addForm.pay,
                             token:window.localStorage.getItem("token")
                         })
                     });
@@ -452,6 +464,12 @@
                             this.getInnList()
                             this.addDialogClosed()
                             this.$message.success("操作成功")
+                        }
+                        else if(res.data.error === "-3"){
+                            this.$message.error("实付款大于应付款")
+                        }
+                        else{
+                            this.$message.error("操作失败")
                         }
                     })
                 })
@@ -470,6 +488,7 @@
                 this.editForm.productId = res.data.productId
                 this.editForm.supplierId = res.data.supplierId
                 this.editForm.productNum = res.data.productNum
+                this.editForm.pay = res.data.pay
                 this.editForm.info = res.data.info
             },
             async viewInn(id){
@@ -489,6 +508,7 @@
                 this.editForm.createdDate = res.data.createdDate
                 this.editForm.lastModifyDate = res.data.lastModifyDate
                 this.editForm.info = res.data.info
+                this.editForm.pay = res.data.pay
                 this.editForm.price = parseFloat(res.data.price).toFixed(2)
                 this.editForm.totalPrice = parseFloat(res.data.price * res.data.productNum).toFixed(2)
             },

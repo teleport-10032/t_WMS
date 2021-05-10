@@ -5,8 +5,8 @@
 
 <mapper namespace="com.example.t_wms.mapper.productMapper">
     <select id="getProductList" resultType="product">
-        select product.id,product.name,type.name as typeName,supplier.name as supplierName,unit,product.info,price
-            from product,type,supplier where type.id = product.typeId and supplier.id=product.supplierId
+        select product.id,product.name,type.name as typeName,unit,product.info,price
+            from product,type where type.id = product.typeId
             and product.name like "%"#{key}"%" order by id limit #{start},#{num}
     </select>
 
@@ -15,15 +15,15 @@
     </select>
 
     <select id="getProductById" resultType="product">
-        select product.id,product.name,typeId,supplierId,unit,product.info,price
-        from product,type,supplier where type.id = product.typeId and supplier.id=product.supplierId
+        select product.id,product.name,typeId,unit,product.info,price
+        from product,type where type.id = product.typeId
                                      and product.id=#{id}
     </select>
     <insert id="addProduct" parameterType="product">
-        insert into product(name,typeId,supplierId,unit,price,info) values(#{name},#{typeId},#{supplierId},#{unit},#{price},#{info})
+        insert into product(name,typeId,unit,price,info,alertNum) values(#{name},#{typeId},#{unit},#{price},#{info},'-1')
     </insert>
     <update id="updateProductById" parameterType="product">
-        update product set name=#{name},typeId=#{typeId},supplierId=#{supplierId},unit=#{unit},price=#{price},info=#{info} where id=#{id}
+        update product set name=#{name},typeId=#{typeId},unit=#{unit},price=#{price},info=#{info} where id=#{id}
     </update>
     <delete id="deleteProductById" parameterType="int">
         delete from product where id=#{id}

@@ -1,8 +1,6 @@
 package com.example.t_wms.service.Impl;
 
-import com.example.t_wms.mapper.outtMapper;
-import com.example.t_wms.mapper.staffMapper;
-import com.example.t_wms.mapper.stockMapper;
+import com.example.t_wms.mapper.*;
 import com.example.t_wms.pojo.outt;
 import com.example.t_wms.service.outtService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,6 +23,10 @@ public class outtServiceImpl implements outtService {
     outtMapper outtMapperObject;
     @Autowired
     stockMapper stockMapperObject;
+    @Autowired
+    productMapper productMapperObject;
+    @Autowired
+    customerMapper customerMapperObject;
 
     @Override
     public String getOuttList(int page, int pre, String key, String token) throws JsonProcessingException {
@@ -64,7 +66,7 @@ public class outtServiceImpl implements outtService {
     }
 
     @Override
-    public String addOutt(String orderId, int productId, int supplierId, int productNum,String info, String token) throws JsonProcessingException {
+    public String addOutt(String orderId, int productId, int supplierId, int productNum,String info,double pay, String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -80,8 +82,13 @@ public class outtServiceImpl implements outtService {
             }
             else
             {
-                if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info) == 1
-                        && stockMapperObject.addProductNumById(productNum*(-1),productId) == 1)
+                double shouldPay = productMapperObject.getProductById(productId).getPrice() * productNum;
+                if(pay > shouldPay){
+                    s.put("error","-4");
+                }
+                if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info,pay) == 1
+                        && stockMapperObject.addProductNumById(productNum*(-1),productId) == 1
+                        && customerMapperObject.addDebtsById(supplierId,(shouldPay-pay)) == 1)
                     s.put("error","0");
                 else
                     s.put("error","-2");
@@ -121,7 +128,15 @@ public class outtServiceImpl implements outtService {
 //            System.out.println(id);
             int num = outtMapperObject.getOuttById(id).getProductNum();
             int productId = outtMapperObject.getOuttById(id).getProductId();
-            if(stockMapperObject.addProductNumById(num,productId) == 1 && outtMapperObject.deleteOuttById(id) == 1){
+
+
+            double pay = outtMapperObject.getOuttById(id).getPay();
+            int productNum = outtMapperObject.getOuttById(id).getProductNum();
+            int supplierId = outtMapperObject.getOuttById(id).getCustomerId();
+            double shouldPay = productMapperObject.getProductById(productId).getPrice() * productNum;
+
+            if(stockMapperObject.addProductNumById(num,productId) == 1 && outtMapperObject.deleteOuttById(id) == 1
+                    && customerMapperObject.addDebtsById(supplierId,(-1)*(shouldPay-pay)) == 1){
                 s.put("error","0");
             }
             else{

@@ -42,6 +42,7 @@
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
                             <el-table-column label="Id" prop="id" min-width="5%"></el-table-column>
                             <el-table-column label="客户名" prop="name" min-width="5%"></el-table-column>
+                            <el-table-column label="负责人" prop="staffName" min-width="5%"></el-table-column>
                             <el-table-column label="所在公司" prop="companyName" min-width="5%"></el-table-column>
                             <el-table-column label="地址" prop="address" min-width="5%"></el-table-column>
                             <el-table-column label="手机" prop="telephone" min-width="5%"></el-table-column>
@@ -51,9 +52,8 @@
                             <el-table-column label="银行账户" prop="bankAccount" min-width="5%"></el-table-column>
                             <el-table-column label="开户名" prop="bankName" min-width="5%"></el-table-column>
                             <el-table-column label="税号" prop="taxNumber" min-width="5%"></el-table-column>
-                            <el-table-column label="欠款(元)" prop="debts" min-width="5%"></el-table-column>
+<%--                            <el-table-column label="欠款(元)" prop="debts" min-width="5%"></el-table-column>--%>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
-                            <el-table-column label="负责人" prop="staffName" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="187px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
@@ -112,9 +112,6 @@
                             <el-form-item label="税号" prop="taxNumber">
                                 <el-input v-model="addForm.taxNumber" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
-                            <el-form-item label="欠款" prop="debts">
-                                <el-input v-model="addForm.debts"> @keyup.enter.native="addCustomer"</el-input>
-                            </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="addForm.info" @keyup.enter.native="addCustomer"></el-input>
                             </el-form-item>
@@ -135,6 +132,18 @@
                             </el-form-item>
                             <el-form-item label="客户名" prop="name">
                                 <el-input v-model="editForm.name" @keyup.enter.native="editCustomerSubmit"></el-input>
+                            </el-form-item>
+                            <el-form-item label="负责人">
+                                <template>
+                                    <el-select v-model="editForm.staffId" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in staffOption"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
                             </el-form-item>
                             <el-form-item label="所在公司" prop="companyName">
                                 <el-input v-model="editForm.companyName" @keyup.enter.native="editCustomerSubmit"></el-input>
@@ -163,14 +172,11 @@
                             <el-form-item label="税号" prop="taxNumber">
                                 <el-input v-model="editForm.taxNumber" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
-                            <el-form-item label="欠款" prop="debts">
-                                <el-input v-model="editForm.debts" @keyup.enter.native="editCustomerSubmit"></el-input>
-                            </el-form-item>
+<%--                            <el-form-item label="欠款" prop="debts">--%>
+<%--                                <el-input v-model="editForm.debts" @keyup.enter.native="editCustomerSubmit" disabled></el-input>--%>
+<%--                            </el-form-item>--%>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="editForm.info" @keyup.enter.native="editCustomerSubmit"></el-input>
-                            </el-form-item>
-                            <el-form-item label="负责人" prop="staffName">
-                                <el-input v-model="editForm.staffName" @keyup.enter.native="editCustomerSubmit"></el-input>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
@@ -213,7 +219,7 @@
                     bankAccount:'',
                     bankName:'',
                     taxNumber:'',
-                    debts:'',
+                    debts:0,
                     info:'',
                 },
                 addFormRules: {
@@ -289,17 +295,19 @@
                     bankAccount:'',
                     bankName:'',
                     taxNumber:'',
-                    debts:'',
+                    debts:0,
                     info:'',
+                    staffId:1000,
                     staffName:''
                 },
+                staffOption:[]
             }
-
         }
         ,
         created() {
             this.getCustomerList()
             this.init()
+            this.getStaffIdAndName()
         },
         methods: {
             init()
@@ -323,6 +331,35 @@
                         this.loading = false;
                         this.CustomerList = res.data.data;
                         this.total = res.data.total;
+                    }
+                    else
+                    {
+                        return this.$message.error('获取数据失败！')
+                    }
+                }).catch(err => {
+                })
+            },
+            getStaffIdAndName(){
+                let url =  '/getStaffIdAndName';
+                axios.get(url, {
+                    params:{token:window.localStorage.getItem("token")}
+                }).then(res => {
+                    if(res.data.error === "0")
+                    {
+                        let len = res.data.data.length
+                        let len2 = this.staffOption.length
+                        if(len2 === 0)
+                        {
+                            for(let i = 0 ; i < len ; i ++)
+                            {
+                                this.staffOption.push(
+                                    {
+                                        label:res.data.data[i]['name'],
+                                        value:res.data.data[i]['id'],
+                                    }
+                                )
+                            }
+                        }
                     }
                     else
                     {
@@ -431,6 +468,7 @@
                             taxNumber:this.editForm.taxNumber,
                             debts:this.editForm.debts,
                             info:this.editForm.info,
+                            staffId:this.editForm.staffId,
                             token: window.localStorage.getItem("token")
                         })
                     });

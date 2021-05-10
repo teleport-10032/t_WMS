@@ -19,4 +19,5 @@ public class inn {
     String lastModifyDate;
     String info;
     double price;
+    double pay;
 }

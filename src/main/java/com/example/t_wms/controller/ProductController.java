@@ -28,18 +28,17 @@ public class ProductController {
         return productServiceObject.getProductById(id,token);
     }
     @PostMapping("addProduct")
-    public String addProduct(@RequestParam("name") String name,@RequestParam("typeId") int typeId,
-                             @RequestParam("supplierId") int supplierId,@RequestParam("unit") String unit,
+    public String addProduct(@RequestParam("name") String name,@RequestParam("typeId") int typeId,@RequestParam("unit") String unit,
                              @RequestParam("price") double price,@RequestParam("info") String info,
                              @RequestParam("token") String token) throws JsonProcessingException {
-        return productServiceObject.addProduct(name,typeId,supplierId,unit,price,info,token);
+        return productServiceObject.addProduct(name,typeId,unit,price,info,token);
     }
     @PutMapping("updateProductById")
     public String updateProductById(@RequestParam("id") int id,@RequestParam("name") String name,@RequestParam("typeId") int typeId,
-                                    @RequestParam("supplierId") int supplierId,@RequestParam("unit") String unit,
+                                    @RequestParam("unit") String unit,
                                     @RequestParam("price") double price,@RequestParam("info") String info,
                                     @RequestParam("token") String token) throws JsonProcessingException {
-        return productServiceObject.updateProductById(id,name,typeId,supplierId,unit,price,info,token);
+        return productServiceObject.updateProductById(id,name,typeId,unit,price,info,token);
     }
 
     @DeleteMapping("deleteProductById")

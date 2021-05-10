@@ -65,7 +65,7 @@ public class customerServiceImpl implements customerService {
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             if(customerMapperObject.addCustomer(name,companyName,address,telephone, email,site,
-                    bank,bankAccount,bankName,taxNumber,debts,info) == 1)
+                    bank,bankAccount,bankName,taxNumber,0,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");
@@ -83,7 +83,7 @@ public class customerServiceImpl implements customerService {
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             if(customerMapperObject.updateCustomerById(id,name,companyName,address,telephone, email,site,
-                    bank,bankAccount,bankName,taxNumber,debts,staffId,info) == 1)
+                    bank,bankAccount,bankName,taxNumber,staffId,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

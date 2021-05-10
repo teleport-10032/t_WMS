@@ -43,6 +43,7 @@
                             <el-table-column label="数量(件)" prop="productNum" min-width="5%"></el-table-column>
                             <el-table-column label="单价(元)" prop="price" min-width="5%"></el-table-column>
                             <el-table-column label="创建日期" prop="createdDate" min-width="5%"></el-table-column>
+<%--                            <el-table-column label="实付款" prop="pay" min-width="5%"></el-table-column>--%>
 <%--                            <el-table-column label="最后修改日期" prop="lastModifyDate" min-width="5%"></el-table-column>--%>
                             <el-table-column label="备注" prop="info" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="210px">
@@ -107,6 +108,9 @@
                             <el-form-item label="数量" prop="productNum">
                                 <el-input v-model="addForm.productNum" @keyup.enter.native="addOutt"></el-input>
                             </el-form-item>
+                            <el-form-item label="实付款(元)" prop="pay">
+                                <el-input v-model="addForm.pay" @keyup.enter.native="addOutt"></el-input>
+                            </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="addForm.info" @keyup.enter.native="addOutt"></el-input>
                             </el-form-item>
@@ -154,6 +158,9 @@
                             </el-form-item>
                             <el-form-item label="数量" prop="productNum">
                                 <el-input v-model="editForm.productNum" @keyup.enter.native="editOuttSubmit" disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="实付款(元)" prop="pay">
+                                <el-input v-model="editForm.pay" @keyup.enter.native="editOuttSubmit" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model="editForm.info" @keyup.enter.native="editOuttSubmit"></el-input>
@@ -208,6 +215,9 @@
                             <el-form-item label="总价(元)">
                                 <el-input v-model="editForm.totalPrice" readonly></el-input>
                             </el-form-item>
+                            <el-form-item label="实付款(元)" prop="pay">
+                                <el-input v-model="editForm.pay" @keyup.enter.native="editOuttSubmit" disabled></el-input>
+                            </el-form-item>
                             <el-form-item label="备注">
                                 <el-input v-model="editForm.info" readonly></el-input>
                             </el-form-item>
@@ -252,6 +262,7 @@
                     customerId:'',
                     productNum:'',
                     info:'',
+                    pay:0.0
                 },
                 customerOptions: [],
                 productOptions: [],
@@ -298,7 +309,8 @@
                     createdDate:'',
                     lastModifyDate:'',
                     price:0,
-                    totalPrice:0
+                    totalPrice:0,
+                    pay:0
                 },
                 viewDialogVisible: false,
             }
@@ -443,6 +455,7 @@
                             customerId:this.addForm.customerId,
                             productNum:this.addForm.productNum,
                             info:this.addForm.info,
+                            pay:this.addForm.pay,
                             token:window.localStorage.getItem("token")
                         })
                     });
@@ -476,6 +489,7 @@
                 this.editForm.productNum = res.data.productNum
                 this.editForm.createdDate = res.data.createdDate
                 this.editForm.lastModifyDate = res.data.lastModifyDate
+                this.editForm.pay = res.data.pay
                 this.editForm.info = res.data.info
             },
             async viewOutt(id){
@@ -496,6 +510,7 @@
                 this.editForm.lastModifyDate = res.data.lastModifyDate
                 this.editForm.info = res.data.info
                 this.editForm.price = res.data.price
+                this.editForm.pay = res.data.pay
                 this.editForm.totalPrice = parseFloat(res.data.price * res.data.productNum).toFixed(2)
             },
             // 监听修改对话框的关闭事件

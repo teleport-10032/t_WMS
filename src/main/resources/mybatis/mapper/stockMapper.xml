@@ -4,14 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.t_wms.mapper.stockMapper">
-    <select id="getStockList" resultType="stock">
-        select stock.id,product.name as productName,stock.num from stock,product
-        where stock.productId = product.id and product.name like "%"#{key}"%"
+    <select id="getStockListByTypeAndKey" resultType="stock">
+        select stock.id,product.id as productId,product.alertNum as alertNum,product.name as productName,stock.num,type.name as typeName from stock,product,type
+        where stock.productId = product.id and product.name like "%"#{key}"%" and product.typeId = type.id and type.id = #{typeId}
         order by id limit #{start},#{num}
     </select>
-    <select id="getStockNum" resultType="int">
-        select count(*) from stock,product where stock.productId = product.id
-                                             and product.name like "%"#{key}"%"
+    <select id="getStockListByKey" resultType="stock">
+        select stock.id,product.id as productId,product.alertNum as alertNum,product.name as productName,stock.num,type.name as typeName from stock,product,type
+        where stock.productId = product.id and product.name like "%"#{key}"%" and product.typeId = type.id
+        order by id limit #{start},#{num}
     </select>
     <update id="addProductNumById" parameterType="int">
         update stock,product set num=num+#{num} where stock.productId = product.id and product.id = #{productId}
@@ -22,6 +23,11 @@
         select stock.id,product.name as productName,stock.num from stock,product
         where stock.productId = product.id and product.id=#{id}
     </select>
-
+    <select id="getAlertNumById" resultType="int">
+        select alertNum from product where id=#{id}
+    </select>
+    <update id="setAlertNumById" parameterType="product">
+        update product set alertNum=#{alertNum} where id=#{id}
+    </update>
 
 </mapper>

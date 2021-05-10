@@ -66,7 +66,7 @@ public class supplierServiceImpl implements supplierService {
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             if(supplierMapperObject.addSupplier(name,companyName,address,telephone, email,site,
-                    bank,bankAccount,bankName,taxNumber,debts,info) == 1)
+                    bank,bankAccount,bankName,taxNumber,0,info) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");
@@ -77,14 +77,14 @@ public class supplierServiceImpl implements supplierService {
     }
 
     @Override
-    public String updateSupplierById(int id, String name, String companyName, String address, String telephone, String email, String site, String bank, String bankAccount, String bankName, String taxNumber, double debts, String info, String token) throws JsonProcessingException {
+    public String updateSupplierById(int id, String name, String companyName, String address, String telephone, String email, String site, String bank, String bankAccount, String bankName, String taxNumber, double debts, String info,  int staffId,String token) throws JsonProcessingException {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(staffMapperObject.getStaffByToken(token) != null &&
                 "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
             if(supplierMapperObject.updateSupplierById(id,name,companyName,address,telephone, email,site,
-                    bank,bankAccount,bankName,taxNumber,debts,info) == 1)
+                    bank,bankAccount,bankName,taxNumber,info,staffId) == 1)
                 s.put("error","0");
             else
                 s.put("error","-2");

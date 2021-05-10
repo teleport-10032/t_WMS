@@ -5,7 +5,7 @@
 
 <mapper namespace="com.example.t_wms.mapper.innMapper">
     <select id="getInnList" resultType="inn">
-        select inn.id,orderId,product.name as productName,supplier.name as supplierName,productNum,createdDate,lastModifyDate,inn.info,price
+        select inn.id,orderId,product.name as productName,supplier.name as supplierName,productNum,createdDate,lastModifyDate,inn.info,price,pay
         from inn,product,supplier
         where orderId like "%"#{key}"%" and product.Id = inn.productId and inn.supplierId=supplier.id
         order by inn.id limit #{start},#{num}
@@ -15,13 +15,13 @@
     </select>
 
     <select id="getInnById" resultType="inn">
-        select inn.id,orderId,product.id as productId,supplier.id as supplierId,product.name as productName,supplier.name as productName,productNum,createdDate,lastModifyDate,inn.info,price
+        select inn.id,orderId,product.id as productId,supplier.id as supplierId,product.name as productName,supplier.name as productName,productNum,createdDate,lastModifyDate,inn.info,price,pay
         from inn,product,supplier
         where product.Id = inn.productId and inn.supplierId=supplier.id and inn.id=#{id}
     </select>
     <insert id="addInn" parameterType="inn">
-        insert into Inn(orderId,productId,supplierId,productNum,createdDate,lastModifyDate,info)
-         values(#{orderId},#{productId},#{supplierId},#{productNum},#{createdDate},#{lastModifyDate},#{info})
+        insert into Inn(orderId,productId,supplierId,productNum,createdDate,lastModifyDate,info,pay)
+         values(#{orderId},#{productId},#{supplierId},#{productNum},#{createdDate},#{lastModifyDate},#{info},#{pay})
     </insert>
 <!--    <update id="updateInnById" parameterType="inn">-->
 <!--        update Inn set orderId=#{orderId},productId=#{productId},supplierId=#{supplierId},-->

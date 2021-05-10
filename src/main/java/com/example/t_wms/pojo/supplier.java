@@ -21,4 +21,6 @@ public class supplier {
     String taxNumber;
     double debts;
     String info;
+    String staffName;
+    int staffId;
 }

@@ -10,4 +10,8 @@ public class stock {
     int id;
     int num;
     String productName;
+    int productId;
+    String typeName;
+    int alertNum;
+    boolean isAlert;
 }
