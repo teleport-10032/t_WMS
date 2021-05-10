@@ -23,24 +23,20 @@
                     <el-card>
                         <el-row :gutter="20">
                             <el-col :span="8">
-                                <el-input placeholder="按客户名查找" v-model="queryInfo.key" clearable @clear="getStockList"
-                                          @keyup.enter.native="getStockList">
-                                    <el-button slot="append" icon="el-icon-search" @Click="getStockList"></el-button>
+                                <el-input placeholder="按客户名查找" v-model="queryInfo.key" clearable @clear="getCustomerList"
+                                          @keyup.enter.native="getCustomerList">
+                                    <el-button slot="append" icon="el-icon-search" @Click="getCustomerList"></el-button>
                                 </el-input>
                             </el-col>
                         </el-row>
                         <br>
-                        <el-table :data="crmList" border stripe v-loading="loading"
+                        <el-table :data="CustomerList" border stripe v-loading="loading"
                                   :header-cell-style="{'text-align':'center','font-size':'14px'}"
                                   :cell-style="{'text-align':'center','font-size':'14px'}">
-                            <el-table-column label="客户Id" prop="id" min-width="5%"></el-table-column>
+                            <el-table-column label="客户Id" prop="customerId" min-width="5%"></el-table-column>
                             <el-table-column label="客户名称" prop="customerName" min-width="5%"></el-table-column>
-                            <el-table-column label="负责人" prop="orderNum" min-width="5%"></el-table-column>
-                            <el-table-column label="成交订单数" prop="orderNum" min-width="5%"></el-table-column>
-                            <el-table-column label="成交总额" prop="orderNum" min-width="5%"></el-table-column>
-                            <el-table-column label="欠款" prop="orderNum" min-width="5%"></el-table-column>
-                            <el-table-column label="回访次数" prop="orderNum" min-width="5%"></el-table-column>
-                            <el-table-column label="近30天回访次数" prop="orderNum" min-width="5%"></el-table-column>
+                            <el-table-column label="负责人" prop="staffName" min-width="5%"></el-table-column>
+                            <el-table-column label="欠款" prop="debts" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="80px">
                                 <template slot-scope="scope">
                                     <el-tooltip effect="dark" content="查看回访详情" placement="top" :enterable="false">
@@ -78,19 +74,12 @@
                     key:"",
                     token:""
                 },
-                stockList:[],
-                crmList:[
-                    {id:1000,customerName:"徐三",orderNum:'30',oweNum:'0',visitNum:'3'},
-                    {id:1000,customerName:"徐四",orderNum:'13',oweNum:'0',visitNum:'4'},
-                    {id:1000,customerName:"徐五",orderNum:'14',oweNum:'0',visitNum:'5'},
-                    {id:1000,customerName:"徐六",orderNum:'5',oweNum:'0',visitNum:'1'},
-                    {id:1000,customerName:"徐七",orderNum:'11',oweNum:'0',visitNum:'2'},
-                    ],
+                CustomerList:[],
                 total: 0,
             }
         },
         created() {
-            this.getStockList()
+            this.getCustomerList()
             this.init()
         },
         methods: {
@@ -103,18 +92,18 @@
                 document.getElementById("crmAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
-            async getStockList() {
+            async getCustomerList() {
                 this.queryInfo.token = window.localStorage.getItem("token")
                 this.loading = true;
-                let url =  '/getStockList';
+                let url =  '/getCustomerCrmList';
                 axios.get(url, {
                     params: this.queryInfo
                 }).then(res => {
                     if(res.data.error === "0")
                     {
                         this.loading = false;
-                        this.stockList = res.data.data;
-                        this.total = res.data.total;
+                        this.CustomerList = res.data.data;
+                        this.total = res.data.data.length
                     }
                     else
                     {
@@ -125,11 +114,11 @@
             },
             handleSizeChange(newSize) {
                 this.queryInfo.pre = newSize
-                this.getStockList()
+                this.getCustomerList()
             },
             handleCurrentChange(newPage) {
                 this.queryInfo.page = newPage
-                this.getStockList()
+                this.getCustomerList()
             },
             // 监听修改对话框的关闭事件
             editDialogClosed() {

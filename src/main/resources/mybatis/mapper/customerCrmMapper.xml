@@ -4,8 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.t_wms.mapper.customerCrmMapper">
 
-<!--    客户id 客户名称 负责人名称 成交订单数 成交总额 欠款 回访次数 近30天回访次数-->
-<!--    <select id="getCustomerCrmList" resultType="customer">-->
-<!--        select coustomer.id,customer.name,customer.companyName,staff.name from coustomer,-->
-<!--    </select>-->
+
+    <select id="getCrmListByStaffId" resultType="customer">
+        select customerCrm.*,staff.name from customerCrm,staff where custromerCrm.staffId=staff.id
+    </select>
+
 </mapper>

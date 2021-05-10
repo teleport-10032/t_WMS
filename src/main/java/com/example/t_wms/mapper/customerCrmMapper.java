@@ -1,11 +1,16 @@
 package com.example.t_wms.mapper;
 
+import com.example.t_wms.pojo.customer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Mapper
 @Repository
 public interface customerCrmMapper {
-    //客户id 客户名称 负责人名称 成交订单数 成交总额 欠款 回访次数 近30天回访次数
-
+    //id 客户id staffId time info
+    //getCrmList by staffId
+    List<customer> getCrmListByStaffId(@Param("staffId") int staffId);
 }

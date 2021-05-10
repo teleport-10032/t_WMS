@@ -45,6 +45,7 @@
         ,
         created() {
             this.init()
+            this.getInnReportData()
         },
         methods: {
             init()
@@ -56,37 +57,71 @@
                 document.getElementById("reportAdminIco").style.color = "#409EFF"
             },
             <%@ include file="../public/superAdmin/setJump.jsp" %>
+            // getInnReportData
+            async getInnReportData(){
+                const { data: res } = await axios.get('/getInnReportData')
+                if (res.error !== "0") {
+                    return this.$message.error('获取数据失败！')
+                }else{
+                    console.log(res.data)
+                    let option1 = {
+                        title:{
+                            text:'年度出库报表'
+                        },
+                        tooltip:{},
+                        legend:{
+                            data:['出库量']
+                        },
+                        xAxis:{
+                            data:["第一季度","第二季度","第三季度","第四季度"]
+                        },
+                        yAxis:{
+
+                        },
+                        series:[{
+                            name:'出库量',
+                            type:'line',
+                            // data:[300,100,120,150,10,10]
+                            data:res.data
+                        }]
+                    };
+
+                    let myChart1 = echarts.init(document.getElementById('chartMain1'));
+                    myChart1.setOption(option1);
+                }
+            }
         }
     })
 </script>
 <script type="text/javascript">
-    let option1 = {
-        title:{
-            text:'年度出库报表'
-        },
-        tooltip:{},
-        legend:{
-            data:['出库量']
-        },
-        xAxis:{
-            data:["第一季度","第二季度","第三季度","第四季度"]
-        },
-        yAxis:{
-
-        },
-        series:[{
-            name:'出库量',
-            type:'line',
-            data:[300,100,120,150,10,10]
-        }]
-    };
+    // let option1 = {
+    //     title:{
+    //         text:'年度出库报表'
+    //     },
+    //     tooltip:{},
+    //     legend:{
+    //         data:['出库量']
+    //     },
+    //     xAxis:{
+    //         data:["第一季度","第二季度","第三季度","第四季度"]
+    //     },
+    //     yAxis:{
+    //
+    //     },
+    //     series:[{
+    //         name:'出库量',
+    //         type:'line',
+    //         // data:[300,100,120,150,10,10]
+    //         data:[]
+    //     }]
+    // };
     let option2 = {
         title:{
-            text:'年度客户报表'
+            text:'年度入库报表'
         },
         tooltip:{},
         legend:{
-            data:['客户量']
+            data:['入库量']
         },
         xAxis:{
             data:["第一季度","第二季度","第三季度","第四季度"]
@@ -100,8 +135,6 @@
             data:[100,300,150,150,400,410]
         }]
     };
-    let myChart1 = echarts.init(document.getElementById('chartMain1'));
-    myChart1.setOption(option1);
     let myChart2 = echarts.init(document.getElementById('chartMain2'));
     myChart2.setOption(option2);
 </script>
