@@ -5,23 +5,23 @@
 
 <mapper namespace="com.example.t_wms.mapper.innMapper">
     <select id="getInnList" resultType="inn">
-        select inn.id,orderId,product.name as productName,supplier.name as supplierName,productNum,createdDate,lastModifyDate,inn.info,price,pay
-        from inn,product,supplier
-        where orderId like "%"#{key}"%" and product.Id = inn.productId and inn.supplierId=supplier.id
-        order by inn.id limit #{start},#{num}
+        select inn.id,orderId,staff.name as staffName,product.name as productName,supplier.name as supplierName,productNum,createdDate,lastModifyDate,inn.info,price,pay
+        from inn,product,supplier,staff
+        where orderId like "%"#{key}"%" and product.Id = inn.productId and inn.supplierId=supplier.id and staff.id=inn.staffId
+        order by inn.id desc limit #{start},#{num}
     </select>
     <select id="getInnNum" resultType="int">
         select count(id) from inn where orderId like "%"#{key}"%"
     </select>
 
     <select id="getInnById" resultType="inn">
-        select inn.id,orderId,product.id as productId,supplier.id as supplierId,product.name as productName,supplier.name as productName,productNum,createdDate,lastModifyDate,inn.info,price,pay
-        from inn,product,supplier
-        where product.Id = inn.productId and inn.supplierId=supplier.id and inn.id=#{id}
+        select inn.id,orderId,staff.name as staffName,product.id as productId,supplier.id as supplierId,product.name as productName,supplier.name as productName,productNum,createdDate,lastModifyDate,inn.info,price,pay
+        from inn,product,supplier,staff
+        where product.Id = inn.productId and inn.supplierId=supplier.id and inn.id=#{id} and staff.id=inn.staffId
     </select>
     <insert id="addInn" parameterType="inn">
-        insert into Inn(orderId,productId,supplierId,productNum,createdDate,lastModifyDate,info,pay)
-         values(#{orderId},#{productId},#{supplierId},#{productNum},#{createdDate},#{lastModifyDate},#{info},#{pay})
+        insert into Inn(orderId,productId,supplierId,productNum,createdDate,lastModifyDate,info,staffId,pay)
+         values(#{orderId},#{productId},#{supplierId},#{productNum},#{createdDate},#{lastModifyDate},#{info},#{staffId},#{pay})
     </insert>
 <!--    <update id="updateInnById" parameterType="inn">-->
 <!--        update Inn set orderId=#{orderId},productId=#{productId},supplierId=#{supplierId},-->

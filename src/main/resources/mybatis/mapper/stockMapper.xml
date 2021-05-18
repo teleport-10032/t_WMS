@@ -14,9 +14,21 @@
         where stock.productId = product.id and product.name like "%"#{key}"%" and product.typeId = type.id
         order by id limit #{start},#{num}
     </select>
+
+    <select id="getStockNum" resultType="int">
+        select count(*) from stock,product where product.name like "%"#{key}"%" and product.id = stock.productId
+    </select>
+    <select id="getStockNumByType" resultType="int">
+        select count(*) from stock,product where product.name like "%"#{key}"%" and product.id = stock.productId and product.typeId = #{typeId}
+    </select>
+
+
     <update id="addProductNumById" parameterType="int">
         update stock,product set num=num+#{num} where stock.productId = product.id and product.id = #{productId}
     </update>
+    <insert id="addStock" parameterType="int">
+        insert stock(productId,num) values(#{productId},#{num})
+    </insert>
 
     <select id="getStockById" resultType="stock">
 

@@ -33,8 +33,7 @@ public class outtServiceImpl implements outtService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             int start = pre * (page - 1);
             int num = pre;
 
@@ -54,8 +53,7 @@ public class outtServiceImpl implements outtService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
 
             s.put("data",outtMapperObject.getOuttById(id));
             s.put("error","0");
@@ -71,8 +69,7 @@ public class outtServiceImpl implements outtService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
 
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String createdDate = simpleDateFormat.format(new Date());
             if(productNum > stockMapperObject.getStockById(productId).getNum())
@@ -86,7 +83,8 @@ public class outtServiceImpl implements outtService {
                 if(pay > shouldPay){
                     s.put("error","-4");
                 }
-                if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info,pay) == 1
+                int staffId = staffMapperObject.getStaffByToken(token).getId();
+                if(outtMapperObject.addOutt(orderId,productId,supplierId,productNum,createdDate,createdDate,info,pay,staffId) == 1
                         && stockMapperObject.addProductNumById(productNum*(-1),productId) == 1
                         && customerMapperObject.addDebtsById(supplierId,(shouldPay-pay)) == 1)
                     s.put("error","0");
@@ -104,8 +102,7 @@ public class outtServiceImpl implements outtService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String lastModifyDate = simpleDateFormat.format(new Date());
             if(outtMapperObject.updateOuttById(id,lastModifyDate,info) == 1)
@@ -123,8 +120,7 @@ public class outtServiceImpl implements outtService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
 //            System.out.println(id);
             int num = outtMapperObject.getOuttById(id).getProductNum();
             int productId = outtMapperObject.getOuttById(id).getProductId();

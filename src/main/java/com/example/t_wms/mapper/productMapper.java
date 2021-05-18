@@ -20,5 +20,6 @@ public interface productMapper {
                           @Param("price") double price,@Param("info") String info);
     int deleteProductById(@Param("id") int id);
     List<product> getIdAndName();
+    int getMaxId();
 }
 

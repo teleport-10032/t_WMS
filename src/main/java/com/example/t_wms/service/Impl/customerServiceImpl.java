@@ -25,8 +25,7 @@ public class customerServiceImpl implements customerService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
             int start = pre * (page - 1);
             int num = pre;
 
@@ -46,8 +45,7 @@ public class customerServiceImpl implements customerService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
 
             s.put("data",customerMapperObject.getCustomerById(id));
             s.put("error","0");
@@ -62,8 +60,7 @@ public class customerServiceImpl implements customerService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
             if(customerMapperObject.addCustomer(name,companyName,address,telephone, email,site,
                     bank,bankAccount,bankName,taxNumber,0,info) == 1)
                 s.put("error","0");
@@ -80,8 +77,7 @@ public class customerServiceImpl implements customerService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
             if(customerMapperObject.updateCustomerById(id,name,companyName,address,telephone, email,site,
                     bank,bankAccount,bankName,taxNumber,staffId,info) == 1)
                 s.put("error","0");
@@ -98,8 +94,7 @@ public class customerServiceImpl implements customerService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
 
             if(customerMapperObject.deleteCustomerById(id) == 1)
                 s.put("error","0");
@@ -116,8 +111,7 @@ public class customerServiceImpl implements customerService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
 
             s.put("data",customerMapperObject.getIdAndName());
             s.put("error","0");

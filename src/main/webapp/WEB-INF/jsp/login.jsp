@@ -128,8 +128,18 @@
                         {
                             this.$message.success("登录成功")
                             window.localStorage.setItem('token',res.data.token);
-                            window.location.href="/superAdmin/systemInfo";
-
+                            if(this.form.type === 'superAdmin'){
+                                window.location.href="/superAdmin/systemInfo";
+                            }
+                            else if(this.form.type === 'whAdmin'){
+                                window.location.href="/whAdmin/innAdmin";
+                            }
+                            else if(this.form.type === 'crmAdmin'){
+                                window.location.href="/crmAdmin/crmAdmin";
+                            }
+                            else if(this.form.type === 'admin'){
+                                window.location.href="/admin/systemInfo";
+                            }
                         }
                         else
                             this.$message.error("用户名或密码不正确")

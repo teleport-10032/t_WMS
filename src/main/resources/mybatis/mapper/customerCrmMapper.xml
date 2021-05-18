@@ -4,9 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.t_wms.mapper.customerCrmMapper">
 
-
     <select id="getCrmListByStaffId" resultType="customer">
         select customerCrm.*,staff.name from customerCrm,staff where custromerCrm.staffId=staff.id
     </select>
+
+    <select id="getVisitNumByCustomerId" resultType="int">
+        select count(id) from customerCrm where customerId=#{customerId}
+    </select>
+
+    <select id="getVisitListByCustomerId" resultType="customerCrm">
+        select id,time,info from customerCrm where customerId=#{customerId} order by time desc
+    </select>
+
+    <delete id="deleteVisitById" parameterType="int">
+        delete from customerCrm where id=#{id}
+    </delete>
+
+    <insert id="addVisit" parameterType="customerCrm">
+        insert customerCrm(customerId,time,info) values(#{customerId},#{date},#{info})
+    </insert>
 
 </mapper>

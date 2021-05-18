@@ -33,8 +33,7 @@ public class innServiceImpl implements innService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null) {
             int start = pre * (page - 1);
             int num = pre;
 
@@ -54,9 +53,7 @@ public class innServiceImpl implements innService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-
+        if(staffMapperObject.getStaffByToken(token) != null){
             s.put("data",innMapperObject.getInnById(id));
             s.put("error","0");
         }
@@ -70,10 +67,7 @@ public class innServiceImpl implements innService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-
+        if(staffMapperObject.getStaffByToken(token) != null){
             double shouldPay = productMapperObject.getProductById(productId).getPrice() * productNum;
             if(pay > shouldPay){
                 s.put("error","-3");
@@ -81,7 +75,8 @@ public class innServiceImpl implements innService {
             else {
                 DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String createdDate = simpleDateFormat.format(new Date());
-                if(innMapperObject.addInn(orderId,productId,supplierId,productNum,createdDate,createdDate,pay,info) == 1
+                int staffId = staffMapperObject.getStaffByToken(token).getId();
+                if(innMapperObject.addInn(orderId,productId,supplierId,productNum,createdDate,createdDate,pay,staffId,info) == 1
                         && stockMapperObject.addProductNumById(productNum,productId) == 1
                         && supplierMapperObject.addDebtsById(supplierId,(-1) * (shouldPay-pay)) == 1)
                     s.put("error","0");
@@ -119,8 +114,7 @@ public class innServiceImpl implements innService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String lastModifyDate = simpleDateFormat.format(new Date());
             if(innMapperObject.updateInnById(id,lastModifyDate,info) == 1)
@@ -138,8 +132,7 @@ public class innServiceImpl implements innService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
 //            System.out.println(id);
             int num = innMapperObject.getInnById(id).getProductNum();
             int productId = innMapperObject.getInnById(id).getProductId();

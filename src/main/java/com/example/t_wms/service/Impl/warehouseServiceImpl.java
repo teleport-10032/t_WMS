@@ -25,8 +25,7 @@ public class warehouseServiceImpl implements warehouseService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             int start = pre * (page - 1);
             int num = pre;
 
@@ -46,8 +45,7 @@ public class warehouseServiceImpl implements warehouseService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
 
             s.put("data",warehouseMapperObject.getWarehouseById(id));
             s.put("error","0");
@@ -62,8 +60,7 @@ public class warehouseServiceImpl implements warehouseService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
 
             if(warehouseMapperObject.addWarehouse(name,position,info) == 1)
                 s.put("error","0");
@@ -80,8 +77,7 @@ public class warehouseServiceImpl implements warehouseService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
 
             if(warehouseMapperObject.updateWarehouseById(id,name,position,info) == 1)
                 s.put("error","0");
@@ -98,8 +94,7 @@ public class warehouseServiceImpl implements warehouseService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
 
             if(warehouseMapperObject.deleteWarehouseById(id) == 1)
                 s.put("error","0");

@@ -26,8 +26,7 @@ public class supplierServiceImpl implements supplierService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             int start = pre * (page - 1);
             int num = pre;
 
@@ -47,8 +46,7 @@ public class supplierServiceImpl implements supplierService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
 
             s.put("data",supplierMapperObject.getSupplierById(id));
             s.put("error","0");
@@ -63,8 +61,7 @@ public class supplierServiceImpl implements supplierService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             if(supplierMapperObject.addSupplier(name,companyName,address,telephone, email,site,
                     bank,bankAccount,bankName,taxNumber,0,info) == 1)
                 s.put("error","0");
@@ -81,8 +78,7 @@ public class supplierServiceImpl implements supplierService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
             if(supplierMapperObject.updateSupplierById(id,name,companyName,address,telephone, email,site,
                     bank,bankAccount,bankName,taxNumber,info,staffId) == 1)
                 s.put("error","0");
@@ -99,8 +95,7 @@ public class supplierServiceImpl implements supplierService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
 
             if(supplierMapperObject.deleteSupplierById(id) == 1)
                 s.put("error","0");
@@ -117,8 +112,7 @@ public class supplierServiceImpl implements supplierService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
             s.put("data",supplierMapperObject.getIdAndName());
             s.put("error","0");
         }

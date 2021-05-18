@@ -75,8 +75,7 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType()))
+        if(staffMapperObject.getStaffByToken(token) != null)
         {
             int start = pre * (page - 1);
             int num = pre;
@@ -96,9 +95,7 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType()))
-        {
+        if(staffMapperObject.getStaffByToken(token) != null){
             int num = staffMapperObject.getStaffNum("");
             s.put("staffNum", num);
             s.put("error", "0");
@@ -115,13 +112,17 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-            int re = staffMapperObject.addStaff(name,sex,age,type,phone,email,username, DigestUtils.md5DigestAsHex("123123".getBytes()));
-            if(re == 1)
-                s.put("error", "0");
-            else
-                s.put("error","-2");
+        if(staffMapperObject.getStaffByToken(token) != null){
+            if(staffMapperObject.getNumByUsername(username) != 0){
+                s.put("error","-3");
+            }
+            else{
+                int re = staffMapperObject.addStaff(name,sex,age,type,phone,email,username, DigestUtils.md5DigestAsHex("123123".getBytes()));
+                if(re == 1)
+                    s.put("error", "0");
+                else
+                    s.put("error","-2");
+            }
         }
         else
             s.put("error","-1");
@@ -134,8 +135,7 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             staff staffObject = staffMapperObject.getStaffInfoById(id);
             s.put("data", staffObject);
             s.put("error", "0");
@@ -152,9 +152,7 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
-
+        if(staffMapperObject.getStaffByToken(token) != null ){
             int re = staffMapperObject.updateStaffById(name,sex,age,type,phone,email,username, id);
             if(re == 1)
                 s.put("error", "0");
@@ -172,8 +170,7 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null ){
             int re = staffMapperObject.deleteStaffById(id);
             if(re == 1)
                 s.put("error", "0");
@@ -191,8 +188,7 @@ public class staffServiceImpl implements staffService {
         //error: -1 means Ultra vires,-2 means system error
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             int re = staffMapperObject.updatePasswordById(id,password);
             if(re == 1)
                 s.put("error", "0");
@@ -208,8 +204,7 @@ public class staffServiceImpl implements staffService {
     public String getIdAndNameList(String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(staffMapperObject.getStaffByToken(token) != null &&
-                "superAdmin".equals(staffMapperObject.getStaffByToken(token).getType())) {
+        if(staffMapperObject.getStaffByToken(token) != null){
             List<staff> list = staffMapperObject.getIdAndNameList();
             s.put("error","0");
             s.put("data",list);

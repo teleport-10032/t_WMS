@@ -47,4 +47,9 @@
     <select id="getIdAndNameList" resultType="type">
         select id,name from staff where type='superAdmin' or type='admin' or type='crmAdmin'
     </select>
+
+    <select id="getNumByUsername" resultType="int">
+        select count(*) from staff where username=#{username}
+    </select>
+
 </mapper>

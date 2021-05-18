@@ -1,9 +1,6 @@
 package com.example.t_wms;
 
-import com.example.t_wms.mapper.innMapper;
-import com.example.t_wms.mapper.outtMapper;
-import com.example.t_wms.mapper.productMapper;
-import com.example.t_wms.mapper.stockMapper;
+import com.example.t_wms.mapper.*;
 import com.example.t_wms.pojo.inn;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +15,19 @@ import java.util.List;
 @SpringBootTest
 class TWmsApplicationTests {
 
+//    @Autowired
+//    productMapper productMapperObject;
     @Autowired
-    innMapper innMapperObject;
+    typeMapper typeMapperObject;
+    @Autowired
+    staffMapper staffMapperObject;
 
     @Test
     void contextLoads() throws ParseException {
+//        System.out.println(productMapperObject.deleteProductById(1005));
 //        List<inn> list = innMapperObject.getInnList(0,innMapperObject.getInnNum(""),"");
+//        System.out.println(typeMapperObject.deleteTypeById(1003));
+        System.out.println(staffMapperObject.deleteStaffById(1008));
 //        int len = list.size();
 //        int one = 0 , two = 0 , three = 0, four = 0;
 //        Calendar calendar = Calendar.getInstance();

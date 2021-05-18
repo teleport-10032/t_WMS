@@ -15,7 +15,6 @@ public class outtController {
                                @RequestParam("key") String key, @RequestParam("token") String token) throws JsonProcessingException {
         return OuttServiceObject.getOuttList(page,pre,key,token);
     }
-
     @GetMapping("getOuttById")
     public String getOuttById(@RequestParam("id") int id, @RequestParam("token") String token) throws JsonProcessingException {
         return OuttServiceObject.getOuttById(id,token);
@@ -31,7 +30,6 @@ public class outtController {
     public String updateOuttById(@RequestParam("id") int id,@RequestParam("info") String info,@RequestParam("token") String token) throws JsonProcessingException {
         return OuttServiceObject.updateOuttById(id,info,token);
     }
-
     @DeleteMapping("deleteOuttById")
     public String deleteOuttById(@RequestParam("id") int id, @RequestParam("token") String token) throws JsonProcessingException {
         return OuttServiceObject.deleteOuttById(id,token);

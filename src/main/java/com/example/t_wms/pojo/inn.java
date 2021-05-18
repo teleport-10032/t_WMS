@@ -20,4 +20,6 @@ public class inn {
     String info;
     double price;
     double pay;
+    String staffName;
+    int staffId;
 }

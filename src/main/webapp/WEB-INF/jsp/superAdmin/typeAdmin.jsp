@@ -278,7 +278,7 @@
             // 根据Id删除
             async deleteTypeById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该种类, 是否继续?',
+                    '此操作将永久删除该种类以及该类下的产品、出入库记录等, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',

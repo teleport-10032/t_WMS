@@ -47,4 +47,7 @@ public interface staffMapper {
     int updatePasswordById(@Param("id") int id,@Param("password") String password);
 
     List<staff> getIdAndNameList();
+
+
+    int getNumByUsername(@Param("username") String username);
 }

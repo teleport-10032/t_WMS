@@ -83,7 +83,11 @@
                                     <!-- 删除按钮 -->
                                     <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
                                         <el-button type="danger" icon="el-icon-delete" size="mini"
+                                                   v-if="scope.row.id != '1000'"
                                                    @click="deleteStaffById(scope.row.id)"
+                                        ></el-button>
+                                        <el-button type="danger" icon="el-icon-delete" size="mini"
+                                                   v-else disabled
                                         ></el-button>
                                     </el-tooltip>
                                 </template>
@@ -408,7 +412,7 @@
             {
                 this.addDialogVisible = true
                 this.sexValue = "男"
-                this.typeValue = "员工"
+                this.typeValue = "admin"
             },
             addDialogClosed() {
                 this.sexValue = ""
@@ -435,12 +439,17 @@
                         })
                     });
                     result.then(res=>{
-                        if(res.data.error === "0")
+                        if(res.data.error  === "0")
                         {
                             this.getStaffList()
                             this.addDialogClosed()
                             this.$message.success("操作成功")
                         }
+                        else if(res.data.error === "-3"){
+                            this.$message.warning("该用户名已存在")
+                        }
+                        else
+                            this.$message.error("操作失败")
                     })
                 })
             },
@@ -533,7 +542,7 @@
             // 根据Id删除
             async deleteStaffById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该员工, 是否继续?',
+                    '此操作将永久删除该员工以及与其相关的客户、供应商、出入库等信息，是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',

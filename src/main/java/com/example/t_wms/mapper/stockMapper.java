@@ -12,10 +12,12 @@ import java.util.List;
 public interface stockMapper {
     List<stock> getStockListByTypeAndKey(@Param("start") int start, @Param("num") int num, @Param("key") String key,@Param("typeId") int typeId);
     List<stock> getStockListByKey(@Param("start") int start, @Param("num") int num, @Param("key") String key);
+    int addStock(@Param("num") int num,@Param("productId") int productId);
     int addProductNumById(@Param("num") int num,@Param("productId") int productId);
     stock getStockById(@Param("id") int id);
-
     int getAlertNumById(@Param("id") int id);
     int setAlertNumById(@Param("id") int id,@Param("alertNum") int alertNum);
 
+    int getStockNum(@Param("key") String key);
+    int getStockNumByType(@Param("typeId") int typeId,@Param("key") String key);
 }

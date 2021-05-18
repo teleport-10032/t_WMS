@@ -33,5 +33,9 @@
         select id,name from product
     </select>
 
+    <select id="getMaxId" resultType="int">
+        select max(id) from product
+    </select>
+
 
 </mapper>

@@ -16,7 +16,8 @@ public interface outtMapper {
     int addOutt(@Param("orderId") String orderId,@Param("productId") int productId,
                @Param("customerId") int customerId,@Param("productNum") int productNum,
                 @Param("createdDate") String createdDate,@Param("lastModifyDate") String lastModifyDate,
-                @Param("info") String info,@Param("pay") double pay);
+                @Param("info") String info,@Param("pay") double pay,@Param("staffId") int staffId);
     int updateOuttById(@Param("id") int id,@Param("lastModifyDate") String lastModifyDate,@Param("info") String info);
     int deleteOuttById(@Param("id") int id);
+    int getOuttNumByCustomerId(@Param("customerId") int customerId);
 }

@@ -197,9 +197,9 @@
                     supplierId:'',
                     typeName:'',
                     supplierName:'',
-                    unit:'',
+                    unit:'件',
                     price:'',
-                    info:'',
+                    info:'无',
                 },
                 typeOptions: [],
                 supplierOptions: [],
@@ -435,7 +435,7 @@
             // 根据Id删除
             async deleteProductById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该产品, 是否继续?',
+                    '此操作将永久删除该产品及其相关信息, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',

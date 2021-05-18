@@ -7,5 +7,7 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface reportService {
-    String getInnReportData() throws ParseException, JsonProcessingException;
+    String getInnReportData(int year) throws ParseException, JsonProcessingException;
+    String getOuttReportData(int year) throws ParseException, JsonProcessingException;
+    String getYearList() throws ParseException, JsonProcessingException;
 }

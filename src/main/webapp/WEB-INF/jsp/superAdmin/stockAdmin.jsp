@@ -150,7 +150,7 @@
                     {
                         this.loading = false;
                         this.stockList = res.data.data;
-                        this.total = res.data.data.length
+                        this.total = res.data.len
                     }
                     else
                     {

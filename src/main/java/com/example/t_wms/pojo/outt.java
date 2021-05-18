@@ -20,4 +20,6 @@ public class outt {
     String info;
     double price;
     double pay;
+    String staffName;
+    int staffId;
 }
