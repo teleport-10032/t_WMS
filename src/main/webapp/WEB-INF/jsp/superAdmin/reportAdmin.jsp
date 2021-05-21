@@ -206,7 +206,7 @@
                 } else {
                     let option2 = {
                         title: {
-                            text: '出库报表'
+                            text: '年度出库报表'
                         },
                         tooltip: {},
                         legend: {
