@@ -23,10 +23,18 @@ public class reportServiceImpl implements reportService {
     outtMapper outtMapperObject;
 
     @Override
-    public String getInnReportData(int year) throws ParseException, JsonProcessingException {
+    public String getInnReportData(int year,int productId) throws ParseException, JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        List<inn> list = innMapperObject.getInnList(0,innMapperObject.getInnNum(""),"");
+        List<inn> list;
+        if(productId == -1){
+            list = innMapperObject.getInnList(0,innMapperObject.getInnNum(""),"");
+        }
+        else{
+            list = innMapperObject.getInnListByProductId(productId);
+        }
+
+
         int len = list.size();
         int one = 0 , two = 0 , three = 0, four = 0;
         Calendar calendar = Calendar.getInstance();
@@ -60,10 +68,17 @@ public class reportServiceImpl implements reportService {
     }
 
     @Override
-    public String getOuttReportData(int year) throws ParseException, JsonProcessingException {
+    public String getOuttReportData(int year,int productId) throws ParseException, JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        List<outt> list = outtMapperObject.getOuttList(0,outtMapperObject.getOuttNum(""),"");
+        List<outt> list;
+        if(productId == -1){
+            list = outtMapperObject.getOuttList(0,outtMapperObject.getOuttNum(""),"");
+        }
+        else{
+            list = outtMapperObject.getOuttListByProductId(productId);
+        }
+
         int len = list.size();
         int one = 0 , two = 0 , three = 0, four = 0;
         Calendar calendar = Calendar.getInstance();

@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface innMapper {
     List<inn> getInnList(@Param("start") int start, @Param("num") int num, @Param("key") String key);
+    List<inn> getInnListByProductId(@Param("productId") int productId);
+
     int getInnNum(String key);
 
     inn getInnById(@Param("id") int id);

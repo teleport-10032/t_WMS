@@ -10,6 +10,9 @@
         where orderId like "%"#{key}"%" and product.Id = inn.productId and inn.supplierId=supplier.id and staff.id=inn.staffId
         order by inn.id desc limit #{start},#{num}
     </select>
+    <select id="getInnListByProductId" resultType="inn">
+        select productNum,createdDate from inn where productId=#{productId}
+    </select>
     <select id="getInnNum" resultType="int">
         select count(id) from inn where orderId like "%"#{key}"%"
     </select>

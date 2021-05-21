@@ -10,6 +10,11 @@
         where orderId like "%"#{key}"%" and product.Id = outt.productId and outt.customerId=customer.id and staff.id=outt.staffId
         order by outt.id desc limit #{start},#{num}
     </select>
+
+    <select id="getOuttListByProductId" resultType="outt">
+        select productNum,createdDate from outt where productId=#{productId}
+    </select>
+
     <select id="getOuttNum" resultType="int">
         select count(id) from outt where orderId like "%"#{key}"%"
     </select>

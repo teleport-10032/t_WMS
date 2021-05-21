@@ -22,4 +22,5 @@ public class inn {
     double pay;
     String staffName;
     int staffId;
+    int typeId;
 }

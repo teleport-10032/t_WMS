@@ -32,6 +32,15 @@
                                         :value="item.value">
                                 </el-option>
                             </el-select>
+                            <span style="font-size: 15px"> 选择产品</span>
+                            <el-select v-model="product" placeholder="请选择" @change="updateData">
+                                <el-option
+                                        v-for="item in productOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
                         </el-row>
                         <div style="height: 20px"></div>
                         <div id="chartMain1" style="width:1000px; height: 400px;"></div>
@@ -52,7 +61,9 @@
             return{
                 username:'',
                 yearOptions:[],
-                year: -1
+                productOptions:[],
+                year: -1,
+                product:-1
             }
 
         }
@@ -62,6 +73,7 @@
             this.getInnReportData()
             this.getOuttReportData()
             this.getYearList()
+            this.getProductIdAndName()
         },
         methods: {
             init()
@@ -76,6 +88,43 @@
             updateData(){
                 this.getInnReportData()
                 this.getOuttReportData()
+            },
+            async getProductIdAndName()
+            {
+                let url =  '/getProductIdAndName';
+                axios.get(url, {
+                    params:{token:window.localStorage.getItem("token")}
+                }).then(res => {
+                    if(res.data.error === "0")
+                    {
+                        let len = res.data.data.length
+                        let len2 = this.productOptions.length
+                        // console.log(len2)
+                        if(len2 === 0)
+                        {
+                            this.productOptions.push(
+                                {
+                                    label:'全部',
+                                    value:-1,
+                                }
+                            )
+                            for(let i = 0 ; i < len ; i ++)
+                            {
+                                this.productOptions.push(
+                                    {
+                                        label:res.data.data[i]['name'],
+                                        value:res.data.data[i]['id'],
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return this.$message.error('获取产品数据失败！')
+                    }
+                }).catch(err => {
+                })
             },
             getYearList(){
                 let url =  '/getYearList';
@@ -117,7 +166,7 @@
             // getInnReportData
             async getInnReportData(){
                 const { data: res } = await axios.get('/getInnReportData', {
-                    params:{year:this.year}
+                    params:{year:this.year,productId:this.product}
                 })
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')
@@ -150,7 +199,7 @@
             },
             async getOuttReportData() {
                 const {data: res} = await axios.get('/getOuttReportData', {
-                    params:{year:this.year}
+                    params:{year:this.year,productId:this.product}
                 })
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')

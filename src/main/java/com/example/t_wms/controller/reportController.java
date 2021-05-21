@@ -16,12 +16,12 @@ public class reportController {
     reportService reportServiceObject;
 
     @GetMapping("/getInnReportData")
-    public String getInnReportData(@RequestParam("year") int year) throws ParseException, JsonProcessingException {
-        return reportServiceObject.getInnReportData(year);
+    public String getInnReportData(@RequestParam("year") int year,@RequestParam("productId") int productId) throws ParseException, JsonProcessingException {
+        return reportServiceObject.getInnReportData(year,productId);
     }
     @GetMapping("/getOuttReportData")
-    public String getOuttReportData(@RequestParam("year") int year) throws ParseException, JsonProcessingException {
-        return reportServiceObject.getOuttReportData(year);
+    public String getOuttReportData(@RequestParam("year") int year,@RequestParam("productId") int productId) throws ParseException, JsonProcessingException {
+        return reportServiceObject.getOuttReportData(year,productId);
     }
 
     @GetMapping("/getYearList")
