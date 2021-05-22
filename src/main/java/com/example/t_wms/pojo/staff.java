@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Data //通过Lombok插件自动生成get/set方法
+@NoArgsConstructor //通过Lombok插件自动生成无参构造方法
+@AllArgsConstructor //通过Lombok插件自动生成有参构造方法
 public class staff {
     int id;
     String username;

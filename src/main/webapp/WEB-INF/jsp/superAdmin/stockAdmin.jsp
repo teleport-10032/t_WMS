@@ -62,7 +62,7 @@
                             <el-table-column label="报警数量" prop="alertNum" min-width="5%"></el-table-column>
                             <el-table-column label="操作" width="80px">
                                 <template slot-scope="scope">
-                                    <el-tooltip effect="dark" content="设置最低报警数量" placement="top" :enterable="false">
+                                    <el-tooltip effect="dark" content="设置报警值" placement="top" :enterable="false">
                                         <el-button type="warning" icon="el-icon-s-tools" size="mini" @click="setAlertNum(scope.row.productId)"></el-button>
                                     </el-tooltip>
                                     </el-tooltip>
@@ -78,10 +78,10 @@
                         </el-pagination>
                     </el-card>
 
-                    <el-dialog title="设置最低报警值" :visible.sync="setDialogVisible" width="50%" @close="setDialogClosed"
+                    <el-dialog title="设置报警值" :visible.sync="setDialogVisible" width="50%" @close="setDialogClosed"
                                @submit.native.prevent>
                         <el-form label-width="90px">
-                            <el-form-item label="最低报警值">
+                            <el-form-item label="报警值">
                                 <el-input v-model="alertNum" @keyup.enter.native="setAlertNumSubmit"></el-input>
                             </el-form-item>
                         </el-form>
