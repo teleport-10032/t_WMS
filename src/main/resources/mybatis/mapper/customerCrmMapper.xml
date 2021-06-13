@@ -13,7 +13,7 @@
     </select>
 
     <select id="getVisitListByCustomerId" resultType="customerCrm">
-        select id,time,info from customerCrm where customerId=#{customerId} order by time desc
+        select id,time,info from customerCrm where customerId=#{customerId} and customerId!='1' order by time desc
     </select>
 
     <delete id="deleteVisitById" parameterType="int">

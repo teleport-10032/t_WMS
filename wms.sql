@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 22/05/2021 23:13:03
+ Date: 13/06/2021 18:33:47
 */
 
 SET NAMES utf8mb4;
@@ -45,6 +45,7 @@ CREATE TABLE `customer` (
 -- Records of customer
 -- ----------------------------
 BEGIN;
+INSERT INTO `customer` VALUES (1, 'myself', 'myself', 'myself', 'myself', 'myself', 'myself', 'myself', 'myself', 'myself', 'myself', 0.00, 1000, 'myself');
 INSERT INTO `customer` VALUES (1000, '罗永郝', '山东新西方', '山东青岛', '13387871463', '11@q.com', 'xdf1.xm', '广发银行', '11128787121', '山东新西方', '91110000717825966C', 2045.00, 1001, '暂无');
 INSERT INTO `customer` VALUES (1001, '王布斯', '涂山科技发展公司', '山西太原', '14489812351', '22@q.com', 'tushan1.tech', '广发银行', '87912801325', '涂山科技发展公司', '91110000717825966B', 0.00, 1000, '暂无');
 INSERT INTO `customer` VALUES (1002, '徐四', '哪都通快递', '河南石家庄', '13874813911', '33@q.com', 'ndt1.com', '中国银行', '87912801311', '哪都通快递', '911100007178259661', 0.00, 1000, '暂无');
@@ -86,7 +87,7 @@ CREATE TABLE `inn` (
   `productNum` int(10) DEFAULT NULL,
   `createdDate` datetime DEFAULT NULL,
   `lastModifyDate` datetime DEFAULT NULL,
-  `pay` double(255,2) DEFAULT NULL,
+  `pay` double(20,2) DEFAULT NULL,
   `info` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `aa` (`staffId`),
@@ -95,7 +96,7 @@ CREATE TABLE `inn` (
   CONSTRAINT `inn1` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `inn2` FOREIGN KEY (`supplierId`) REFERENCES `supplier` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `inn3` FOREIGN KEY (`staffId`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1050 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1049 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of inn
@@ -107,7 +108,6 @@ INSERT INTO `inn` VALUES (1045, 'In16207969403095306', 1024, 1001, 1000, 10, '20
 INSERT INTO `inn` VALUES (1046, 'In16207969687716835', 1025, 1000, 1000, 10, '2021-05-12 13:23:59', '2021-05-12 13:23:59', 3990.00, '无');
 INSERT INTO `inn` VALUES (1047, 'In16207970420114782', 1026, 1000, 1000, 100, '2021-12-12 13:24:30', '2021-05-12 13:24:30', 5100.00, '无');
 INSERT INTO `inn` VALUES (1048, 'In16207990361135452', 1019, 1000, 1002, 10, '2021-05-12 13:57:29', '2021-05-12 13:57:29', 0.00, '');
-INSERT INTO `inn` VALUES (1049, 'In16208007106132458', 1033, 1001, 1000, 10, '2021-05-12 14:25:24', '2021-05-12 14:25:24', 10.00, '无');
 COMMIT;
 
 -- ----------------------------
@@ -132,7 +132,7 @@ CREATE TABLE `outt` (
   CONSTRAINT `outt1` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `outt2` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `outt3` FOREIGN KEY (`staffId`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1023 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1022 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of outt
@@ -140,7 +140,6 @@ CREATE TABLE `outt` (
 BEGIN;
 INSERT INTO `outt` VALUES (1020, 'Out16207971112762564', 1019, 1000, 1000, '无', 100, '2021-05-12 13:25:27', '2021-05-12 13:25:27', 0.00);
 INSERT INTO `outt` VALUES (1021, 'Out16207972971106727', 1026, 1000, 1000, '无', 10, '2021-05-12 13:28:38', '2021-05-12 13:28:38', 510.00);
-INSERT INTO `outt` VALUES (1022, 'Out16208007320165067', 1033, 1000, 1000, '无', 5, '2021-05-12 14:25:53', '2021-05-12 14:25:53', 0.00);
 COMMIT;
 
 -- ----------------------------
@@ -157,8 +156,8 @@ CREATE TABLE `product` (
   `alertNum` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product1` (`typeId`),
-  CONSTRAINT `product1` FOREIGN KEY (`typeId`) REFERENCES `type` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1035 DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `product1` FOREIGN KEY (`typeId`) REFERENCES `type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1033 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of product
@@ -178,8 +177,6 @@ INSERT INTO `product` VALUES (1029, '优奥 加厚锡纸烤箱纸30米 烘焙烧
 INSERT INTO `product` VALUES (1030, '全棉四套件 纯棉田园床品 双人床单被套 叶镜1.8', 1008, '件', 339.00, '无', -1);
 INSERT INTO `product` VALUES (1031, '智汇 调料架玻璃调料盒套装厨房用品置物架多功能收纳架落地多层台面储物架陶瓷调味罐盐罐套装油壶调料瓶 竹架+6个油瓶+8个玻璃调味罐+贴纸+漏斗15件套 收纳架', 1008, '件', 159.00, '无', -1);
 INSERT INTO `product` VALUES (1032, '智汇 饺子盒 冰箱冷冻盒速冻饺子多层盒家用冰箱收纳保鲜盒水饺馄饨收纳盒饺子托盘 饺子盒 四层一盖 奶白色 饺子收纳盒', 1008, '件', 22.00, '无', -1);
-INSERT INTO `product` VALUES (1033, 'product', 1009, '件', 1.00, '无', -1);
-INSERT INTO `product` VALUES (1034, 'test', 1005, '件', 1.50, '无', -1);
 COMMIT;
 
 -- ----------------------------
@@ -204,8 +201,8 @@ CREATE TABLE `staff` (
 -- Records of staff
 -- ----------------------------
 BEGIN;
-INSERT INTO `staff` VALUES (1000, 'superAdmin', '超级管理员', '男', 21, 'superAdmin', '13867481031', '1@q.com', '4297f44b13955235245b2497399d7a93', '162166917712700129734');
-INSERT INTO `staff` VALUES (1001, 'crmAdmin', 'crm管理员', '女', 21, 'crmAdmin', '13867481031', '22@qq.com', '4297f44b13955235245b2497399d7a93', '162080100301182790619');
+INSERT INTO `staff` VALUES (1000, 'superAdmin', '超级管理员', '男', 21, 'superAdmin', '13867481031', '1@q.com', '4297f44b13955235245b2497399d7a93', '162314214220699685712');
+INSERT INTO `staff` VALUES (1001, 'crmAdmin', '客户关系管理员', '女', 21, 'crmAdmin', '13867481031', '22@qq.com', '4297f44b13955235245b2497399d7a93', '162080100301182790619');
 INSERT INTO `staff` VALUES (1002, 'whAdmin', '仓库管理员1', '男', 54, 'whAdmin', '13867481031', '3@q.com', '4297f44b13955235245b2497399d7a93', '162079899689229302187');
 INSERT INTO `staff` VALUES (1003, 'admin', '管理员', '男', 21, 'admin', '13867481031', '3@q.com', '4297f44b13955235245b2497399d7a93', '162079893117829702472');
 INSERT INTO `staff` VALUES (1004, 'whAdmin2', '仓库管理员2', '男', 21, 'whAdmin', '13867481031', '3@q.com', '4297f44b13955235245b2497399d7a93', NULL);
@@ -222,7 +219,7 @@ CREATE TABLE `stock` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `stock1` (`productId`),
   CONSTRAINT `stock1` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1024 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1022 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of stock
@@ -242,8 +239,6 @@ INSERT INTO `stock` VALUES (1018, 1029, 0);
 INSERT INTO `stock` VALUES (1019, 1030, 0);
 INSERT INTO `stock` VALUES (1020, 1031, 0);
 INSERT INTO `stock` VALUES (1021, 1032, 0);
-INSERT INTO `stock` VALUES (1022, 1033, 5);
-INSERT INTO `stock` VALUES (1023, 1034, 0);
 COMMIT;
 
 -- ----------------------------
@@ -288,7 +283,7 @@ CREATE TABLE `type` (
   `name` varchar(105) DEFAULT '',
   `info` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1011 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1009 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of type
@@ -298,8 +293,6 @@ INSERT INTO `type` VALUES (1005, '食品', '各种食品');
 INSERT INTO `type` VALUES (1006, '电脑办公', '电脑，路由器等');
 INSERT INTO `type` VALUES (1007, '手机', '手机类');
 INSERT INTO `type` VALUES (1008, '家具厨具', '居家用品 厨房用品');
-INSERT INTO `type` VALUES (1009, 'type', '111');
-INSERT INTO `type` VALUES (1010, 'test', 'info');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

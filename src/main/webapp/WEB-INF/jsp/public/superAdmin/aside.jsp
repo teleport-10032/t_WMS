@@ -28,7 +28,7 @@
         </el-menu-item>
         <el-menu-item index="6" style="width: 220px" @Click="jumpToCrmAdmin">
             <i class="el-icon-s-custom"  id="crmAdminIco"></i>
-            <span slot="title"  id="crmAdmin">crm管理</span>
+            <span slot="title"  id="crmAdmin">客户关系管理</span>
         </el-menu-item>
 
     </el-menu>

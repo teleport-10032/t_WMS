@@ -59,7 +59,7 @@
                                     </div>
                                     <div v-else-if="scope.row.type==='crmAdmin'">
                                         <el-tag effect="light" size="mini">
-                                            crm管理员
+                                            客户关系管理员
                                         </el-tag>
                                     </div>
                                     <div v-else>
@@ -263,7 +263,7 @@
                     label: '管理员'
                 }, {
                     value: 'crmAdmin',
-                    label: 'crm管理员'
+                    label: '客户关系管理员'
                 }, {
                     value: 'whAdmin',
                     label: '仓库管理员'
@@ -329,8 +329,6 @@
                             trigger: "blur"
                         }
                     ],
-
-
                     password: [
                         { required: true, message: '密码必须是6-20位', trigger: 'blur' },
                         {
